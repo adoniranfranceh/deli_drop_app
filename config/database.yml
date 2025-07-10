@@ -1,0 +1,34 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("POSTGRES_USER") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  host: <%= ENV.fetch('POSTGRES_HOST') %>
+
+development:
+  <<: *default
+  database: deli_drop_app_development
+
+test:
+  <<: *default
+  database: deli_drop_app_test
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: deli_drop_app_production
+    username: deli_drop_app
+    password: <%= ENV["DELI_DROP_APP_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: deli_drop_app_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: deli_drop_app_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: deli_drop_app_production_cable
+    migrations_paths: db/cable_migrate
