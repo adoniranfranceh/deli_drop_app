@@ -1,0 +1,45 @@
+@import "@fontsource/inter";
+
+:root {
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --color-primary: #E53935;
+  --color-primary-hover: #c62828;
+  --color-secondary: #FFCA28;
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+
+  --color-text: #333333;
+  --color-muted: #666666;
+  --color-text-light: #999999;
+  --color-link: #E53935;
+  --color-link-hover: #c62828;
+
+  --bg-color: #fefefe;
+  --bg-soft: #fff6f5;
+  --bg-highlight: #fff8e1;
+
+  --color-accent: #29a19c;
+  --color-accent-light: #70d6d6;
+  --color-error: #d32f2f;
+  --color-success: #2e7d32;
+  --color-warning: #f57c00;
+
+  --color-border: #e0e0e0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #eee;
+    --bg-color: #121212;
+    --color-link: #ff7961;
+    --color-link-hover: #ff5252;
+    /* ajuste outras cores para dark */
+  }
+}
