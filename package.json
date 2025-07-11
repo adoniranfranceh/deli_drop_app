@@ -1,0 +1,16 @@
+{
+  "name": "app",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.25.6"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
+    "build:watch": "yarn build --watch=forever"
+  },
+  "dependencies": {
+    "esbuild-plugin-vue": "^0.2.4",
+    "esbuild-plugin-vue3": "^0.4.2",
+    "vue": "^3.2.0"
+  }
+}
