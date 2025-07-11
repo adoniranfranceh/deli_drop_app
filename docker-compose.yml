@@ -1,27 +1,43 @@
 services:
   app:
-    build: .
-    working_dir: /app
+    build:
+      context: .
     ports:
-      - 3000:3000
-    command: bash -c "rm -f tmp/pids/server.pid && rails s -b 0.0.0.0"
+      - "3000:3000"
     volumes:
       - .:/app
-      - rubygems:/usr/local/bundle
-    env_file:
-      - .env
+      - bundle:/usr/local/bundle
+    working_dir: /app
+    entrypoint: ./entrypoint.sh
+    command: "rails s -b 0.0.0.0"
     depends_on:
       - postgres
-
-  postgres:
-    image: postgres:latest
-    ports:
-      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_HOST: ${POSTGRES_HOST}
     env_file:
       - .env
+
+  esbuild:
+    build:
+      context: .
+    command: "node esbuild.config.js --watch"
     volumes:
-      - database:/var/lib/postgresql/data
+      - .:/app
+    working_dir: /app
+    depends_on:
+      - app
+
+  postgres:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
 volumes:
-  database:
-  rubygems:
+  bundle:
+  pgdata:
