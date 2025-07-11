@@ -1,7 +1,5 @@
 FROM ruby:3.3.6
 
-WORKDIR /app
-
 COPY Gemfile* ./
 RUN bundle install
 
@@ -10,6 +8,7 @@ RUN apt-get update -y
 RUN apt-get install -y nodejs
 RUN npm install -g yarn
 
-COPY . .
+WORKDIR /app
+COPY . /app
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
