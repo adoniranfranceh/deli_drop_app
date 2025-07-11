@@ -15,9 +15,9 @@
 </template>
 
 <script setup>
-import QuickActions from './components/dashboard/QuickActions.vue';
-import OverviewStats from './components/dashboard/OverviewStats.vue'
-import RecentOrders from './components/dashboard/RecentOrders.vue'
-import RestaurantInfo from './components/dashboard/RestaurantInfo.vue'
-import PerformanceChart from './components/dashboard/PerformanceChart.vue'
+import QuickActions from './QuickActions.vue';
+import OverviewStats from './OverviewStats.vue'
+import RecentOrders from './RecentOrders.vue'
+import RestaurantInfo from './RestaurantInfo.vue'
+import PerformanceChart from './PerformanceChart.vue'
 </script>
