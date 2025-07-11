@@ -1,0 +1,19 @@
+{
+  "name": "app",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.25.6"
+  },
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "build:watch": "node esbuild.config.js --watch"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.6",
+    "esbuild-plugin-vue3": "^0.4.2",
+    "vue": "^3.2.0"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
+}
