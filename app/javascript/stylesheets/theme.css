@@ -12,6 +12,16 @@
   --color-white: #ffffff;
   --color-black: #1a1a1a;
 
+  --color-background: rgb(249, 250, 251);
+
+  --background-doing: rgb(254, 249, 195);
+  --background-done: rgb(219, 234, 254);
+  --background-delivered: rgb(220, 252, 231);
+
+  --color-doing: rgb(133, 77, 14);
+  --color-done: rgb(30, 64, 175);
+  --color-delivered: rgb(22, 101, 52);
+
   --color-text: #333333;
   --color-muted: #666666;
   --color-text-light: #999999;
