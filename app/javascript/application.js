@@ -1,3 +1,4 @@
+import "./stylesheets/application.css";
 import { createApp } from 'vue'
 import App from './components/App.vue'
 import Dashboard from './components/dashboard/Dashboard.vue'
