@@ -55,9 +55,26 @@ defineProps({
 }
 
 @media (max-width: 1000px) {
+  .info-card {
+    padding: 1rem 0;
+  }
+
   .info-icon {
     width: 3rem;
     height: 3rem;
   }
+
+  .info-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  .info-label {
+    font-size: 1rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
 }
 </style>
