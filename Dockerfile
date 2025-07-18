@@ -11,4 +11,6 @@ RUN npm install -g yarn
 WORKDIR /app
 COPY . /app
 
+RUN yarn install
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
