@@ -5,6 +5,7 @@
       v-for="action in actions"
       :key="action.label"
       class="quick-action-card"
+      @click="navigateTo(action.path)"
     >
       <div class="quick-action-icon"><Icon :icon="action.icon" /></div>
       <span class="quick-action-label">{{ action.label }}</span>
@@ -16,11 +17,15 @@
 import { Icon } from '@iconify/vue';
 
 const actions = [
-  { label: 'Gerenciar Menu', icon: 'tabler:chef-hat' },
-  { label: 'Ver Pedidos', icon: 'iconoir:bell' },
-  { label: 'Horários', icon: 'lucide:calendar' },
-  { label: 'Área de Entrega', icon: 'tdesign:location' }
+  { label: 'Gerenciar Menu', icon: 'tabler:chef-hat', path: '/menu' },
+  { label: 'Ver Pedidos', icon: 'iconoir:bell', path: '/orders' },
+  { label: 'Horários', icon: 'lucide:calendar', path: '/schedules' },
+  { label: 'Área de Entrega', icon: 'tdesign:location', path: '/delivery-area' }
 ]
+
+const navigateTo = (path) => {
+  if (path) window.location.href = path
+}
 </script>
 
 <style scoped>
