@@ -136,6 +136,7 @@ import CurrencyInput from '../ui/CurrencyInput.vue'
 import StepIndicator from './StepIndicator.vue'
 import ModifierOptionsPrompt from './ModifierOptionsPrompt.vue'
 import IngredientsInput from './IngredientsInput.vue'
+import { Icon } from '@iconify/vue'
 import { useProductValidator } from '../../composables/useProductValidator'
 import { useGroupsValidator } from '../../composables/useGroupsValidator'
 
@@ -148,12 +149,12 @@ const handleStepChange = (stepChoice) => {
 }
 
 const product = reactive({
-  name: '1',
-  category: '1',
-  price: '1',
-  duration: '1',
-  description: '1',
-  image_url: '1',
+  name: null,
+  category: null,
+  price: null,
+  duration: null,
+  description: null,
+  image_url: null,
   isActive: true,
   isFeatured: false,
   ingredients: [],
