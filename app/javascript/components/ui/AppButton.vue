@@ -18,10 +18,7 @@ import { Icon } from '@iconify/vue'
 
 const props = defineProps({
   path: String,
-  text: {
-    type: String,
-    required: true
-  },
+  text: String,
   selected: Boolean,
   icon: String,
   iconLeft: String,
@@ -68,7 +65,7 @@ span {
   display: flex;
   align-items: center;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   gap: 0.5rem;
   transition: gap 0.3s ease;
   margin: 0;
