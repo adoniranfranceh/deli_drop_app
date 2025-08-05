@@ -1,9 +1,11 @@
 <template>
-  <div class="step-indicator">
+  <div ref="containerRef" class="step-indicator">
     <div
       v-for="(step, index) in steps"
       :key="index"
       class="step-wrapper"
+      :ref="el => { if (el) stepRefs[index] = el }"
+      @click="() => canClick(index) && $emit('update:step', index + 1)"
     >
       <div class="step">
         <div
@@ -37,17 +39,41 @@
 
 <script setup>
 import { Icon } from '@iconify/vue'
+import { ref, watch, nextTick } from 'vue'
 
-defineProps({
-  steps: {
-    type: Array,
-    required: true,
-  },
-  currentStep: {
-    type: Number,
-    default: 0,
-  },
+const props = defineProps({
+  steps: { type: Array, required: true },
+  currentStep: { type: Number, default: 0 },
+  canClick: {
+    type: Function,
+    default: () => () => true
+  }
 })
+
+const containerRef = ref(null)
+const stepRefs = ref([])
+
+watch(
+  () => props.currentStep,
+  async () => {
+    await nextTick()
+    scrollToCurrentStep()
+  },
+  { immediate: true }
+)
+
+function scrollToCurrentStep() {
+  if (window.matchMedia('(max-width: 758px)').matches) {
+    const el = stepRefs.value[props.currentStep - 1];
+    if (el) {
+      el.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -63,55 +89,54 @@ defineProps({
 .step-wrapper {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .step {
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   gap: 1rem;
   min-width: 4rem;
 }
 
 .step-icon {
-  background-color: #e0e0e0;
+  background-color: var(--color-border);
   border-radius: 50%;
   padding: 0.7rem;
-  color: #999;
+  color: var(--color-muted);
   transition: all 0.3s ease;
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
 
-  svg {
-    width: 100%;
-    height: 100%;
-  }
+.step-icon > svg {
+  width: 100%;
+  height: 100%;
 }
 
 .step-icon.completed {
   background-color: var(--color-success);
-  color: white;
+  color: var(--color-white);
 }
 
-.step-label.completed {
-  color: var(--color-success);
-  font-weight: 500;
-}
-
-.step-line.completed {
-  background-color: var(--color-success);
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .step-icon.active {
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-white);
+  animation: breathe 2.5s ease-in-out infinite;
 }
+
 
 .step-label {
   font-size: 1rem;
-  color: #999;
+  color: var(--color-muted);
 }
 
 .step-label.active {
@@ -119,38 +144,76 @@ defineProps({
   color: var(--color-primary);
 }
 
+.step-label.completed {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
 .step-line {
   height: 2px;
   width: 5rem;
-  background-color: #ddd;
+  background-color: var(--color-border);
   margin: 0 1rem;
+}
+
+.step-line.completed {
+  background-color: var(--color-success);
 }
 
 @media (max-width: 758px) {
   .step-indicator {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
     margin: 0;
+    overflow-y: hidden;
+    scrollbar-width: none;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .step-indicator::-webkit-scrollbar {
+    display: none;
+  }
+
+  .step-wrapper {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-width: 100vw;
+    justify-content: center;
+
+    scroll-snap-align: center;
   }
 
   .step {
-    gap: 0.3rem;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .step-label {
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     white-space: nowrap;
+    text-align: center;
   }
 
   .step-icon {
-    
-      height: 0.8rem;
-      width: 0.8rem;
-      padding: 0.5rem;
-    
+    height: 3rem;
+    width: 3rem;
+    padding: 0.5rem;
+  }
+
+  .step-icon > svg {
+    width: 2rem;
+    height: 2rem;
   }
 
   .step-line {
-    width: 2rem;
-    margin: 0 0.5rem;
+    display: none;
   }
 }
 </style>
