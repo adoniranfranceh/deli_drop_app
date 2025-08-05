@@ -1,9 +1,7 @@
 <template>
-  <div class="menu-overview">
-    <MenuOverview />
-  </div>
+  <MenuOverview />
   <div class="menu">
-    <div class="menu-dashboard">
+    <div class="menu-center">
       <MenuCards />
       <TabMenu @changeTab="handleTabChange" />
 
@@ -43,17 +41,12 @@ function handleTabChange(view) {
 </script>
 
 <style scoped>
-.menu-overview {
-  display: flex;
-  justify-content: center;
-}
-
 .menu {
   display: flex;
   justify-content: center;
 }
 
-.menu-dashboard {
+.menu-center {
   display: flex;
   flex-direction: column;
   padding: 2rem;
@@ -69,13 +62,8 @@ function handleTabChange(view) {
 }
 
 @media (max-width: 758px) {
-  .menu-dashboard {
+  .menu-center {
     width: 100%;
-    margin: 0;
-    padding: 1rem;
-  }
-
-  .menu-overview header {
     margin: 0;
     padding: 1rem;
   }
