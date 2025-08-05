@@ -88,6 +88,7 @@ import PerformanceChart from './PerformanceChart.vue';
   flex-direction: column;
   gap: 2rem;
 }
+
 @media (max-width: 900px) {
   .dashboard-main{
     flex-direction: column;
