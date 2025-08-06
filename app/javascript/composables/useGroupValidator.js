@@ -1,4 +1,4 @@
-import { computed, reactive, watchEffect } from 'vue'
+import { reactive, watchEffect, computed } from 'vue'
 
 export function useGroupValidator(group) {
   const errors = reactive({
@@ -21,44 +21,31 @@ export function useGroupValidator(group) {
   function validateMin() {
     if (group.min == null || group.min === '') return 'Min é obrigatório'
     if (group.min < 0) return 'Mínimo inválido'
-    if (group.max != null && group.min > group.max)
-      return 'Min deve ser menor que o max'
+    if (group.max != null && group.min > group.max) return 'Min deve ser menor que o max'
     return null
   }
 
   function validateMax() {
     if (group.max == null || group.max === '') return 'Max é obrigatório'
-    if (group.min != null && group.max < group.min)
-      return 'Max deve ser maior que o min'
+    if (group.min != null && group.max < group.min) return 'Max deve ser maior que o min'
     return null
   }
 
   function validateFreeLimit() {
-    if (group.free_limit == null || group.free_limit === '')
-      return 'Limite grátis é obrigatório'
+    if (group.free_limit == null || group.free_limit === '') return 'Limite grátis é obrigatório'
     if (group.free_limit < 0) return 'Limite grátis inválido'
-    if (group.max != null && group.free_limit > group.max)
-      return 'Limite grátis não pode ser maior que max'
+    if (group.max != null && group.free_limit > group.max) return 'Limite grátis não pode ser maior que max'
     return null
   }
 
   function validateModifiers() {
-    if (!group.modifiers || group.modifiers.length === 0) {
-      return 'Pelo menos um modificador é obrigatório'
-    }
-
-    for (const modifier of group.modifiers) {
-      const hasName = modifier.name?.trim()
-      const hasPrice =
-        modifier.base_price != null &&
-        modifier.base_price !== '' &&
-        Number(modifier.base_price) > 0
-
-      if (!hasName || !hasPrice) {
+    const modifiers = group.modifiers
+    if (!modifiers || modifiers.length === 0) return 'Pelo menos um modificador é obrigatório'
+    for (const mod of modifiers) {
+      if (!mod.name?.trim() || !Number(mod.base_price) > 0) {
         return 'Todos os modificadores devem ter nome e preço válidos'
       }
     }
-
     return null
   }
 
@@ -72,7 +59,7 @@ export function useGroupValidator(group) {
   })
 
   const isValid = computed(() =>
-    Object.values(errors).every((err) => err === null)
+    Object.values(errors).every(err => err === null)
   )
 
   return {
