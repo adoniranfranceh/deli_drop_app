@@ -10,9 +10,7 @@ export function useModifierValidator(modifiers) {
   function validatePrice(modifier) {
     const price = modifier.base_price
     const isBlank =
-      price == null ||
       price === '' ||
-      price === 0 ||
       (typeof price === 'string' && price.trim() === '')
     return isBlank ? 'Preço é obrigatório' : null
   }
