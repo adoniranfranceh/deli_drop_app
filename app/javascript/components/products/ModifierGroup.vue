@@ -81,7 +81,7 @@ function addGroup(type = '') {
 
   groups.value.push({
     id: Date.now(),
-    name: '',
+    name: null,
     input_type: type,
     min: null,
     max: max,
@@ -98,7 +98,7 @@ function addModifier(index) {
   groups.value[index].modifiers.push({
     id: Date.now(),
     name: null,
-    price: null,
+    base_price: null,
     image: null,
   })
 }
