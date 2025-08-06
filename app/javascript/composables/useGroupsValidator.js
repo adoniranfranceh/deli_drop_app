@@ -9,7 +9,7 @@ export function useGroupsValidator(groups) {
   )
 
   const isValid = computed(() => {
-    return groupsValue.value.length > 0 && validators.value.every(v => v.isValid.value)
+    return validators.value.every(v => v.isValid.value)
   })
 
   const errors = computed(() =>
