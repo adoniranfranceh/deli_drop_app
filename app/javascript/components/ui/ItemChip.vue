@@ -1,7 +1,7 @@
 <template>
   <span class="chip">
     {{ item }}
-    <button class="remove-btn" @click="$emit('remove')">×</button>
+    <button v-if="hasRemoveListener" class="remove-btn" @click="$emit('remove')">×</button>
   </span>
 </template>
 
@@ -39,10 +39,15 @@
 </style>
 
 <script setup>
-  defineProps({
-    item: {
-      type: String,
-      required: true
-    }
-  })
+import { computed, useAttrs } from 'vue';
+
+defineProps({
+  item: {
+    type: String,
+    required: true
+  }
+})
+
+const attrs = useAttrs();
+const hasRemoveListener = computed(() => !!attrs.onRemove);
 </script>
