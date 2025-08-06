@@ -37,7 +37,11 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const ingredient = ref('')
-const ingredients = ref([...props.modelValue])
+const ingredients = props.modelValue
+
+watch(() => props.modelValue, (newVal) => {
+  ingredients.value = [...newVal]
+})
 
 watch(ingredients, () => {
   emit('update:modelValue', ingredients.value)
