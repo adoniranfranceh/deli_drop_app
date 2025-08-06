@@ -45,13 +45,3 @@
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: #eee;
-    --bg-color: #121212;
-    --color-link: #ff7961;
-    --color-link-hover: #ff5252;
-    /* ajuste outras cores para dark */
-  }
-}

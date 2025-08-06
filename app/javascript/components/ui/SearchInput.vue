@@ -35,7 +35,6 @@ defineEmits(['update:modelValue', 'search'])
 
 <style scoped>
 .floating-search {
-  position: sticky;
   top: 100px;
   z-index: 1;
   overflow-x: auto;
