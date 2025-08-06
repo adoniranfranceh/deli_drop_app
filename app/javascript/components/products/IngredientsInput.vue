@@ -32,7 +32,7 @@ import AppButton from '../ui/AppButton.vue'
 import ItemChip from '../ui/ItemChip.vue'
 
 const props = defineProps({
-  modelValue: { type: Array, default: () => [] }
+  modelValue: { type: [Array, Object], default: () => [] }
 })
 const emit = defineEmits(['update:modelValue'])
 
