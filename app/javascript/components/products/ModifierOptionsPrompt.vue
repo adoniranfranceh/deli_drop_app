@@ -25,14 +25,12 @@
         iconLeft="lucide-settings"
         @click="emit('modifiers-decision', 2)"
       />
-
       <AppButton
         class="no"
         text="Não, produto simples"
         iconLeft="lucide:target"
         @click="emit('modifiers-decision', 3)"
       />
-
     </div>
   </div>
 </template>
