@@ -14,33 +14,39 @@ export function useProductForm() {
     isFeatured: false,
     ingredients: [],
     modifiers_groups: []
-  })
+  });
 
-  const step = ref(1)
-  const nextStep = ref(null)
+  const step = ref(1);
+  const nextStep = ref(null);
 
-  const { errors: productErrors, isValid: isProductValid } = useProductValidator(product)
-  const { isValid: groupsValid } = useGroupsValidator(computed(() => product.modifiers_groups))
+  const { errors: productErrors, isValid: isProductValid } = useProductValidator(product);
+  const { isValid: areGroupsValid } = useGroupsValidator(computed(() => product.modifiers_groups));
 
-  const canContinueStep1 = computed(() => {
-    return isProductValid.value && nextStep.value !== null
-  })
 
-  const isStep1Invalid = computed(() => step.value === 1 && !canContinueStep1.value)
+  const hasMadeStep1Decision = computed(() => nextStep.value !== null);
+  const canProceedFromStep1 = computed(() => isProductValid.value && hasMadeStep1Decision.value);
+  const isStep1Complete = computed(() => isProductValid.value);
 
-  const isStep2Invalid = computed(() => {
-    return step.value === 2 && (!groupsValid.value || (product.modifiers_groups.length > 0 && !groupsValid.value))
-  })
+  const hasModifiers = computed(() => product.modifiers_groups.length > 0);
+  const canProceedFromStep2 = computed(() => !hasModifiers.value || areGroupsValid.value);
 
-  const isNextDisabled = computed(() => isStep1Invalid.value || isStep2Invalid.value)
+  const isFormValid = computed(() => isProductValid.value && canProceedFromStep2.value);
 
-  const allValid = computed(() => isProductValid.value && groupsValid.value)
+  const isNextButtonDisabled = computed(() => {
+    if (step.value === 1) {
+      return !canProceedFromStep1.value;
+    }
+    if (step.value === 2) {
+      return !canProceedFromStep2.value;
+    }
+    return false;
+  });
 
   const canClickSteps = computed(() => [
     true,
-    isProductValid.value,
-    allValid.value && nextStep.value === 3
-  ])
+    isStep1Complete.value,
+    isFormValid.value
+  ]);
 
   return {
     product,
@@ -48,12 +54,13 @@ export function useProductForm() {
     nextStep,
     productErrors,
     isProductValid,
-    isNextDisabled,
-    canClickSteps
-  }
+    isNextDisabled: isNextButtonDisabled,
+    canClickSteps,
+    isFormValid,
+  };
 }
 
-export function useProductTemplate(product) {
+export function useProductTemplate(product, forceCategoryError) {
   function fillProduct(template) {
     Object.assign(product, {
       name: null,
@@ -67,7 +74,9 @@ export function useProductTemplate(product) {
       ingredients: [],
       modifiers_groups: [],
       ...template
-    })
+    });
+
+    forceCategoryError.value = true
   }
 
   return { fillProduct }

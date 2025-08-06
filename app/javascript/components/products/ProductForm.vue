@@ -18,6 +18,7 @@
         v-if="step === 1"
         :product="product"
         :errors="productErrors"
+        :showCategoryError="forceCategoryError"
       />
       <ModifierOptionsPrompt
         v-if="isProductValid && step === 1"
@@ -57,6 +58,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import {
   useProductForm,
   useProductTemplate
@@ -80,11 +82,30 @@ const {
   productErrors,
   isProductValid,
   isNextDisabled,
-  canClickSteps
+  canClickSteps,
+  allValid
 } = useProductForm()
 
 
-const { fillProduct } = useProductTemplate(product)
+const forceCategoryError = ref(false)
+const { fillProduct } = useProductTemplate(product, forceCategoryError)
+
+function submit() {
+  const payload = {
+    name: product.name,
+    category: product.category,
+    base_price: Number(product.price),
+    duration: Number(product.duration),
+    description: product.description,
+    ingredients: product.ingredients,
+    image: product.image_url,
+    is_featured: product.isFeatured,
+    is_active: product.isActive,
+    modifiers_groups: product.modifiers_groups
+  }
+
+  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2))
+}
 </script>
 
 <style scoped>
@@ -142,10 +163,6 @@ button.cancel:hover {
     width: 100%;
     margin: 0;
     padding: 0.5rem;
-  }
-
-  .form-actions {
-    flex-direction: column-reverse;
   }
 }
 </style>

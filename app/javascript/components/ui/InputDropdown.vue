@@ -31,7 +31,7 @@
     </div>
 
     <p class="error">
-      <span v-if="touched && externalError">{{ externalError }}</span>
+      <span v-if="(touched.value || forceShowError) && externalError">{{ externalError }}</span>
       <span v-else>&nbsp;</span>
     </p>
   </div>
@@ -58,6 +58,7 @@ const props = defineProps({
   label: String,
   required: Boolean,
   externalError: String,
+  forceShowError: Boolean
 })
 
 const emit = defineEmits(['update:modelValue'])

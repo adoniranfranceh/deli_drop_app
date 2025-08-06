@@ -25,6 +25,7 @@
         placeholder="Todas as categorias"
         :externalError="errors?.category"
         label="Categoria"
+        :forceShowError="showCategoryError"
         required
       />
     </div>
@@ -80,7 +81,8 @@ import { toRefs } from 'vue'
 
 const props = defineProps({
   product: Object,
-  errors: Object
+  errors: Object,
+  showCategoryError: Boolean,
 })
 
 const emit = defineEmits(['update:product'])
