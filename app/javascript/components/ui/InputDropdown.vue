@@ -1,12 +1,12 @@
 <template>
-  <div class="category-group" ref="dropdownRef">
-    <label for="product-category" @click="toggleDropdown">
+  <div class="select-group" ref="dropdownRef">
+    <label for="product-select" @click="toggleDropdown">
       <span class="label-text">{{ label }}</span>
 
       <span v-if="required" class="required-asterisk">*</span>
     </label>
 
-    <div class="dropdown-wrapper" @click="toggleDropdown" @focusout="onBlur">
+    <div class="dropdown-wrapper" @click="toggleDropdown">
       <div class="dropdown-display">
         <span>{{ selectedPlaceholder }}</span>
         <Icon icon="line-md:chevron-down" class="dropdown-icon" />
@@ -65,6 +65,7 @@ const emit = defineEmits(['update:modelValue'])
 const selected = ref(props.modelValue)
 const isOpen = ref(false)
 const dropdownRef = ref(null)
+const wasInteracted = ref(false)
 
 watch(() => props.modelValue, (newVal) => {
   selected.value = newVal
@@ -72,6 +73,7 @@ watch(() => props.modelValue, (newVal) => {
 
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value
+  if (isOpen.value) wasInteracted.value = true
 }
 
 const selectOption = (value) => {
@@ -97,7 +99,9 @@ const { touched, onBlur } = useField({ modelValue: value, required: props.requir
 const handleClickOutside = (event) => {
   if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
     isOpen.value = false
-    onBlur()
+    if (wasInteracted.value) {
+      onBlur()
+    }
   }
 }
 
@@ -111,7 +115,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.category-group {
+.select-group {
   flex: 1;
   display: flex;
   flex-direction: column;
