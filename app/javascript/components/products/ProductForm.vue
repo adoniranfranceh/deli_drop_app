@@ -124,96 +124,34 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
-import ModifierGroup from './ModifierGroup.vue'
-import InputDropdown from '../ui/InputDropdown.vue'
-import AppButton from '../ui/AppButton.vue'
+import {
+  useProductForm,
+  useProductTemplate
+} from '../../composables/useProductForm'
 import ProductFormOverview from './ProductFormOverview.vue'
-import InputGroup from '../ui/InputGroup.vue'
-import InputNumber from '../ui/InputNumber.vue'
-import ToggleSwitch from '../ui/ToggleSwitch.vue'
-import CurrencyInput from '../ui/CurrencyInput.vue'
 import StepIndicator from './StepIndicator.vue'
+import QuickTemplate from './QuickTemplate.vue'
+import ModifierGroup from './ModifierGroup.vue'
 import ModifierOptionsPrompt from './ModifierOptionsPrompt.vue'
-import IngredientsInput from './IngredientsInput.vue'
-import { Icon } from '@iconify/vue'
-import { useProductValidator } from '../../composables/useProductValidator'
-import { useGroupsValidator } from '../../composables/useGroupsValidator'
-
-const step = ref(1)
-const nextStep = ref(null)
-const isGroupsValid = ref(false)
+import FormStepOne from './FormStepOne.vue'
+import AppButton from '../ui/AppButton.vue'
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice
 }
 
-const product = reactive({
-  name: null,
-  category: null,
-  price: null,
-  duration: null,
-  description: null,
-  image_url: null,
-  isActive: true,
-  isFeatured: false,
-  ingredients: [],
-  modifiers_groups: []
-})
+const {
+  product,
+  step,
+  nextStep,
+  productErrors,
+  isProductValid,
+  isNextDisabled,
+  canClickSteps
+} = useProductForm()
 
-const { errors: productErrors, isValid: isProductValid } = useProductValidator(product)
-const { isValid: groupsValid } = useGroupsValidator(product.modifiers_groups)
 
-const canContinueStep1 = computed(() => {
-  return isProductValid.value && nextStep.value !== null
-})
-
-const isStep1Invalid = computed(() => step.value === 1 && !canContinueStep1.value)
-
-const isStep2Invalid = computed(() => {
-  return step.value === 2 && (!groupsValid.value || product.modifiers_groups.length === 0)
-})
-
-const isNextDisabled = computed(() => isStep1Invalid.value || isStep2Invalid.value)
-
-const allValid = computed(() => {
-  return isProductValid.value && groupsValid.value
-})
-
-function canNavigateToStep(index) {
-  const targetStep = index + 1
-
-  switch (targetStep) {
-    case 1:
-      return true
-    case 2:
-      return isProductValid.value
-    case 3:
-      return allValid.value
-    default:
-      return false
-  }
-}
-
-function submit() {
-  const payload = {
-    name: product.name,
-    category: product.category,
-    base_price: Number(product.price),
-    duration: Number(product.duration),
-    description: product.description,
-    ingredients: product.ingredients,
-    image: product.image_url,
-    is_featured: product.isFeatured,
-    is_active: product.isActive,
-    modifiers_groups: product.modifiers_groups
-  }
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2))
-}
-
-const navigateTo = (path) => {
-  if (path) window.location.href = path
-}
+const { fillProduct } = useProductTemplate(product)
 </script>
 
 <style scoped>

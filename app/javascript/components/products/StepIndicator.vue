@@ -5,7 +5,8 @@
       :key="index"
       class="step-wrapper"
       :ref="el => { if (el) stepRefs[index] = el }"
-      @click="() => canClick(index) && $emit('update:step', index + 1)"
+      :class="{ disabled: !canClickSteps[index] }"
+      @click="() => canClickSteps[index] && $emit('update:step', index + 1)"
     >
       <div class="step">
         <div
@@ -34,19 +35,20 @@
         :class="{ completed: index + 1 < currentStep }"
       ></div>
     </div>
+
   </div>
 </template>
 
 <script setup>
 import { Icon } from '@iconify/vue'
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 
 const props = defineProps({
   steps: { type: Array, required: true },
   currentStep: { type: Number, default: 0 },
-  canClick: {
-    type: Function,
-    default: () => () => true
+   canClickSteps: {
+    type: Array,
+    default: () => [true, true, true]
   }
 })
 
@@ -90,6 +92,10 @@ function scrollToCurrentStep() {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.step-wrapper.disabled {
+  pointer-events: none;
 }
 
 .step {
