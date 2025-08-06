@@ -41,7 +41,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const value = toRef(props, 'modelValue')
-const { touched, onBlur } = useField({ modelValue: value, required: props.required })
+const { touched, onBlur } = useField()
 </script>
 
 <style scoped>

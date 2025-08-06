@@ -65,7 +65,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const value = toRef(props, 'modelValue')
-const { touched } = useField({ modelValue: value, required: props.required })
+const { touched } = useField()
 
 function increment() {
   const current = Number(props.modelValue) || 0
