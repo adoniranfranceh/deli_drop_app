@@ -1,14 +1,12 @@
 <template>
   <MenuHeader
-    title="Central do Menu"
-    subtitle="Gerencie seus produtos de forma simples e eficiente"
-  >
+    title="Novo Produto"
+    subtitle="Preencha as informações do produto"
+    >
     <template #actions>
-      <AppButton text="Nova Categoria" iconLeft="tabler:plus" class="new-category" />
-      <AppButton text="Novo Produto" iconLeft="tabler:plus" @click="navigateTo('/products/new')" />
+      <AppButton text="Voltar ao menu" iconLeft="ri:arrow-left-line" @click="navigateTo('/menu')"/>
     </template>
   </MenuHeader>
-
 </template>
 
 <script setup>
@@ -21,9 +19,13 @@ const navigateTo = (path) => {
 </script>
 
 <style scoped>
-.new-category {
+:deep(.cta-button) {
   background-color: var(--color-white);
-  color: var(--color-black);
   border: 1px solid var(--color-border);
+  color: var(--color-black);
 }
-</style> 
+
+:deep(.cta-button:hover) {
+  background-color: var(--color-border);
+}
+</style>

@@ -2,7 +2,7 @@
   <div class="dashboard-filters">
     <SearchInput class="input" />
     <div class="categories">
-      <CategoryDropdown
+      <InputDropdown
         class="category-dropdown"
         label="Todas as categorias"
         :options="[
@@ -37,7 +37,7 @@
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue'
 import SearchInput from '../ui/SearchInput.vue';
-import CategoryDropdown from '../ui/CategoryDropdown.vue';
+import InputDropdown from '../ui/InputDropdown.vue';
 
 const emit = defineEmits(['changeView'])
 const activeView = ref('grid')

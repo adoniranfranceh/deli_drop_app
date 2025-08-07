@@ -1,6 +1,7 @@
 <template>
   <span class="chip">
     {{ item }}
+    <button v-if="hasRemoveListener" class="remove-btn" @click="$emit('remove')">×</button>
   </span>
 </template>
 
@@ -8,7 +9,7 @@
 .chip {
   background-color: #f1f1f1;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   padding: 0.4rem 0.75rem;
   margin: 0;
   border-radius: 9999px;
@@ -18,15 +19,35 @@
 }
 
 .chip:hover {
-  background-color: #e0e0e0;
+  background-color: var(--color-border);
+}
+
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.3rem;
+  line-height: 1;
+}
+
+.remove-btn:hover {
+  color: var(--color-primary);
 }
 </style>
 
 <script setup>
-  defineProps({
-    item: {
-      type: String,
-      required: true
-    }
-  })
+import { computed, useAttrs } from 'vue';
+
+defineProps({
+  item: {
+    type: String,
+    required: true
+  }
+})
+
+const attrs = useAttrs();
+const hasRemoveListener = computed(() => !!attrs.onRemove);
 </script>

@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   get "/menu", to: "menus#show"
+  get "/products/new", to: "products#new"
 end

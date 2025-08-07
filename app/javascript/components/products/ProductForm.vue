@@ -1,0 +1,168 @@
+<template>
+  <ProductFormOverview />
+  <StepIndicator
+    :steps="[
+      { label: 'Informações Básicas', icon: 'lucide:package' },
+      { label: 'Modificadores', icon: 'lucide:settings' },
+      { label: 'Revisão', icon: 'lucide:circle-check-big' }
+    ]"
+    :currentStep="step"
+    :canClickSteps="canClickSteps"
+    @update:step="step = $event"
+  />
+
+  <div class="product-form">
+    <div class="form-container">
+      <QuickTemplate @update:product="fillProduct" v-if="step === 1"/>
+      <FormStepOne
+        v-if="step === 1"
+        :product="product"
+        :errors="productErrors"
+        :showCategoryError="forceCategoryError"
+      />
+      <ModifierOptionsPrompt
+        v-if="isProductValid && step === 1"
+        @modifiers-decision="handleStepChange"
+      />
+      <ModifierGroup
+        v-if="step === 2"
+        v-model="product.modifiers_groups"
+      />
+      <div class="form-actions">
+        <AppButton
+          class="cancel"
+          @click="step = step > 1 ? step - 1 : 1"
+          text="Voltar"
+          iconLeft="lucide-arrow-left"
+          v-if="step > 1"
+        />
+        <AppButton
+          class="save"
+          text="Continuar"
+          icon="lucide-arrow-right"
+          @click="step = (step === 1 ? nextStep : 3)"
+          :disabled="isNextDisabled"
+          v-if="step < 3"
+        />
+        <AppButton
+          class="save"
+          text="Salvar"
+          icon="lucide-save"
+          v-if="step === 3"
+          @click="submit"
+          :disabled="isNextDisabled"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import {
+  useProductForm,
+  useProductTemplate
+} from '../../composables/useProductForm'
+import ProductFormOverview from './ProductFormOverview.vue'
+import StepIndicator from './StepIndicator.vue'
+import QuickTemplate from './QuickTemplate.vue'
+import ModifierGroup from './ModifierGroup.vue'
+import ModifierOptionsPrompt from './ModifierOptionsPrompt.vue'
+import FormStepOne from './FormStepOne.vue'
+import AppButton from '../ui/AppButton.vue'
+
+const handleStepChange = (stepChoice) => {
+  nextStep.value = stepChoice
+}
+
+const {
+  product,
+  step,
+  nextStep,
+  productErrors,
+  isProductValid,
+  isNextDisabled,
+  canClickSteps,
+  allValid
+} = useProductForm()
+
+
+const forceCategoryError = ref(false)
+const { fillProduct } = useProductTemplate(product, forceCategoryError)
+
+function submit() {
+  const payload = {
+    name: product.name,
+    category: product.category,
+    base_price: Number(product.price),
+    duration: Number(product.duration),
+    description: product.description,
+    ingredients: product.ingredients,
+    image: product.image_url,
+    is_featured: product.isFeatured,
+    is_active: product.isActive,
+    modifiers_groups: product.modifiers_groups
+  }
+
+  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2))
+}
+</script>
+
+<style scoped>
+.product-form {
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+  background-color: var(--color-background);
+  margin: 0 2rem;
+  width: 1820px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-inline: 1rem;
+}
+
+button.cancel {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-black);
+}
+
+button.cancel,
+button.save {
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:deep(.cta-button) {
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+button.cancel:hover {
+  background-color: var(--color-border);
+}
+
+@media (max-width: 758px) {
+  .form-container {
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
+</style>
