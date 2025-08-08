@@ -82,8 +82,8 @@ button:focus-visible {
 }
 
 input[type='checkbox']:checked + .custom-checkbox {
-  background-color: var(--color-restaurant);
-  border-color: var(--color-restaurant);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .custom-checkbox::after {
@@ -93,13 +93,13 @@ input[type='checkbox']:checked + .custom-checkbox {
   left: 5px;
   width: 4px;
   height: 8px;
-  border: solid white;
+  border: solid var(--color-white);
   border-width: 0 1.7px 1.7px 0;
   transform: rotate(45deg);
 }
 
 .swal2-icon.meu-icon {
-  color: black;
+  color: var(--color-black);
 }
 
 .swal2-popup.my-alert {
