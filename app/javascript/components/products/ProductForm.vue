@@ -28,6 +28,7 @@
         v-if="step === 2"
         v-model="product.modifiers_groups"
       />
+      <ProductViewer v-if="step === 3" :product="product" />
       <div class="form-actions">
         <AppButton
           class="cancel"
@@ -58,22 +59,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import {
   useProductForm,
   useProductTemplate
-} from '../../composables/useProductForm'
-import ProductFormOverview from './ProductFormOverview.vue'
-import StepIndicator from './StepIndicator.vue'
-import QuickTemplate from './QuickTemplate.vue'
-import ModifierGroup from './ModifierGroup.vue'
-import ModifierOptionsPrompt from './ModifierOptionsPrompt.vue'
-import FormStepOne from './FormStepOne.vue'
-import AppButton from '../ui/AppButton.vue'
+} from '../../composables/useProductForm';
+import ProductFormOverview from './ProductFormOverview.vue';
+import StepIndicator from './StepIndicator.vue';
+import QuickTemplate from './QuickTemplate.vue';
+import ModifierGroup from './ModifierGroup.vue';
+import ModifierOptionsPrompt from './ModifierOptionsPrompt.vue';
+import FormStepOne from './FormStepOne.vue';
+import AppButton from '../ui/AppButton.vue';
+import ProductViewer from './FormStepThree/ProductViewer.vue';
 
 const handleStepChange = (stepChoice) => {
-  nextStep.value = stepChoice
-}
+  nextStep.value = stepChoice;
+};
 
 const {
   product,
@@ -82,13 +84,32 @@ const {
   productErrors,
   isProductValid,
   isNextDisabled,
-  canClickSteps,
-  allValid
-} = useProductForm()
+  canClickSteps
+} = useProductForm();
 
+const forceCategoryError = ref(false);
+const { fillProduct } = useProductTemplate(product, forceCategoryError);
 
-const forceCategoryError = ref(false)
-const { fillProduct } = useProductTemplate(product, forceCategoryError)
+const hasUnsavedChanges = ref(false);
+
+watch(product, () => {
+  hasUnsavedChanges.value = true;
+}, { deep: true });
+
+onMounted(() => {
+  window.addEventListener('beforeunload', handleBeforeUnload);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+const handleBeforeUnload = (event) => {
+  if (hasUnsavedChanges.value) {
+    event.preventDefault();
+    event.returnValue = '';
+  }
+};
 
 function submit() {
   const payload = {
@@ -102,9 +123,11 @@ function submit() {
     is_featured: product.isFeatured,
     is_active: product.isActive,
     modifiers_groups: product.modifiers_groups
-  }
+  };
 
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2))
+  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
+
+  hasUnsavedChanges.value = false;
 }
 </script>
 
