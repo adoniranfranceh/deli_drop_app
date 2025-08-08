@@ -14,7 +14,7 @@
   <div class="product-form">
     <div class="form-container">
       <QuickTemplate @update:product="fillProduct" v-if="step === 1"/>
-      <FormStepOne
+      <ProductBasicInputs
         v-if="step === 1"
         :product="product"
         :errors="productErrors"
@@ -64,14 +64,14 @@ import {
   useProductForm,
   useProductTemplate
 } from '../../composables/useProductForm';
-import ProductFormOverview from './ProductFormOverview.vue';
-import StepIndicator from './StepIndicator.vue';
-import QuickTemplate from './QuickTemplate.vue';
-import ModifierGroup from './ModifierGroup.vue';
-import ModifierOptionsPrompt from './ModifierOptionsPrompt.vue';
-import FormStepOne from './FormStepOne.vue';
+import ProductFormOverview from './Shared/ProductFormOverview.vue';
+import StepIndicator from './Shared/StepIndicator.vue';
+import QuickTemplate from './StepOne/QuickTemplate.vue';
+import ModifierGroup from './StepTwo/ModifierGroup.vue';
+import ModifierOptionsPrompt from './StepOne/ModifierOptionsPrompt.vue';
+import ProductBasicInputs from './StepOne/ProductBasicInputs.vue';
 import AppButton from '../ui/AppButton.vue';
-import ProductViewer from './FormStepThree/ProductViewer.vue';
+import ProductViewer from './StepThree/ProductViewer.vue';
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice;
