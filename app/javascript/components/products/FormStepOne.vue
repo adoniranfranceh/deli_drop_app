@@ -60,6 +60,12 @@
       required
     />
 
+    <InputGroup
+      label="Imagem"
+      placeholder="Imagem"
+      v-model="product.image"
+    />
+
     <IngredientsInput v-model="localProduct.ingredients" />
 
     <div class="switch-wrapper">
