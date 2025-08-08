@@ -68,9 +68,11 @@
           class="input-free"
           label="Limite Grátis"
           placeholder="Quantidade"
-          v-model.number="group.free_limit"
+          :modelValue="computedFreeLimit"
+          @update:modelValue="computedFreeLimit = $event"
           :min="0"
           :max="1000"
+          :disabled="group.input_type !== 'quantity'"
           :externalError="groupErrors?.free_limit"
           required
         />
@@ -89,13 +91,14 @@
 </template>
 
 <script setup>
-import AppButton from '../ui/AppButton.vue'
-import InputDropdown from '../ui/InputDropdown.vue'
-import InputGroup from '../ui/InputGroup.vue'
-import InputNumber from '../ui/InputNumber.vue'
-import ItemChip from '../ui/ItemChip.vue'
+import { computed, watch } from 'vue'
+import AppButton from '../../ui/AppButton.vue'
+import InputDropdown from '../../ui/InputDropdown.vue'
+import InputGroup from '../../ui/InputGroup.vue'
+import InputNumber from '../../ui/InputNumber.vue'
+import ItemChip from '../../ui/ItemChip.vue'
 import ModifierList from './ModifierList.vue'
-import { useGroupValidator } from '../../composables/useGroupValidator'
+import { useGroupValidator } from '../../../composables/useGroupValidator'
 
 const props = defineProps({
   group: Object,
@@ -105,6 +108,31 @@ const props = defineProps({
 const { errors: groupErrors } = useGroupValidator(props.group)
 
 defineEmits(['remove-group', 'add-modifier', 'remove-modifier'])
+
+const computedFreeLimit = computed({
+  get() {
+    if (props.group.input_type === 'single_choice') return 1
+    if (props.group.input_type === 'multiple_choice') return props.group.max ?? 0
+    return props.group.free_limit ?? 0
+  },
+  set(val) {
+    if (props.group.input_type === 'quantity') {
+      props.group.free_limit = val
+    }
+  }
+})
+
+watch(
+  () => [props.group.input_type, props.group.max],
+  ([type, max]) => {
+    if (type === 'multiple_choice') {
+      props.group.free_limit = max ?? 0
+    }
+    if (type === 'single_choice') {
+      props.group.free_limit = max ?? 0
+    }
+  }
+)
 </script>
 
 <style scoped>

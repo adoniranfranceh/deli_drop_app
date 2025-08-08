@@ -15,7 +15,7 @@
       <div v-if="isOpen" class="dropdown-menu">
         <div
           v-for="option in allOptions"
-          :key="option.value"
+          :key="option"
           class="dropdown-item"
           :class="{ selected: option.value === selected }"
           @click.stop="selectOption(option.value)"
@@ -31,7 +31,7 @@
     </div>
 
     <p class="error">
-      <span v-if="(touched.value || forceShowError) && externalError">{{ externalError }}</span>
+      <span v-if="(touched || forceShowError) && externalError">{{ externalError }}</span>
       <span v-else>&nbsp;</span>
     </p>
   </div>

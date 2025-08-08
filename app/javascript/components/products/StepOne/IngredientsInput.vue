@@ -27,9 +27,9 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import InputGroup from '../ui/InputGroup.vue'
-import AppButton from '../ui/AppButton.vue'
-import ItemChip from '../ui/ItemChip.vue'
+import InputGroup from '../../ui/InputGroup.vue'
+import AppButton from '../../ui/AppButton.vue'
+import ItemChip from '../../ui/ItemChip.vue'
 
 const props = defineProps({
   modelValue: { type: [Array, Object], default: () => [] }

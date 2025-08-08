@@ -41,7 +41,7 @@
 
 <script setup>
 import { Icon } from '@iconify/vue'
-import { ref, watch, nextTick, computed } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 
 const props = defineProps({
   steps: { type: Array, required: true },
