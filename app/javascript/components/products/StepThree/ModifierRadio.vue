@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import ModifierListBase from './ModifierListBase.vue';
 
 const props = defineProps({
@@ -19,8 +19,6 @@ const faded = (item) =>
 const getBasePrice = (item) => item.base_price || 0;
 
 function toggle(item) {
-  // Se o item já estiver selecionado, deseleciona.
-  // Caso contrário, seleciona o novo item.
   if (isSelected(item)) {
     selectedItem.value = null;
   } else {
@@ -31,7 +29,6 @@ function toggle(item) {
 watch(
   () => props.modifier_group?.selected,
   (initial) => {
-    // Para seleção única, pegamos o primeiro item do array, se existir.
     selectedItem.value = initial?.[0] ?? null;
   },
   { immediate: true },
