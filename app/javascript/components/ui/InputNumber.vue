@@ -203,13 +203,6 @@ label {
   margin: 0;
 }
 
-@media (max-width: 1102px) {
-  .error {
-    font-size: 0.80rem;
-    min-height: 1.9rem;
-  }
-}
-
 @media (max-width: 758px) {
   .label-text {
     font-size: 0.7rem;
