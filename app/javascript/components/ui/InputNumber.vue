@@ -7,17 +7,17 @@
 
     <div class="number-wrapper">
       <input
-      :id="id"
-      type="number"
-      :placeholder="placeholder"
-      :value="modelValue"
-      step="1"
-      inputmode="numeric"
-      @input="onInput"
-      @blur="onBlur"
-      class="number-input"
-      :disabled="disabled"
-    />
+        :id="id"
+        type="number"
+        :placeholder="placeholder"
+        :value="modelValue"
+        step="1"
+        inputmode="numeric"
+        @input="onInput"
+        @blur="onBlur"
+        class="number-input"
+        :disabled="disabled"
+      />
       <div class="controls">
         <button
           type="button"
@@ -46,7 +46,6 @@
 </template>
 
 <script setup>
-import { toRef } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useField } from '../../composables/useFields'
 
@@ -64,7 +63,6 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const value = toRef(props, 'modelValue')
 const { touched } = useField()
 
 function increment() {
@@ -205,9 +203,16 @@ label {
   margin: 0;
 }
 
+@media (max-width: 1102px) {
+  .error {
+    font-size: 0.80rem;
+    min-height: 1.9rem;
+  }
+}
+
 @media (max-width: 758px) {
   .label-text {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 }
 </style>
