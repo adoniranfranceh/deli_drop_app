@@ -63,7 +63,7 @@
     <InputGroup
       label="Imagem"
       placeholder="Imagem"
-      v-model="product.image"
+      v-model="product.image_url"
     />
 
     <IngredientsInput v-model="localProduct.ingredients" />
