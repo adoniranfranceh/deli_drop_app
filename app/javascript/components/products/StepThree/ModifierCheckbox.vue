@@ -22,14 +22,12 @@ const faded = (item) =>
 const getBasePrice = (item) => item.base_price || 0
 
 function toggle(item) {
-  const exists = selectedIds.value.includes(item.id)
+  const exists = isSelected(item)
 
   if (exists) {
     selectedItems.value = selectedItems.value.filter(i => i.id !== item.id)
-  } else {
-    if (!props.modifier_group.max || selectedItems.value.length < props.modifier_group.max) {
+  } else if (!props.modifier_group.max || selectedItems.value.length < props.modifier_group.max) {
       selectedItems.value.push(item)
-    }
   }
 }
 
