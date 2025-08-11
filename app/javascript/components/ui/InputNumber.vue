@@ -7,17 +7,17 @@
 
     <div class="number-wrapper">
       <input
-      :id="id"
-      type="number"
-      :placeholder="placeholder"
-      :value="modelValue"
-      step="1"
-      inputmode="numeric"
-      @input="onInput"
-      @blur="onBlur"
-      class="number-input"
-      :disabled="disabled"
-    />
+        :id="id"
+        type="number"
+        :placeholder="placeholder"
+        :value="modelValue"
+        step="1"
+        inputmode="numeric"
+        @input="onInput"
+        @blur="onBlur"
+        class="number-input"
+        :disabled="disabled"
+      />
       <div class="controls">
         <button
           type="button"
@@ -39,14 +39,13 @@
     </div>
 
     <p class="error">
-      <span v-if="touched && externalError">{{ externalError }}</span>
+      <span v-if="touched && externalError" v-html="externalError"></span>
       <span v-else>&nbsp;</span>
     </p>
   </div>
 </template>
 
 <script setup>
-import { toRef } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useField } from '../../composables/useFields'
 
@@ -64,7 +63,6 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const value = toRef(props, 'modelValue')
 const { touched } = useField()
 
 function increment() {
@@ -201,13 +199,13 @@ label {
 .error {
   color: red;
   font-size: 0.85rem;
-  min-height: 1.2rem;
+  min-height: 2rem;
   margin: 0;
 }
 
 @media (max-width: 758px) {
   .label-text {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 }
 </style>
