@@ -52,7 +52,7 @@
 
           <div class="item-info">
             <div class="free-modifier">Incluso</div>
-            <div class="item-price">
+            <div class="item-price" v-if="getBasePrice(item) > 0">
               {{ FloatToMoney(getBasePrice(item)) }}
             </div>
           </div>
