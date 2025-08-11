@@ -60,6 +60,12 @@
       required
     />
 
+    <InputGroup
+      label="Imagem"
+      placeholder="Imagem"
+      v-model="product.image_url"
+    />
+
     <IngredientsInput v-model="localProduct.ingredients" />
 
     <div class="switch-wrapper">
@@ -71,11 +77,11 @@
 
 <script setup>
 import { Icon } from '@iconify/vue'
-import InputGroup from '../ui/InputGroup.vue'
-import InputDropdown from '../ui/InputDropdown.vue'
-import CurrencyInput from '../ui/CurrencyInput.vue'
-import InputNumber from '../ui/InputNumber.vue'
-import ToggleSwitch from '../ui/ToggleSwitch.vue'
+import InputGroup from '../../ui/InputGroup.vue'
+import InputDropdown from '../../ui/InputDropdown.vue'
+import CurrencyInput from '../../ui/CurrencyInput.vue'
+import InputNumber from '../../ui/InputNumber.vue'
+import ToggleSwitch from '../../ui/ToggleSwitch.vue'
 import IngredientsInput from './IngredientsInput.vue'
 import { toRefs } from 'vue'
 

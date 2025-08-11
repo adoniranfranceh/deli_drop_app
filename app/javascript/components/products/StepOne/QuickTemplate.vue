@@ -38,7 +38,7 @@ function selectTemplate(label) {
       price: 3590,
       duration: 25,
       description: 'Deliciosa pizza de queijo e tomate.',
-      image_url: null,
+      image_url: 'https://static.itdg.com.br/images/1200-630/47d6583c93d77edac5244cab67ba660b/253447-378226756-original.jpg',
       isActive: true,
       isFeatured: false,
       ingredients: ['Queijo', 'Tomate', 'Manjericão'],
@@ -49,10 +49,10 @@ function selectTemplate(label) {
       price: 2850,
       duration: 20,
       description: 'Pão, carne, queijo e molho especial.',
-      image_url: null,
       isActive: true,
       isFeatured: false,
       ingredients: ['Pão', 'Carne', 'Queijo'],
+      image_url: 'https://www.minhareceita.com.br/app/uploads/2023/08/x-bacon-portal-minha-receita.jpg',
       modifiers_groups: [],
     },
     Açaí: {
@@ -60,10 +60,9 @@ function selectTemplate(label) {
       price: 1800,
       duration: 15,
       description: 'Açaí com banana, granola e mel.',
-      image_url: null,
       isActive: true,
       isFeatured: false,
-      ingredients: ['Açaí', 'Banana', 'Granola'],
+      image_url: 'https://flordejambu.com/wp-content/uploads/2022/05/acai.png',
       modifiers_groups: [],
     },
     Bebida: {
@@ -71,10 +70,10 @@ function selectTemplate(label) {
       price: 750,
       duration: 5,
       description: 'Suco natural de frutas frescas.',
-      image_url: null,
       isActive: true,
       isFeatured: false,
       ingredients: ['Fruta'],
+      image_url: 'https://s3-sa-east-1.amazonaws.com/deliveryon-uploads/products/imperio/38_5c58b562c06f5.jpg',
       modifiers_groups: [],
     }
   }
@@ -141,6 +140,7 @@ function selectTemplate(label) {
 .quick-action-label {
   font-weight: 600;
   color: var(--color-black);
+  justify-content: center
 }
 
 @media (max-width: 758px) {

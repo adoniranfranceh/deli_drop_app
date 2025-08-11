@@ -55,7 +55,7 @@
 <script setup>
 import { toRef, watch} from 'vue'
 import { Icon } from '@iconify/vue'
-import AppButton from '../ui/AppButton.vue'
+import AppButton from '../../ui/AppButton.vue'
 import ModifierGroupCard from './ModifierGroupCard.vue'
 
 const props = defineProps({
@@ -74,9 +74,11 @@ watch(groups, () => {
 
 function addGroup(type = '') {
   let max = null
+  let free_limit = null
 
   if (type === 'single_choice') {
     max = 1
+    free_limit = 1
   }
 
   groups.value.push({
@@ -85,7 +87,7 @@ function addGroup(type = '') {
     input_type: type,
     min: null,
     max: max,
-    free_limit: null,
+    free_limit: free_limit,
     modifiers: []
   })
 }
