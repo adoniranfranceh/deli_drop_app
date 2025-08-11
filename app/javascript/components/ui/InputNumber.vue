@@ -39,7 +39,7 @@
     </div>
 
     <p class="error">
-      <span v-if="touched && externalError">{{ externalError }}</span>
+      <span v-if="touched && externalError" v-html="externalError"></span>
       <span v-else>&nbsp;</span>
     </p>
   </div>
@@ -199,7 +199,7 @@ label {
 .error {
   color: red;
   font-size: 0.85rem;
-  min-height: 1.2rem;
+  min-height: 2rem;
   margin: 0;
 }
 

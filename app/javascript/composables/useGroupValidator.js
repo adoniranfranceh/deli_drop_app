@@ -30,7 +30,7 @@ export function useGroupValidator(group) {
 
     if (max == null || max === '') return 'Máx é obrigatório';
     if (max === 0) return 'Máx não pode ser 0';
-    if (input_type === 'multiple_choice' && max < 2) return 'Múltipla Escolha: Máx deve ser maior';
+    if (input_type === 'multiple_choice' && max < 2) return "Múltipla Escolha:<br> Máx deve ser maior";
     if (min != null && max < min) return 'Máx deve ser maior que o Mín';
 
     return null;
