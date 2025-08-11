@@ -52,6 +52,5 @@ watch(
     :getBasePrice="getBasePrice"
     :multiple="true"
     :isCheckbox="true"
-    :readonly="false"
   />
 </template>

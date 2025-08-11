@@ -18,7 +18,6 @@
         :class="{
           selected: isSelected(item),
           faded: faded(item),
-          readonly: readonly
         }"
       >
         <label class="content-option">
@@ -28,7 +27,6 @@
               :checked="isSelected(item)"
               @change="() => toggle(item)"
               :name="`modifier-${modifier_group.id}`"
-              :disabled="readonly"
             />
             <span 
               class="custom-checkbox"
@@ -79,10 +77,6 @@ defineProps({
     type: Boolean,
     default: false
   },
-  readonly: {
-    type: Boolean,
-    default: false
-  },
   isCheckbox: Boolean,
   isRadio: Boolean
 })
@@ -105,11 +99,6 @@ defineProps({
   align-items: center;
   justify-content: flex-start;
   opacity: 1;
-}
-
-.modifiers-options.readonly {
-  cursor: default;
-  pointer-events: none;
 }
 
 .modifiers-options.selected {
