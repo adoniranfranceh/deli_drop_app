@@ -20,15 +20,20 @@ export function useGroupValidator(group) {
 
   function validateMin() {
     if (group.min == null || group.min === '') return 'Min é obrigatório'
-    if (group.min < 0) return 'Mínimo inválido'
+    if (group.min < 0) return 'Mín inválido'
     if (group.max != null && group.min > group.max) return 'Min deve ser menor que o max'
     return null
   }
 
   function validateMax() {
-    if (group.max == null || group.max === '') return 'Max é obrigatório'
-    if (group.min != null && group.max < group.min) return 'Max deve ser maior que o min'
-    return null
+    const { max, min, input_type } = group;
+
+    if (max == null || max === '') return 'Máx é obrigatório';
+    if (max === 0) return 'Máx não pode ser 0';
+    if (input_type === 'multiple_choice' && max < 2) return 'Múltipla Escolha: Máx deve ser maior';
+    if (min != null && max < min) return 'Máx deve ser maior que o Mín';
+
+    return null;
   }
 
   function validateFreeLimit() {
