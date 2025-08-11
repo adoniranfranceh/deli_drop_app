@@ -179,5 +179,9 @@ hr {
     align-items: flex-start;
     gap: 0.5rem;
   }
+
+  .info {
+    text-align: center;
+  }
 }
 </style>
