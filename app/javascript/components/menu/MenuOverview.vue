@@ -4,11 +4,19 @@
     subtitle="Gerencie seus produtos de forma simples e eficiente"
   >
     <template #actions>
-      <AppButton text="Nova Categoria" iconLeft="tabler:plus" class="new-category" />
-      <AppButton text="Novo Produto" iconLeft="tabler:plus" @click="navigateTo('/products/new')" />
+      <AppButton
+        text="Nova Categoria"
+        iconLeft="tabler:plus"
+        class="new-category"
+        @click="emit('openCategoryModal')"
+      />
+      <AppButton
+        text="Novo Produto"
+        iconLeft="tabler:plus"
+        @click="navigateTo('/products/new')"
+      />
     </template>
   </MenuHeader>
-
 </template>
 
 <script setup>
@@ -18,6 +26,8 @@ import MenuHeader from '../ui/MenuHeader.vue';
 const navigateTo = (path) => {
   if (path) window.location.href = path
 }
+
+const emit = defineEmits(['openCategoryModal'])
 </script>
 
 <style scoped>
@@ -26,4 +36,8 @@ const navigateTo = (path) => {
   color: var(--color-black);
   border: 1px solid var(--color-border);
 }
-</style> 
+
+.new-category:hover {
+  background-color: var(--color-border);
+}
+</style>

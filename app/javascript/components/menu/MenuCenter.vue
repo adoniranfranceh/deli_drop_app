@@ -1,5 +1,5 @@
 <template>
-  <MenuOverview />
+  <MenuOverview @openCategoryModal="openCategoryForm"/>
   <div class="menu">
     <div class="menu-center">
       <MenuCards />
@@ -7,17 +7,17 @@
 
       <div v-show="tab === 'products'" class="products-tab">
         <ProductsMenuFilters @changeView="handleViewChange" />
-        <MenuEmptyState :product="true"/>
+        <MenuEmptyState :product="true" @openProductForm="navigateTo('/products/new')"/>
       </div>
 
       <div v-show="tab === 'categories'">
-        <CategoriesFilter
-          @changeView="handleViewChange"
-        />
-        <MenuEmptyState />
+        <CategoriesFilter @openCategoryModal="openCategoryForm"/>
+        <MenuEmptyState @openCategoryModal="openCategoryForm" />
       </div>
     </div>
   </div>
+
+  <CategoryFormModal v-if="openModal" @close="closeModal"/>
 </template>
 
 <script setup>
@@ -28,8 +28,23 @@ import ProductsMenuFilters from './ProductsMenuFilters.vue'
 import MenuEmptyState from './MenuEmptyState.vue'
 import TabMenu from './TabMenu.vue'
 import CategoriesFilter from './CategoriesFilter.vue'
+import CategoryFormModal from '../category/CategoryFormModal.vue'
 
 const tab = ref('products')
+
+const openModal = ref(false)
+
+function openCategoryForm() {
+  openModal.value = true
+}
+
+function closeModal() {
+  openModal.value = false
+}
+
+const navigateTo = (path) => {
+  if (path) window.location.href = path
+}
 
 function handleViewChange(view) {
   console.log('Visualização selecionada:', view)

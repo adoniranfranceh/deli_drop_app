@@ -4,7 +4,7 @@
     <div class="categories">
       <InputDropdown
         class="category-dropdown"
-        label="Todas as categorias"
+        placeholder="Todas as categorias"
         :options="[
           { label: 'Bebidas', value: 'bebidas' },
           { label: 'Comidas', value: 'comidas' },
@@ -67,6 +67,10 @@ function setView(view) {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.category-dropdown {
+  gap: 0;
 }
 
 .view-buttons {

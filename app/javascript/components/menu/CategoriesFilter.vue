@@ -1,7 +1,12 @@
 <template>
   <div class="category-header">
     <h2>Gerenciar Categorias</h2>
-    <AppButton text="Nova Categoria" class="btn-add" iconLeft="tabler:plus" />
+    <AppButton
+      text="Nova Categoria"
+      class="btn-add"
+      iconLeft="tabler:plus"
+      @click="openCategory"
+    />
   </div>
   <div class="dashboard-filters">
     <SearchInput class="input" />
@@ -9,8 +14,15 @@
 </template>
 
 <script setup>
-import AppButton from '../ui/AppButton.vue';
-import SearchInput from '../ui/SearchInput.vue';
+import { defineEmits } from 'vue'
+import AppButton from '../ui/AppButton.vue'
+import SearchInput from '../ui/SearchInput.vue'
+
+const emit = defineEmits(['openCategoryModal'])
+
+function openCategory() {
+  emit('openCategoryModal')
+}
 </script>
 
 <style scoped>

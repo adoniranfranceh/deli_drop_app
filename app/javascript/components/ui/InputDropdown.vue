@@ -43,10 +43,7 @@ import { Icon } from '@iconify/vue'
 import { useField } from '../../composables/useFields'
 
 const props = defineProps({
-  placeholder: {
-    type: String,
-    default: 'Todas as categorias',
-  },
+  placeholder: String,
   options: {
     type: Array,
     default: () => [],

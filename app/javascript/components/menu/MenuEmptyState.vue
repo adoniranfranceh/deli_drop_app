@@ -3,7 +3,11 @@
     <Icon icon="tabler:package" class="empty-icon" />
     <p class="empty-text">Nenhum {{ product ? 'produtos' : 'categorias' }} encontrado</p>
     <p class="empty-subtext">Comece adicionando {{ product ? 'seu primeiro produto' : 'sua primeira categoria' }}</p>
-    <AppButton iconLeft="tabler:plus" :text="`Adicionar ${product ? 'Produtos' : 'Categorias'}`"/>
+    <AppButton
+      iconLeft="tabler:plus"
+      :text="`Adicionar ${product ? 'Produtos' : 'Categorias'}`"
+      @click="`${product ? emit('openProductForm') : emit('openCategoryModal')}`"
+    />
   </div>
 </template>
 
@@ -17,6 +21,8 @@ defineProps({
     default: false,
   }
 })
+
+const emit = defineEmits(['openProductForm', 'openCategoryModal'])
 </script>
 
 <style scoped>

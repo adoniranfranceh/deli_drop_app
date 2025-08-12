@@ -64,6 +64,7 @@ function handleClick(event) {
 span {
   display: flex;
   align-items: center;
+  justify-content: center;
   font-size: 18px;
   font-weight: 400;
   gap: 0.5rem;
