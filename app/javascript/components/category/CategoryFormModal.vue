@@ -14,7 +14,7 @@
         Adicione uma nova categoria para organizar seus produtos
       </p>
 
-      <form @submit.prevent>
+      <form @submit.prevent class="form-grid">
         <InputGroup
           label="Nome"
           placeholder="Nome da categoria"
@@ -104,6 +104,12 @@ function submit() {
 .subtitle {
   margin: 0.5rem 0 1.5rem 0;
   color: var(--color-muted);
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .actions {
