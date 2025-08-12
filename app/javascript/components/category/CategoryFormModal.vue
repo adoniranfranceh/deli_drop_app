@@ -3,7 +3,6 @@
     <div class="modal-container">
       <div class="modal-header">
         <h2>Nova Categoria</h2>
-
         <button
           class="close-btn"
           aria-label="Fechar modal"
@@ -13,7 +12,6 @@
       <p class="subtitle">
         Adicione uma nova categoria para organizar seus produtos
       </p>
-
       <form @submit.prevent class="form-grid">
         <InputGroup
           label="Nome"

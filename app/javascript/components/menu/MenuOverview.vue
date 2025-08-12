@@ -17,7 +17,6 @@
       />
     </template>
   </MenuHeader>
-
 </template>
 
 <script setup>
@@ -41,4 +40,4 @@ const emit = defineEmits(['openCategoryModal'])
 .new-category:hover {
   background-color: var(--color-border);
 }
-</style> 
+</style>

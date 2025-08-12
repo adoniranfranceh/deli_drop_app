@@ -11,7 +11,6 @@ import { onMounted, onUnmounted } from 'vue'
 
 defineEmits(['close'])
 
-
 onMounted(() => {
   document.body.style.overflow = 'hidden'
 })
