@@ -27,7 +27,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const emit = defineEmits('changeTab')
+const emit = defineEmits(['changeTab'])
 
 const currentTab = ref('products')
 
