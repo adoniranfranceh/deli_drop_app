@@ -9,9 +9,11 @@
           @click="$emit('close')"
         >×</button>
       </div>
+
       <p class="subtitle">
         Adicione uma nova categoria para organizar seus produtos
       </p>
+
       <form @submit.prevent class="form-grid">
         <InputGroup
           label="Nome"
