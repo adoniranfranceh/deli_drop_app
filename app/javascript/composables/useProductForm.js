@@ -22,7 +22,6 @@ export function useProductForm() {
   const { errors: productErrors, isValid: isProductValid } = useProductValidator(product);
   const { isValid: areGroupsValid } = useGroupsValidator(computed(() => product.modifiers_groups));
 
-
   const hasMadeStep1Decision = computed(() => nextStep.value !== null);
   const canProceedFromStep1 = computed(() => isProductValid.value && hasMadeStep1Decision.value);
   const isStep1Complete = computed(() => isProductValid.value);
