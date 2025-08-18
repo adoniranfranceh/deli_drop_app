@@ -173,7 +173,7 @@ const stats = computed(() => allStats[selectedTime.value]);
 .info-stat {
   display: flex;
   flex-direction: column;
-  align-items: baseline
+  align-items: baseline;
 }
 
 .info-icon {
