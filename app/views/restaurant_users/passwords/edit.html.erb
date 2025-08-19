@@ -1,0 +1,35 @@
+<div class="devise-container">
+  <div class="devise-apresentation"></div>
+
+  <div class="devise-form">
+    <h2><%= t('devise.passwords.edit.title') %></h2>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "restaurant_users/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="field">
+        <div class="label-with-hint">
+          <%= f.label :password, t('devise.passwords.edit.password_label') %>
+          <% if @minimum_password_length %>
+            <em><%= t('devise.passwords.edit.password_hint', count: @minimum_password_length) %></em>
+          <% end %>
+        </div>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation, t('devise.passwords.edit.password_confirmation_label') %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit t('devise.passwords.edit.submit') %>
+      </div>
+    <% end %>
+
+    <div class="devise-links">
+      <%= render "restaurant_users/shared/links" %>
+    </div>
+  </div>
+</div>
