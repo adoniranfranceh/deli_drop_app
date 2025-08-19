@@ -341,18 +341,20 @@ body.modal-open {
     flex-direction: column;
     justify-content: flex-start;
     justify-items: center;
-    height: 100vh;
+    height: 100vb;
     width: 100%;
     margin: 0;
   }
 
   .devise-apresentation {
     width: 100%;
-    height: 150px;
-    margin: 0 0 1.5rem 0;
+    height: 100%;
+    margin: 0;
   }
 
   .devise-form {
+    position: absolute;
+    top: 7rem;
     width: 90%;
     padding: 1rem;
     margin-bottom: 2rem;
