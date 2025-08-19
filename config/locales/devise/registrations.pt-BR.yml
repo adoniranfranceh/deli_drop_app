@@ -1,0 +1,26 @@
+pt-BR:
+  devise:
+    registrations:
+      new:
+        title: "Criar conta"
+        email_label: "E-mail"
+        password_label: "Senha"
+        password_hint: "(%{count} caracteres no mínimo)"
+        password_confirmation_label: "Confirme a senha"
+        submit: "Cadastrar"
+      edit:
+        title: "Editar %{resource}"
+        email_label: "E-mail"
+        pending_confirmation: "Atualmente aguardando confirmação para: %{email}"
+        password_label: "Nova senha"
+        password_hint_blank: "(deixe em branco se não quiser alterar)"
+        password_minimum: "(%{count} caracteres no mínimo)"
+        password_confirmation_label: "Confirme a nova senha"
+        current_password_label: "Senha atual"
+        current_password_hint: "(precisamos da sua senha atual para confirmar as alterações)"
+        submit: "Atualizar"
+        cancel_title: "Cancelar minha conta"
+        cancel_question: "Insatisfeito?"
+        cancel_button: "Cancelar minha conta"
+        confirm_cancel: "Tem certeza?"
+        back: "Voltar"
