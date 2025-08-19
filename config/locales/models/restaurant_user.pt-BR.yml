@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    models:
+      restaurant_user: Usuário
+    attributes:
+      restaurant_user:
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmação de Senha"
