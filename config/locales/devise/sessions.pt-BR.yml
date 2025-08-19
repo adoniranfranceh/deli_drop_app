@@ -1,0 +1,9 @@
+pt-BR:
+  devise:
+    sessions:
+      new:
+        title: "Entrar"
+        email_label: "E-mail"
+        password_label: "Senha"
+        remember_me_label: "Lembrar-me"
+        submit: "Entrar"
