@@ -360,19 +360,3 @@ body.modal-open {
     margin-bottom: 2rem;
   }
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-text: #213547;
-    --bg-color: var(--color-white);
-  }
-
-  a:hover {
-    color: var(--color-link-hover);
-  }
-
-  button {
-    background-color: #f9f9f9;
-    color: var(--color-black);
-  }
-}
