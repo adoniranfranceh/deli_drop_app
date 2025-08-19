@@ -330,6 +330,7 @@ body.modal-open {
     width: 45%;
     margin-right: 2rem;
   }
+
   .devise-form {
     width: 50%;
   }
@@ -339,7 +340,8 @@ body.modal-open {
   .devise-container {
     flex-direction: column;
     justify-content: flex-start;
-    height: auto;
+    justify-items: center;
+    height: 100vh;
     width: 100%;
     margin: 0;
   }
