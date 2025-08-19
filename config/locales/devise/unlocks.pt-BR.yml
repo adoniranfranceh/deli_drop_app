@@ -1,0 +1,7 @@
+pt-BR:
+  devise:
+    unlocks:
+      new:
+        title: "Reenviar instruções de desbloqueio"
+        email_label: "E-mail"
+        submit: "Reenviar instruções de desbloqueio"

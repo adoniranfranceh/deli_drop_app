@@ -38,6 +38,11 @@ services:
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
+  mailcatcher:
+    image: dockage/mailcatcher
+    ports:
+      - "1080:1080"
+
 volumes:
   bundle:
   pgdata:

@@ -40,6 +40,11 @@
   --color-success: #16A34A;
   --color-warning: #f57c00;
 
+  --color-error-bg: #ffe6e6;
+  --color-error-border: #ff4d4f;
+  --color-error-title: #b30000;
+  --color-error-text: #800000;
+
   --color-border: #e0e0e0;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);

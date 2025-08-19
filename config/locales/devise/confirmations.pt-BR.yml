@@ -1,0 +1,7 @@
+pt-BR:
+  devise:
+    confirmations:
+      new:
+        title: "Reenviar instruções de confirmação"
+        email_label: "E-mail"
+        submit: "Reenviar instruções de confirmação"

@@ -1,0 +1,11 @@
+pt-BR:
+  devise:
+    shared:
+      links:
+        login: "Entrar"
+        signup: "Cadastrar-se"
+        forgot_password: "Esqueceu sua senha?"
+        resend_confirmation: "Não recebeu as instruções de confirmação?"
+        resend_unlock: "Não recebeu as instruções de desbloqueio?"
+        omniauth: "Entrar com %{provider}"
+      already_have_account: Já possui uma conta?

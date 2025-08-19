@@ -62,6 +62,8 @@ const navigateTo = (path) => {
 }
 
 .quick-action-label {
+  display: flex;
+  justify-content: center;
   font-weight: 500;
   color: var(--color-black);
 }
