@@ -4,6 +4,7 @@ import App from './components/App.vue'
 import Dashboard from './components/dashboard/Dashboard.vue'
 import Menu from './components/menu/MenuCenter.vue'
 import ProductForm from './components/products/ProductForm.vue'
+import RestaurantForm from "./components/restaurant/RestaurantForm.vue";
 
 document.addEventListener('DOMContentLoaded', () => {
   const appEl = document.getElementById('app-vue')
@@ -24,5 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const newPro = document.getElementById('new-product')
   if (newPro) {
     createApp(ProductForm).mount(newPro)
+  }
+
+  const editRestaurant = document.getElementById('edit-restaurant')
+  if (editRestaurant) {
+    createApp(RestaurantForm).mount(editRestaurant)
   }
 })
