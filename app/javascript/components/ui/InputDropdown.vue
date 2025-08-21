@@ -7,15 +7,22 @@
     </label>
 
     <div class="dropdown-wrapper" @click="toggleDropdown">
-      <div class="dropdown-display">
-        <span>{{ selectedPlaceholder }}</span>
+      <div class="dropdown-display" @click="toggleDropdown">
+        <input
+          v-model="searchQuery"
+          :placeholder="selectedPlaceholder"
+          class="dropdown-input"
+          :class="{ 'has-value': selected }"
+          @click.stop
+          @focus="isOpen = true"
+        />
         <Icon icon="line-md:chevron-down" class="dropdown-icon" />
       </div>
 
       <div v-if="isOpen" class="dropdown-menu">
         <div
-          v-for="option in allOptions"
-          :key="option"
+          v-for="option in filteredOptions"
+          :key="option.value"
           class="dropdown-item"
           :class="{ selected: option.value === selected }"
           @click.stop="selectOption(option.value)"
@@ -58,6 +65,7 @@ const props = defineProps({
   forceShowError: Boolean
 })
 
+const searchQuery = ref("")
 const emit = defineEmits(['update:modelValue'])
 
 const selected = ref(props.modelValue)
@@ -77,6 +85,7 @@ const toggleDropdown = () => {
 const selectOption = (value) => {
   selected.value = value
   emit('update:modelValue', value)
+  searchQuery.value = ""
   isOpen.value = false
   onBlur()
 }
@@ -85,6 +94,13 @@ const allOptions = computed(() => [
   { label: props.placeholder, value: '' },
   ...props.options,
 ])
+
+const filteredOptions = computed(() => {
+  if (!searchQuery.value) return allOptions.value
+  return allOptions.value.filter(option =>
+    option.label.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
 
 const selectedPlaceholder = computed(() => {
   const selectedOption = allOptions.value.find(o => o.value === selected.value)
@@ -144,7 +160,7 @@ label {
 }
 
 .dropdown-display {
-  padding: 0.7rem 1rem;
+  padding-right: 0.5rem;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   background-color: var(--color-white);
@@ -152,6 +168,25 @@ label {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+}
+
+.dropdown-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.75rem;
+  font-size: 1rem;
+  color: var(--color-black);
+}
+
+.dropdown-input::placeholder {
+  color: var(--color-muted);
+}
+
+.dropdown-input.has-value::placeholder {
+  color: var(--color-black);
 }
 
 .dropdown-icon {
