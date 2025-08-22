@@ -10,6 +10,12 @@
 
       <div class="form-actions">
         <AppButton
+          class="cancel"
+          text="Cancelar"
+          @click="navigateTo('/')"
+        />
+
+        <AppButton
           class="save"
           text="Salvar"
           icon="lucide-save"
@@ -27,6 +33,7 @@ import RestaurantFormOverview from './RestaurantFormOverview.vue';
 import RestaurantBasicInputs from './RestaurantBasicInputs.vue';
 import AppButton from '../ui/AppButton.vue';
 import { useRestaurantValidator } from '../../composables/useRestaurantValidator';
+import { navigateTo } from '../../utils/navigation';
 
 const restaurant = reactive({
   name: null,
