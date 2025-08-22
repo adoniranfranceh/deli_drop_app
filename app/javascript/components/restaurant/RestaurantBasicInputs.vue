@@ -10,6 +10,7 @@
   
       <div class="form-row">
         <InputGroup
+          id="restaurant-name"
           label="Nome"
           placeholder="Nome do Restaurante"
           v-model="restaurant.name"
@@ -54,6 +55,7 @@
       />
 
       <InputGroup
+        id="restaurant-image"
         label="Imagem"
         placeholder="Imagem"
         v-model="restaurant.image_url"
@@ -76,6 +78,7 @@
       </h2>
       <div class="form-row">
         <InputGroup
+          id="restaurant-phone"
           label="Telefone"
           placeholder="(11) 99999-9999"
           v-model="restaurant.phone"
@@ -83,6 +86,7 @@
           required
         />
         <InputGroup
+          id="restaurant-email"
           label="Email"
           placeholder="restaurante@email.com"
           v-model="restaurant.email"
@@ -93,6 +97,7 @@
       </div>
 
       <InputGroup
+        id="restaurant-address"
         label="Endereço Completo"
         placeholder="Endereço do Restaurante"
         v-model="restaurant.address"
