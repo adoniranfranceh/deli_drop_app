@@ -15,6 +15,12 @@
         iconLeft="tabler:plus"
         @click="navigateTo('/products/new')"
       />
+      <AppButton
+        class="new-category"
+        text="Voltar a tela inicial"
+        iconLeft="ri:arrow-left-line"
+        @click="navigateTo('/')"
+      />
     </template>
   </MenuHeader>
 </template>
