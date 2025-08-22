@@ -54,6 +54,7 @@ const informations = [
   h2 {
     display: flex;
     justify-content: center;
+    width: auto;
   }
 }
 
@@ -118,9 +119,19 @@ const informations = [
   font-size: 16px;
 }
 
+@media (max-width: 1500px) {
+  .restaurant-top h2 {
+    width: 180px;
+  }
+}
+
 @media (max-width: 758px) {
   .restaurant-top {
     flex-direction: column;
+
+    h2 {
+      width: 100%;
+    }
   }
 
   .btn-edit {
