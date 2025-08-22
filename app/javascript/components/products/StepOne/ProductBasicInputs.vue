@@ -38,6 +38,7 @@
         label="Preço"
         v-model="product.price"
         :externalError="errors?.price"
+        required
       />
 
       <InputNumber
