@@ -14,7 +14,7 @@
           class="dropdown-input"
           :class="{ 'has-value': selected }"
           @click.stop
-          @focus="isOpen = true"
+          @focus="toggleDropdown()"
         />
         <Icon icon="line-md:chevron-down" class="dropdown-icon" />
       </div>
