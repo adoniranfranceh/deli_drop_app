@@ -9,12 +9,14 @@
 
     <div class="form-row">
       <InputGroup
+        id="product-name"
         label="Nome"
         placeholder="Nome do Produto"
         v-model="product.name"
         :externalError="errors?.name"
         required
       />
+
       <InputDropdown
         v-model="product.category"
         :options="[
@@ -61,6 +63,7 @@
     />
 
     <InputGroup
+      id="product-image"
       label="Imagem"
       placeholder="Imagem"
       v-model="product.image_url"
