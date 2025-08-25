@@ -93,7 +93,7 @@ label {
   font-weight: 500;
   color: var(--color-black);
   display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 0.4rem;
 }
 
@@ -102,7 +102,7 @@ label {
 }
 
 .required-asterisk {
-  color: var(--color-danger, red);
+  color: red;
 }
 
 .currency-wrapper {
@@ -134,7 +134,7 @@ input:focus {
 }
 
 .error {
-  color: var(--color-danger, red);
+  color: red;
   font-size: 0.85rem;
   min-height: 1.2rem;
   margin: 0;

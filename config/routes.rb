@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   get "/menu", to: "menus#show"
   get "/products/new", to: "products#new"
+  get "/restaurants/edit", to: "restaurants#edit"
 end

@@ -29,6 +29,7 @@ import MenuEmptyState from './MenuEmptyState.vue'
 import TabMenu from './TabMenu.vue'
 import CategoriesFilter from './CategoriesFilter.vue'
 import CategoryFormModal from '../category/CategoryFormModal.vue'
+import { navigateTo } from '../../utils/navigation'
 
 const tab = ref('products')
 
@@ -40,10 +41,6 @@ function openCategoryForm() {
 
 function closeModal() {
   openModal.value = false
-}
-
-const navigateTo = (path) => {
-  if (path) window.location.href = path
 }
 
 function handleViewChange(view) {

@@ -14,6 +14,7 @@
       @input="$emit('update:modelValue', $event.target.value)"
       @blur="onBlur"
       :rows="isTextarea ? 4 : null"
+      :disabled="disabled"
     />
 
     <p class="error">
@@ -32,6 +33,7 @@ const props = defineProps({
   label: String,
   modelValue: [String, Number],
   type: { type: String, default: 'text' },
+  disabled: Boolean,
   placeholder: String,
   isTextarea: Boolean,
   required: Boolean,

@@ -38,7 +38,7 @@
 
       <div class="form-row-options">
         <InputNumber
-          id="min-options"
+          :id="'min-options' + index"
           class="input-min"
           :externalError="groupErrors?.min"
           label="Min de Opções"
@@ -50,7 +50,7 @@
         />
 
         <InputNumber
-          id="max-options"
+          :id="'max-options' + index"
           class="input-max"
           :externalError="groupErrors?.max"
           label="Max de Opções"
@@ -64,7 +64,7 @@
         />
 
         <InputNumber
-          id="free-limit"
+          :id="'free-limit' + index"
           class="input-free"
           label="Limite Grátis"
           placeholder="Quantidade"

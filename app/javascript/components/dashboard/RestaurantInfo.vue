@@ -1,6 +1,14 @@
 <template>
   <div class="restaurant-info">
-    <h2>Informações do restaurante</h2>
+    <div class="restaurant-top">
+      <h2>Informações do restaurante</h2>
+      <AppButton
+        text="Editar"
+        @click="navigateTo('/restaurants/edit')"
+        iconLeft="lucide-pen-line"
+        class="btn-edit"
+      />
+    </div>
     <div class="restaurant-header">
       <img
         alt="restaurant-img"
@@ -25,6 +33,9 @@
 </template>
 
 <script setup>
+import AppButton from '../ui/AppButton.vue'
+import { navigateTo } from '../../utils/navigation'
+
 const informations = [
   { label: 'Avaliação', value: '4.8' },
   { label: 'Tempo médio', value: '25,35 min' },
@@ -43,7 +54,24 @@ const informations = [
   h2 {
     display: flex;
     justify-content: center;
+    width: auto;
   }
+}
+
+.restaurant-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-edit {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-black);
+}
+
+.btn-edit:hover {
+  background-color: var(--color-border);
 }
 
 .restaurant-img {
@@ -89,5 +117,25 @@ const informations = [
   color: var(--color-black) !important;
   font-weight: 600 !important;
   font-size: 16px;
+}
+
+@media (max-width: 1500px) {
+  .restaurant-top h2 {
+    width: 180px;
+  }
+}
+
+@media (max-width: 758px) {
+  .restaurant-top {
+    flex-direction: column;
+
+    h2 {
+      width: 100%;
+    }
+  }
+
+  .btn-edit {
+    width: 100%;
+  }
 }
 </style>

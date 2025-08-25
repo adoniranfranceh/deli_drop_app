@@ -15,6 +15,7 @@
 
 <script setup>
 import { Icon } from '@iconify/vue';
+import { navigateTo } from '../../utils/navigation';
 
 const actions = [
   { label: 'Gerenciar Menu', icon: 'tabler:chef-hat', path: '/menu' },
@@ -22,10 +23,6 @@ const actions = [
   { label: 'Horários', icon: 'lucide:calendar', path: '/schedules' },
   { label: 'Área de Entrega', icon: 'tdesign:location', path: '/delivery-area' }
 ]
-
-const navigateTo = (path) => {
-  if (path) window.location.href = path
-}
 </script>
 
 <style scoped>

@@ -96,8 +96,14 @@ import PerformanceChart from './PerformanceChart.vue';
 }
 
 @media (max-width: 758px) {
+  .dashboard-header {
+    margin: 1rem 0;
+    width: 100%;
+  }
+
   .dashboard-container {
     width: 100%;
+    padding: 1rem;
     margin: 0;
   }
 }

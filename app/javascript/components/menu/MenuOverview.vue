@@ -15,6 +15,12 @@
         iconLeft="tabler:plus"
         @click="navigateTo('/products/new')"
       />
+      <AppButton
+        class="new-category"
+        text="Voltar a tela inicial"
+        iconLeft="ri:arrow-left-line"
+        @click="navigateTo('/')"
+      />
     </template>
   </MenuHeader>
 </template>
@@ -22,10 +28,7 @@
 <script setup>
 import AppButton from '../ui/AppButton.vue';
 import MenuHeader from '../ui/MenuHeader.vue';
-
-const navigateTo = (path) => {
-  if (path) window.location.href = path
-}
+import { navigateTo } from '../../utils/navigation';
 
 const emit = defineEmits(['openCategoryModal'])
 </script>

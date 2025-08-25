@@ -12,10 +12,7 @@
 <script setup>
 import AppButton from '../../ui/AppButton.vue';
 import MenuHeader from '../../ui/MenuHeader.vue';
-
-const navigateTo = (path) => {
-  if (path) window.location.href = path
-}
+import { navigateTo } from '../../../utils/navigation';
 </script>
 
 <style scoped>
