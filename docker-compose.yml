@@ -6,7 +6,6 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-      - bundle:/usr/local/bundle
     working_dir: /app
     entrypoint: ./entrypoint.sh
     command: "rails s -b 0.0.0.0"
@@ -44,5 +43,4 @@ services:
       - "1080:1080"
 
 volumes:
-  bundle:
   pgdata:
