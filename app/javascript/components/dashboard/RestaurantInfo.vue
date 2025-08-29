@@ -4,7 +4,7 @@
       <h2>Informações do restaurante</h2>
       <AppButton
         text="Editar"
-        @click="navigateTo('/restaurants/edit')"
+        @click="navigateTo(`/restaurants/${restaurantData.id}/edit`)"
         iconLeft="lucide-pen-line"
         class="btn-edit"
       />
@@ -35,6 +35,10 @@
 <script setup>
 import AppButton from '../ui/AppButton.vue'
 import { navigateTo } from '../../utils/navigation'
+
+defineProps({
+  restaurantData: Object
+})
 
 const informations = [
   { label: 'Avaliação', value: '4.8' },
