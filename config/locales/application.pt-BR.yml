@@ -1,0 +1,4 @@
+pt-BR:
+  alerts:
+    restaurant:
+      must_register: "Cadastre seu restaurante para continuar"
