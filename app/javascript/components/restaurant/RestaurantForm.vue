@@ -50,7 +50,7 @@ const restaurant = reactive({
   name: initialData?.name || null,
   culinary_style: initialData?.culinary_style || null,
   description: initialData?.description || null,
-  image_url: initialData?.image_url || null,
+  image: initialData?.image || null,
   phone: initialData?.phone || null,
   email: currentEmail || null,
   address: initialData?.address || null,
@@ -63,7 +63,7 @@ function submit() {
     name: restaurant.name,
     culinary_style: restaurant.culinary_style,
     description: restaurant.description,
-    image_url: restaurant.image_url,
+    image: restaurant.image,
     phone: restaurant.phone,
     address: restaurant.address,
   };
