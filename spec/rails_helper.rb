@@ -5,6 +5,14 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'capybara/rspec'
 require 'rspec/rails'
 require 'securerandom'
+require 'simplecov'
+
+SimpleCov.start 'rails' do
+  add_filter 'channels'
+  add_filter 'mailers'
+  add_filter 'jobs'
+  add_filter 'helpers'
+end
 
 Capybara.register_driver :selenium_chrome_headless do |app|
   chrome_options = Selenium::WebDriver::Chrome::Options.new.tap do |opts|
