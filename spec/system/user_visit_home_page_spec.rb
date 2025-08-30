@@ -12,6 +12,7 @@ describe "User visits home page", js: true do
   it "successfully" do
     restaurant_user = create(:restaurant_user)
     login_as(restaurant_user, scope: :restaurant_user)
+    restaurant_user.create_restaurant(name: "Hamburgueria Top")
 
     visit root_path
     expect(page).to have_content("Dashboard")

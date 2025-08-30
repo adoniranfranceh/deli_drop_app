@@ -5,7 +5,12 @@
     icon="lucide-store"
   >
     <template #actions>
-      <AppButton text="Voltar a tela inicial" iconLeft="ri:arrow-left-line" @click="navigateTo('/')"/>
+      <AppButton 
+        v-if="restaurantExists"
+        text="Voltar a tela inicial"
+        iconLeft="ri:arrow-left-line"
+        @click="navigateTo('/')"
+      />
     </template>
   </MenuHeader>
 </template>
@@ -14,6 +19,10 @@
 import AppButton from '../ui/AppButton.vue';
 import MenuHeader from '../ui/MenuHeader.vue';
 import { navigateTo } from '../../utils/navigation';
+
+defineProps({
+  restaurantExists: Boolean
+});
 </script>
 
 <style scoped>

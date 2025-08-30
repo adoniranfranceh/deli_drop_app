@@ -1,0 +1,7 @@
+pt-BR:
+  api:
+    v1:
+      restaurants:
+        create:
+          success: "Restaurante criado com sucesso!"
+          error: "Erro ao criar restaurante"

@@ -5,5 +5,14 @@ Rails.application.routes.draw do
 
   get "/menu", to: "menus#show"
   get "/products/new", to: "products#new"
-  get "/restaurants/edit", to: "restaurants#edit"
+
+  resources :restaurants, only: %i[new edit]
+
+  namespace :api do
+    namespace :v1 do
+      resources :restaurants, only: %i[create update]
+    end
+  end
+
+  get "/flash", to: "flash#redirect"
 end
