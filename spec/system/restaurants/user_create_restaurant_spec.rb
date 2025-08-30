@@ -68,8 +68,15 @@ describe 'User creates a restaurant' do
 
       expect(page).to have_content('Restaurante criado com sucesso')
       expect(page).to have_current_path(root_path)
-      expect(restaurant_user.reload.restaurant).to eq Restaurant.last
       expect(Restaurant.count).to eq 1
+      restaurant = Restaurant.last
+      expect(restaurant_user.reload.restaurant).to eq restaurant
+      expect(restaurant.name).to eq 'Restaurante Legal'
+      expect(restaurant.culinary_style).to eq 'brazilian'
+      expect(restaurant.description).to eq 'Comida boa'
+      expect(restaurant.image).to eq 'http://www.imagem.com/imagem.png'
+      expect(restaurant.phone).to eq '(11) 99999-9999'
+      expect(restaurant.address).to eq 'Av. Brasil, 1000'
     end
 
     it 'and see errors in all required fields after touched' do
