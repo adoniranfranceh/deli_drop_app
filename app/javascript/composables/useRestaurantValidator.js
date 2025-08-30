@@ -5,7 +5,7 @@ export function useRestaurantValidator(restaurant) {
     name: null,
     culinary_style: null,
     description: null,
-    image_url: null,
+    image: null,
     phone: null,
     email: null,
     address: null,
@@ -24,7 +24,7 @@ export function useRestaurantValidator(restaurant) {
   }
 
   function validateImageUrl() {
-    return !restaurant.image_url?.trim() ? 'URL da imagem é obrigatória' : null
+    return !restaurant.image?.trim() ? 'URL da imagem é obrigatória' : null
   }
 
   function validatePhone() {
@@ -39,7 +39,7 @@ export function useRestaurantValidator(restaurant) {
     errors.name = validateName()
     errors.culinary_style = validateCulinaryStyle()
     errors.description = validateDescription()
-    errors.image_url = validateImageUrl()
+    errors.image = validateImageUrl()
     errors.phone = validatePhone()
     errors.email = validateEmail()
   })
