@@ -10,7 +10,7 @@ export async function apiPost(endpoint, payload, successMessage = 'Operação re
     navigateTo(`/flash?path=${encodeURIComponent('/')}&notice=${encodeURIComponent(msg)}`)
     return data
   } catch (error) {
-    const msg = error.response?.data?.message || 'Erro desconhecido'
+    const msg = error.response?.data?.errors || 'Erro desconhecido'
     navigateTo(`/flash?path=${encodeURIComponent(window.location.pathname)}&alert=${encodeURIComponent(msg)}`)
     throw error
   }
