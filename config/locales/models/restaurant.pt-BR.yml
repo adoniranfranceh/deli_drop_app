@@ -1,0 +1,14 @@
+pt-BR:
+  activerecord:
+    models:
+      restaurant: Restaurante
+    attributes:
+      restaurant:
+        name: "Nome"
+        culinary_style: "Tipo de Culinária"
+        description: "Descrição"
+        image: "Imagem"
+        address: "Endereço"
+        phone: "Telefone"
+        restaurant_user: "Usuário Restaurante"
+        restaurant_user_id: "Usuário Restaurante"
