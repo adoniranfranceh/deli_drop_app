@@ -5,7 +5,8 @@ class RestaurantsController < ApplicationController
   def edit; end
 
   def new
-    redirect_to edit_restaurant_path(@restaurant) if @restaurant.present?
+    redirect_to edit_restaurant_path(@restaurant),
+                alert: I18n.t("restaurants.new.you_already_have") if @restaurant.present?
   end
 
   private
