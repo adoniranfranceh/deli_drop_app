@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-header">
     <h1 class="title">Dashboard</h1>
-    <p class="welcome-msg">Bem-vindo de volta, Hamburgueria Top</p>
+    <p class="welcome-msg">Bem-vindo de volta, {{ restaurantData.name }}</p>
   </div>
   <div class="dashboard">
     <div class="dashboard-container">
