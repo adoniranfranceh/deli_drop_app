@@ -1,5 +1,5 @@
 <template>
-  <RestaurantFormOverview :restaurantExists="initialData !== ''" />
+  <RestaurantFormOverview :restaurantExists="restaurantExists" />
 
   <div class="restaurant-form">
     <div class="form-container">
@@ -35,8 +35,7 @@ import RestaurantBasicInputs from './RestaurantBasicInputs.vue';
 import AppButton from '../ui/AppButton.vue';
 import { useRestaurantValidator } from '../../composables/useRestaurantValidator';
 import { navigateTo } from '../../utils/navigation';
-import { apiPost } from '../../utils/apiHelper'
-
+import { apiPost, apiPut } from '../../utils/apiHelper'
 
 const props = defineProps ({
   initialData: Object,
@@ -45,6 +44,7 @@ const props = defineProps ({
 
 const initialData = props.initialData
 const currentEmail = props.currentEmail
+const restaurantExists = initialData !== '' && initialData !== null && initialData !== undefined
 
 const restaurant = reactive({
   name: initialData?.name || null,
@@ -70,7 +70,11 @@ function submit() {
 
   console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
 
-  apiPost('/api/v1/restaurants', payload, 'Restaurante criado com sucesso!')
+  if (restaurantExists) {
+    return apiPut(`/api/v1/restaurants/${initialData.id}`, payload, 'Restaurante atualizado com sucesso!');
+  } else {
+    return apiPost('/api/v1/restaurants', payload, 'Restaurante criado com sucesso!');
+  }
 }
 </script>
 
