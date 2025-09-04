@@ -20,7 +20,7 @@ describe 'User creates a restaurant' do
       expect(page).to have_field('Telefone')
       expect(page).to have_field('Endereço Completo')
       expect(page).not_to have_button('Cancelar')
-      expect(page).not_to have_button('Salvar')
+      expect(page).to have_button('Salvar', disabled: true)
     end
 
     it 'and sees an error message if something goes wrong on the server' do
@@ -96,7 +96,7 @@ describe 'User creates a restaurant' do
       fill_in 'Telefone', with: ''
 
       expect(page).not_to have_button('Cancelar')
-      expect(page).not_to have_button('Salvar')
+      expect(page).to have_button('Salvar', disabled: true)
       expect(page).to have_content('Cadastre seu restaurante para continuar')
       expect(page).to have_content('Nome do restaurante é obrigatório')
       expect(page).to have_content('Estilo culinário é obrigatório')
