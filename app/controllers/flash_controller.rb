@@ -1,5 +1,5 @@
 class FlashController < ApplicationController
-  skip_before_action :restaurant_user_signed_in?
+  skip_before_action :restaurant_registered?
 
   def redirect
     flash[:notice] = params[:notice] if params[:notice].present?
