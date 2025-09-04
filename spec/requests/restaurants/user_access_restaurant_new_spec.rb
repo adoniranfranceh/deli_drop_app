@@ -16,7 +16,7 @@ describe 'User access new form path' do
         get new_restaurant_path
         expect(response).to have_http_status(302)
         expect(response).to redirect_to(new_restaurant_user_session_path)
-        expect(flash[:alert]).to match(/Para continuar, efetue login ou registre-se./)
+        expect(flash[:alert]).to eq "Para continuar, efetue login ou registre-se."
       end
 
       it 'when restaurant_user already has a restaurant' do
@@ -27,8 +27,8 @@ describe 'User access new form path' do
         get new_restaurant_path
 
         expect(response).to have_http_status(302)
-        expect(response).to redirect_to(edit_restaurant_path user.restaurant)
-        expect(flash[:alert]).to match(/Você já possui um restaurante cadastrado/)
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq "Você não tem permissão para executar esta ação"
       end
     end
   end
