@@ -9,6 +9,16 @@ class Api::V1::RestaurantsController < Api::V1::ApplicationController
     end
   end
 
+  def update
+    restaurant = current_restaurant_user.restaurant
+
+    if restaurant.update(restaurant_params)
+      render json: { message: I18n.t("api.v1.restaurants.update.success"), restaurant: restaurant }, status: :ok
+    else
+      render json: { status: :unprocessable_entity, errors: restaurant.errors.full_messages.join(", ") }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def restaurant_params
