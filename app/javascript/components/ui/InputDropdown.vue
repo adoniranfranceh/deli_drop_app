@@ -1,6 +1,6 @@
 <template>
   <div class="select-group" ref="dropdownRef">
-    <label for="product-select" @click="toggleDropdown">
+    <label :for="id || 'product-select'" @click="toggleDropdown">
       <span class="label-text">{{ label }}</span>
 
       <span v-if="required" class="required-asterisk">*</span>
@@ -9,6 +9,7 @@
     <div class="dropdown-wrapper" @click="toggleDropdown">
       <div class="dropdown-display" @click="toggleDropdown">
         <input
+          :id="id || 'product-select'"
           v-model="searchQuery"
           :placeholder="selectedPlaceholder"
           class="dropdown-input"
@@ -50,6 +51,7 @@ import { Icon } from '@iconify/vue'
 import { useField } from '../../composables/useFields'
 
 const props = defineProps({
+  id: String,
   placeholder: String,
   options: {
     type: Array,

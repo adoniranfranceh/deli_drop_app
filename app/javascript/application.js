@@ -34,8 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const restaurantData = JSON.parse(editRestaurant.dataset.restaurant);
     const dataEmail = editRestaurant.dataset.email;
 
-    console.log("restaurantData do usuário logado: ", restaurantData);
-
     createApp(RestaurantForm, { initialData: restaurantData, currentEmail: dataEmail}).mount(editRestaurant)
   }
 
@@ -43,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (newRestaurant) {
     const restaurantData = ''
     const dataEmail = newRestaurant.dataset.email;
-
-    console.log("Email do usuário logado: ", dataEmail);
 
     createApp(RestaurantForm, { initialData: restaurantData, currentEmail: dataEmail}).mount(newRestaurant)
   }
