@@ -47,7 +47,7 @@ body {
 
 @media (max-width: 758px) {
   .modal-content {
-    height: 80%;
+    height: 70%;
   }
 }
 </style>

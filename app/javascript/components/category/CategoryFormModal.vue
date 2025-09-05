@@ -16,6 +16,7 @@
 
       <form @submit.prevent class="form-grid">
         <InputGroup
+          id="name"
           label="Nome"
           placeholder="Nome da categoria"
           v-model="category.name"
@@ -24,6 +25,7 @@
         />
 
         <InputGroup
+          id="description"
           label="Descrição"
           placeholder="Descrição da categoria (opcional)"
           v-model="category.description"
@@ -55,6 +57,7 @@ import BaseModal from '../ui/BaseModal.vue';
 import InputGroup from '../ui/InputGroup.vue';
 import { useCategoryValidator } from '../../composables/useCategoryValidator';
 import AppButton from '../ui/AppButton.vue';
+import { apiPost } from '../../utils/apiHelper';
 
 const category = reactive({
   name: null,
@@ -70,6 +73,13 @@ function submit() {
   };
 
   console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
+
+  apiPost({
+    endpoint: '/api/v1/categories',
+    payload,
+    successMessage: 'Categoria criada com sucesso!',
+    redirectPath: '/menu'
+  });
 }
 </script>
 
