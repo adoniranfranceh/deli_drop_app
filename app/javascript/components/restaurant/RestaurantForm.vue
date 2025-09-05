@@ -73,7 +73,11 @@ function submit() {
   if (restaurantExists) {
     return apiPut(`/api/v1/restaurants/${initialData.id}`, payload, 'Restaurante atualizado com sucesso!');
   } else {
-    return apiPost('/api/v1/restaurants', payload, 'Restaurante criado com sucesso!');
+    return apiPost({
+      endpoint: '/api/v1/restaurants',
+      payload,
+      successMessage: 'Restaurante criado com sucesso!'
+    });
   }
 }
 </script>
