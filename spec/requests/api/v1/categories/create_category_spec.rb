@@ -69,7 +69,7 @@ describe "POST /api/v1/categories" do
   end
 
   context "when user is not logged in" do
-    it "returns unauthorized" do
+    it "returns unprocessable entity" do
       category_params = {
         category: {
           name: "Pizzas",
