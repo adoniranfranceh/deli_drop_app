@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    models:
+      category: categoria
+    attributes:
+      category:
+        name: "Nome"
+        description: "Descrição"
+        restaurant: "Restaurante"

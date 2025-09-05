@@ -1,0 +1,7 @@
+pt-BR:
+  api:
+    v1:
+      categories:
+        create:
+          success: "Categoria criada com sucesso!"
+          error: "Erro ao criar categoria"
