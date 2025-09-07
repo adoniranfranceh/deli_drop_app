@@ -7,7 +7,7 @@ export function useGroupValidator(group) {
     min: null,
     max: null,
     free_limit: null,
-    modifiers: null
+    modifiers_attributes: null
   })
 
   function validateName() {
@@ -44,9 +44,9 @@ export function useGroupValidator(group) {
   }
 
   function validateModifiers() {
-    const modifiers = group.modifiers
-    if (!modifiers || modifiers.length === 0) return 'Pelo menos um modificador é obrigatório'
-    for (const mod of modifiers) {
+    const modifiers_attributes = group.modifiers_attributes
+    if (!modifiers_attributes || modifiers_attributes.length === 0) return 'Pelo menos um modificador é obrigatório'
+    for (const mod of modifiers_attributes) {
       if (!mod.name?.trim()) {
         return 'Todos os modificadores devem ter nome e preço válidos'
       }
@@ -60,7 +60,7 @@ export function useGroupValidator(group) {
     errors.min = validateMin()
     errors.max = validateMax()
     errors.free_limit = validateFreeLimit()
-    errors.modifiers = validateModifiers()
+    errors.modifiers_attributes = validateModifiers()
   })
 
   const isValid = computed(() =>
