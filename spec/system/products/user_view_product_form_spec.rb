@@ -16,20 +16,171 @@ describe 'User view product form', type: :system do
 
   context 'in first step' do
     it "and see fields" do
-      expect(page).to have_field('Nome', with: '', placeholder: 'Nome do Produto')
-      expect(page).to have_field('Categoria', with: '', placeholder: 'Todas as categorias')
-      expect(page).to have_field('Preço', with: '0,00')
-      expect(page).to have_field('Tempo de preparo', with: '', placeholder: 'Tempo de preparo (minutos)')
-      expect(page).to have_field('Descrição', with: '', placeholder: 'Descreva o produto...')
-      expect(page).to have_field('Imagem', with: '', placeholder: 'Imagem')
-      expect(page).to have_field('Ingredientes', with: '', placeholder: 'Digite um ingrediente')
-      expect(page).to have_button('Incluir', disabled: true)
-      toggle_active_product = find_field('Produto ativo', type: 'checkbox', visible: false)
-      expect(toggle_active_product).to be_checked
-      toggle_featured_product = find_field('Produto em destaque', type: 'checkbox', visible: false)
-      expect(toggle_featured_product).not_to be_checked
+      within '.step-indicator' do
+        within find('[class="step-label active"]') do
+          expect(page).to have_content 'Informações Básicas'
+          expect(page).not_to have_content 'Modificadores'
+          expect(page).not_to have_content 'Revisão'
+        end
+        expect(page).to have_content 'Modificadores'
+        expect(page).to have_content 'Revisão'
+      end
+
+      within '.quick-container' do
+        expect(page).to have_content 'Ações rápidas'
+        expect(page).to have_content 'Escolha um template para preencher automaticamente'
+        expect(page).to have_content 'Pizza'
+        expect(page).to have_content 'Hambúrguer'
+        expect(page).to have_content 'Açaí'
+        expect(page).to have_content 'Bebida'
+      end
+
+      within '.form-grid' do
+        expect(page).to have_field('Nome', with: '', placeholder: 'Nome do Produto')
+        expect(page).to have_field('Categoria', with: '', placeholder: 'Todas as categorias')
+        expect(page).to have_field('Preço', with: '0,00')
+        expect(page).to have_field('Tempo de preparo', with: '', placeholder: 'Tempo de preparo (minutos)')
+        expect(page).to have_field('Descrição', with: '', placeholder: 'Descreva o produto...')
+        expect(page).to have_field('Imagem', with: '', placeholder: 'Imagem')
+        expect(page).to have_field('Ingredientes', with: '', placeholder: 'Digite um ingrediente')
+        expect(page).to have_button('Incluir', disabled: true)
+        toggle_active_product = find_field('Produto ativo', type: 'checkbox', visible: false)
+        expect(toggle_active_product).to be_checked
+        toggle_featured_product = find_field('Produto em destaque', type: 'checkbox', visible: false)
+        expect(toggle_featured_product).not_to be_checked
+      end
+
       expect(page).to have_button('Continuar', disabled: true)
       expect(page).not_to have_css('.cancel', text: 'Voltar')
+    end
+
+    context "and use quick template" do
+      it 'for filling like Pizza' do
+        within '.quick-container' do
+          find('span', text: 'Pizza').click
+        end
+
+        within '.form-grid' do
+          expect(page).to have_field('Nome', with: 'Pizza Margherita', placeholder: 'Nome do Produto')
+          expect(page).to have_field('Categoria', with: '', placeholder: 'Todas as categorias')
+          expect(page).to have_content('Categoria é obrigatória')
+          expect(page).to have_field('Preço', with: '35,90')
+          expect(page).to have_field('Tempo de preparo', with: '25', placeholder: 'Tempo de preparo (minutos)')
+          expect(page).to have_field('Descrição', with: 'Deliciosa pizza de queijo e tomate.', placeholder: 'Descreva o produto...')
+          expect(page).to have_field(
+            'Imagem',
+            with: 'https://static.itdg.com.br/images/1200-630/47d6583c93d77edac5244cab67ba660b/253447-378226756-original.jpg',
+            placeholder: 'Imagem'
+          )
+          expect(page).to have_field('Ingredientes', with: '', placeholder: 'Digite um ingrediente')
+          expect(page).to have_button('Incluir', disabled: true)
+          within '.chips-container' do
+            expect(page).to have_content("Queijo\n×\nTomate\n×\nManjericão\n×")
+          end
+          toggle_active_product = find_field('Produto ativo', type: 'checkbox', visible: false)
+          expect(toggle_active_product).to be_checked
+          toggle_featured_product = find_field('Produto em destaque', type: 'checkbox', visible: false)
+          expect(toggle_featured_product).not_to be_checked
+        end
+
+        expect(page).to have_button('Continuar', disabled: true)
+        expect(page).not_to have_css('.cancel', text: 'Voltar')
+      end
+
+      it 'for filling like Hambúrguer' do
+        within '.quick-container' do
+          find('span', text: 'Hambúrguer').click
+        end
+
+        within '.form-grid' do
+          expect(page).to have_field('Nome', with: 'Hambúrguer Clássico', placeholder: 'Nome do Produto')
+          expect(page).to have_field('Categoria', with: '', placeholder: 'Todas as categorias')
+          expect(page).to have_content('Categoria é obrigatória')
+          expect(page).to have_field('Preço', with: '28,50')
+          expect(page).to have_field('Tempo de preparo', with: '20', placeholder: 'Tempo de preparo (minutos)')
+          expect(page).to have_field('Descrição', with: 'Pão, carne, queijo e molho especial.', placeholder: 'Descreva o produto...')
+          expect(page).to have_field(
+            'Imagem',
+            with: 'https://www.minhareceita.com.br/app/uploads/2023/08/x-bacon-portal-minha-receita.jpg',
+            placeholder: 'Imagem'
+          )
+          expect(page).to have_field('Ingredientes', with: '', placeholder: 'Digite um ingrediente')
+          expect(page).to have_button('Incluir', disabled: true)
+          within '.chips-container' do
+            expect(page).to have_content("Pão\n×\nCarne\n×\nQueijo\n×")
+          end
+          toggle_active_product = find_field('Produto ativo', type: 'checkbox', visible: false)
+          expect(toggle_active_product).to be_checked
+          toggle_featured_product = find_field('Produto em destaque', type: 'checkbox', visible: false)
+          expect(toggle_featured_product).not_to be_checked
+        end
+
+        expect(page).to have_button('Continuar', disabled: true)
+        expect(page).not_to have_css('.cancel', text: 'Voltar')
+      end
+
+      it 'for filling like Açaí' do
+         within '.quick-container' do
+          find('span', text: 'Açaí').click
+        end
+
+        within '.form-grid' do
+          expect(page).to have_field('Nome', with: 'Tigela de Açaí', placeholder: 'Nome do Produto')
+          expect(page).to have_field('Categoria', with: '', placeholder: 'Todas as categorias')
+          expect(page).to have_content('Categoria é obrigatória')
+          expect(page).to have_field('Preço', with: '18,00')
+          expect(page).to have_field('Tempo de preparo', with: '15', placeholder: 'Tempo de preparo (minutos)')
+          expect(page).to have_field('Descrição', with: 'Açaí com banana, granola e mel.', placeholder: 'Descreva o produto...')
+          expect(page).to have_field(
+            'Imagem',
+            with: 'https://flordejambu.com/wp-content/uploads/2022/05/acai.png',
+            placeholder: 'Imagem'
+          )
+          expect(page).to have_field('Ingredientes', with: '', placeholder: 'Digite um ingrediente')
+          expect(page).to have_button('Incluir', disabled: true)
+          expect(page).not_to have_css '.chips-container'
+
+          toggle_active_product = find_field('Produto ativo', type: 'checkbox', visible: false)
+          expect(toggle_active_product).to be_checked
+          toggle_featured_product = find_field('Produto em destaque', type: 'checkbox', visible: false)
+          expect(toggle_featured_product).not_to be_checked
+        end
+
+        expect(page).to have_button('Continuar', disabled: true)
+        expect(page).not_to have_css('.cancel', text: 'Voltar')
+      end
+
+      it 'for filling like Bebida' do
+        within '.quick-container' do
+          find('span', text: 'Bebida').click
+        end
+
+        within '.form-grid' do
+          expect(page).to have_field('Nome', with: 'Suco Natural', placeholder: 'Nome do Produto')
+          expect(page).to have_field('Categoria', with: '', placeholder: 'Todas as categorias')
+          expect(page).to have_content('Categoria é obrigatória')
+          expect(page).to have_field('Preço', with: '7,50')
+          expect(page).to have_field('Tempo de preparo', with: '5', placeholder: 'Tempo de preparo (minutos)')
+          expect(page).to have_field('Descrição', with: 'Suco natural de frutas frescas.', placeholder: 'Descreva o produto...')
+          expect(page).to have_field(
+            'Imagem',
+            with: 'https://s3-sa-east-1.amazonaws.com/deliveryon-uploads/products/imperio/38_5c58b562c06f5.jpg',
+            placeholder: 'Imagem'
+          )
+          expect(page).to have_field('Ingredientes', with: '', placeholder: 'Digite um ingrediente')
+          expect(page).to have_button('Incluir', disabled: true)
+          within '.chips-container' do
+            expect(page).to have_content("Fruta\n×")
+          end
+          toggle_active_product = find_field('Produto ativo', type: 'checkbox', visible: false)
+          expect(toggle_active_product).to be_checked
+          toggle_featured_product = find_field('Produto em destaque', type: 'checkbox', visible: false)
+          expect(toggle_featured_product).not_to be_checked
+        end
+
+        expect(page).to have_button('Continuar', disabled: true)
+        expect(page).not_to have_css('.cancel', text: 'Voltar')
+      end
     end
 
     it 'and see errors in all required fields after touched' do
@@ -50,6 +201,19 @@ describe 'User view product form', type: :system do
       expect(page).to have_content 'Tempo de preparo é obrigatório'
       expect(page).to have_content 'Descrição é obrigatória'
       expect(page).not_to have_content 'Imagem do produto é obrigatório'
+    end
+
+    it 'and see quick template after valid fields' do
+      fill_first_step
+
+      expect(page).to have_content 'Seu produto tem opções?'
+      expect(page).to have_content 'Modificadores permitem que seus clientes personalizem o produto. Por exemplo:'
+      expect(page).to have_content "Pizza\nTamanhos, sabores, bordas"
+      expect(page).to have_content "Açaí\nComplementos, frutas, coberturas"
+      expect(page).to have_content "Hambúrguer\nAdicionais, molhos, ponto da carne"
+      expect(page).to have_content "Bebidas\nTamanhos, temperaturas"
+      expect(page).to have_button 'Sim, adicionar opções'
+      expect(page).to have_button 'Não, produto simples'
     end
   end
 
