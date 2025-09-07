@@ -61,17 +61,14 @@ export function useProductForm() {
 
 export function useProductTemplate(product, forceCategoryError) {
   function fillProduct(template) {
+    console.log(template)
+    product.ingredients.length = 0;
+
+    if (template.ingredients) {
+      product.ingredients.push(...template.ingredients);
+    }
+
     Object.assign(product, {
-      name: null,
-      category: null,
-      price: null,
-      duration: null,
-      description: null,
-      image_url: null,
-      isActive: true,
-      isFeatured: false,
-      ingredients: [],
-      modifier_groups: [],
       ...template
     });
 
