@@ -1,4 +1,9 @@
 class Api::V1::CategoriesController < Api::V1::ApplicationController
+  def index
+    categories = current_restaurant_user.restaurant.categories
+    render json: categories.select(:id, :name)
+  end
+
   def create
     category = Category.new(category_params)
 
