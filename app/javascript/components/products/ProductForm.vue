@@ -90,6 +90,7 @@ const {
 
 const forceCategoryError = ref(false);
 const { fillProduct } = useProductTemplate(product, forceCategoryError);
+console.log(product)
 
 const hasUnsavedChanges = ref(false);
 
