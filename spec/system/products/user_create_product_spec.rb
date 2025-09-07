@@ -108,4 +108,74 @@ describe 'User creates a product', type: :system do
     expect(modifiers2.map(&:image)).to contain_exactly('http://image.com/pudim', 'http://image.com/bolo')
   end
 
+  it 'successfully without multiple groups and modifiers' do
+    # Arrange
+    fill_in 'Nome', with: 'Combo Mix'
+    fill_in 'Categoria', with: 'Comb'
+    within '.dropdown-menu' do
+      find('.dropdown-item', text: 'Combos').click
+    end
+    fill_in 'Preço', with: '4990'
+    fill_in 'Tempo de preparo', with: '14'
+    fill_in 'Descrição', with: 'Este é um combo mix'
+    fill_in 'Imagem', with: 'http://productimage.com'
+    fill_in 'Ingredientes', with: 'Bebidas'
+    click_button 'Incluir'
+    find('label', text: 'Produto em destaque').click
+    click_button 'Não, produto simples'
+    click_button 'Continuar'
+
+    # Act
+    click_button 'Salvar'
+
+    # Assert
+    expect(page).to have_content 'Produto criado com sucesso!'
+    expect(page).to have_current_path(menu_path)
+
+    product = Product.last
+    expect(ModifierGroup.count).to eq 0
+    expect(Modifier.count).to eq 0
+    expect(product.name).to eq('Combo Mix')
+    expect(product.category).to eq(category)
+    expect(product.base_price).to eq(4990)
+    expect(product.duration).to eq(14)
+    expect(product.description).to eq('Este é um combo mix')
+    expect(product.image).to eq('http://productimage.com')
+    expect(product.ingredients).to eq([ 'Bebidas' ])
+    expect(product.status).to eq('active')
+    expect(product.featured).to eq(true)
+    expect(product.restaurant).to eq(user.restaurant)
+  end
+
+  it 'and sees an error message if something goes wrong on the server' do
+    allow_any_instance_of(Product).to receive(:save).and_return(false)
+    allow_any_instance_of(Product).to receive_message_chain(:errors, :full_messages)
+                                  .and_return([ "Erro interno no servidor" ])
+    # Arrange
+    fill_in 'Nome', with: 'Combo Mix'
+    fill_in 'Categoria', with: 'Comb'
+    within '.dropdown-menu' do
+      find('.dropdown-item', text: 'Combos').click
+    end
+    fill_in 'Preço', with: '4990'
+    fill_in 'Tempo de preparo', with: '14'
+    fill_in 'Descrição', with: 'Este é um combo mix'
+    fill_in 'Imagem', with: 'http://productimage.com'
+    fill_in 'Ingredientes', with: 'Bebidas'
+    click_button 'Incluir'
+    find('label', text: 'Produto em destaque').click
+    click_button 'Não, produto simples'
+    click_button 'Continuar'
+
+    # Act
+    click_button 'Salvar'
+
+    # Assert
+    expect(page).to have_content 'Erro interno no servidor'
+    expect(page).to have_current_path(products_new_path)
+
+    expect(Product.count).to eq 0
+    expect(ModifierGroup.count).to eq 0
+    expect(Modifier.count).to eq 0
+  end
 end
