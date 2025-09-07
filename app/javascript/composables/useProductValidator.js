@@ -14,7 +14,7 @@ export function useProductValidator(product) {
   }
 
   function validateCategory() {
-    return !product.category?.trim() ? 'Categoria é obrigatória' : null
+    return !product.category ? 'Categoria é obrigatória' : null
   }
 
   function validatePrice() {
