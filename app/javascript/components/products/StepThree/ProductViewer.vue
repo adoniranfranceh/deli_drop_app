@@ -18,8 +18,8 @@
       <hr />
 
       <ModifierGroup
-        v-if="product.modifiers_groups?.length > 0"
-        v-for="group in product.modifiers_groups"
+        v-if="product.modifier_groups?.length > 0"
+        v-for="group in product.modifier_groups"
         :key="group.id"
         :modifier_group="group"
         @update:selected="handleUpdateSelected"

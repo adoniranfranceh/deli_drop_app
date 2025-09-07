@@ -26,7 +26,7 @@
       />
       <ModifierGroup
         v-if="step === 2"
-        v-model="product.modifiers_groups"
+        v-model="product.modifier_groups"
       />
       <ProductViewer v-if="step === 3" :product="product" />
       <div class="form-actions">
