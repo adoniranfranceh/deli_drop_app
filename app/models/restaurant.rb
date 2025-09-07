@@ -1,6 +1,8 @@
 class Restaurant < ApplicationRecord
   belongs_to :restaurant_user
 
+  has_many :categories
+
   validates :name, :culinary_style, :description, :image, :phone, presence: true
   validates :restaurant_user_id, uniqueness: true
 
