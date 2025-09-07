@@ -72,6 +72,7 @@ import ModifierOptionsPrompt from './StepOne/ModifierOptionsPrompt.vue';
 import ProductBasicInputs from './StepOne/ProductBasicInputs.vue';
 import AppButton from '../ui/AppButton.vue';
 import ProductViewer from './StepThree/ProductViewer.vue';
+import { apiPost } from '../../utils/apiHelper';
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice;
@@ -114,18 +115,25 @@ const handleBeforeUnload = (event) => {
 function submit() {
   const payload = {
     name: product.name,
-    category: product.category,
+    category_id: product.category,
     base_price: Number(product.price),
     duration: Number(product.duration),
     description: product.description,
     ingredients: product.ingredients,
     image: product.image_url,
-    is_featured: product.isFeatured,
-    is_active: product.isActive,
-    modifiers_groups: product.modifiers_groups
+    featured: product.isFeatured,
+    status: product.isActive ? 'active' : 'inactive',
+    modifier_groups_attributes: product.modifier_groups
   };
 
   console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
+
+  apiPost({
+    endpoint: '/api/v1/products',
+    payload,
+    successMessage: 'Produto criado com sucesso!',
+    redirectPath: '/menu'
+  });
 
   hasUnsavedChanges.value = false;
 }
