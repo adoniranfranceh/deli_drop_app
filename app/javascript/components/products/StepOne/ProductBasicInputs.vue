@@ -19,11 +19,7 @@
 
       <InputDropdown
         v-model="product.category"
-        :options="[
-          { label: 'Bebidas', value: 'bebidas' },
-          { label: 'Comidas', value: 'comidas' },
-          { label: 'Sobremesas', value: 'sobremesas' }
-        ]"
+        :options="categoryOptions"
         placeholder="Todas as categorias"
         :externalError="errors?.category"
         label="Categoria"
@@ -87,7 +83,8 @@ import CurrencyInput from '../../ui/CurrencyInput.vue'
 import InputNumber from '../../ui/InputNumber.vue'
 import ToggleSwitch from '../../ui/ToggleSwitch.vue'
 import IngredientsInput from './IngredientsInput.vue'
-import { toRefs } from 'vue'
+import { toRefs, ref, onMounted } from 'vue'
+import axios from 'axios'
 
 const props = defineProps({
   product: Object,
@@ -98,6 +95,20 @@ const props = defineProps({
 const emit = defineEmits(['update:product'])
 
 const localProduct = toRefs(props.product)
+
+const categoryOptions = ref([])
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/v1/categories')
+    categoryOptions.value = response.data.map(cat => ({
+      label: cat.name,
+      value: cat.id
+    }))
+  } catch (err) {
+    console.error('Erro ao carregar categorias', err)
+  }
+})
 </script>
 
 <style scoped>

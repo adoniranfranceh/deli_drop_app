@@ -5,7 +5,7 @@
       <InputGroup
         id="ingredients"
         v-model="ingredient"
-        placeholder="Digite um ingredientes"
+        placeholder="Digite um ingrediente"
         @keyup.enter="addIngredient"
       />
       <AppButton

@@ -42,7 +42,7 @@ function selectTemplate(label) {
       isActive: true,
       isFeatured: false,
       ingredients: ['Queijo', 'Tomate', 'Manjericão'],
-      modifiers_groups: [],
+      modifier_groups: [],
     },
     Hambúrguer: {
       name: 'Hambúrguer Clássico',
@@ -53,7 +53,7 @@ function selectTemplate(label) {
       isFeatured: false,
       ingredients: ['Pão', 'Carne', 'Queijo'],
       image_url: 'https://www.minhareceita.com.br/app/uploads/2023/08/x-bacon-portal-minha-receita.jpg',
-      modifiers_groups: [],
+      modifier_groups: [],
     },
     Açaí: {
       name: 'Tigela de Açaí',
@@ -63,7 +63,7 @@ function selectTemplate(label) {
       isActive: true,
       isFeatured: false,
       image_url: 'https://flordejambu.com/wp-content/uploads/2022/05/acai.png',
-      modifiers_groups: [],
+      modifier_groups: [],
     },
     Bebida: {
       name: 'Suco Natural',
@@ -74,7 +74,7 @@ function selectTemplate(label) {
       isFeatured: false,
       ingredients: ['Fruta'],
       image_url: 'https://s3-sa-east-1.amazonaws.com/deliveryon-uploads/products/imperio/38_5c58b562c06f5.jpg',
-      modifiers_groups: [],
+      modifier_groups: [],
     }
   }
 

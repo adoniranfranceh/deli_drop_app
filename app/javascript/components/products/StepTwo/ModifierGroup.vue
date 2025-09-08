@@ -82,13 +82,12 @@ function addGroup(type = '') {
   }
 
   groups.value.push({
-    id: Date.now(),
     name: null,
     input_type: type,
     min: null,
     max: max,
     free_limit: free_limit,
-    modifiers: []
+    modifiers_attributes: []
   })
 }
 
@@ -97,8 +96,7 @@ function removeGroup(index) {
 }
 
 function addModifier(index) {
-  groups.value[index].modifiers.push({
-    id: Date.now(),
+  groups.value[index].modifiers_attributes.push({
     name: null,
     base_price: null,
     image: null,
@@ -106,7 +104,7 @@ function addModifier(index) {
 }
 
 function removeModifier(groupIndex, modifierIndex) {
-  groups.value[groupIndex].modifiers.splice(modifierIndex, 1)
+  groups.value[groupIndex].modifiers_attributes.splice(modifierIndex, 1)
 }
 </script>
 

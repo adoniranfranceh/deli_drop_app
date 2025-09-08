@@ -72,17 +72,17 @@
           @update:modelValue="computedFreeLimit = $event"
           :min="0"
           :max="1000"
-          :disabled="group.input_type !== 'quantity'"
+          :disabled="group.input_type === 'single_choice' || group.input_type === 'multiple_choice'"
           :externalError="groupErrors?.free_limit"
           required
         />
       </div>
     </div>
 
-    <ItemChip :item="`${group.modifiers.length} opções`" class="options-chip" />
+    <ItemChip :item="`${group.modifiers_attributes.length} ${group.modifiers_attributes.length != 1 ? 'opções' : 'opção' }`" class="options-chip" />
 
     <ModifierList
-      :modifiers="group.modifiers"
+      :modifiers="group.modifiers_attributes"
       :index="index"
       @add-modifier="$emit('add-modifier', index)"
       @remove-modifier="$emit('remove-modifier', index, $event)"

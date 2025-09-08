@@ -13,20 +13,20 @@ export function useProductForm() {
     isActive: true,
     isFeatured: false,
     ingredients: [],
-    modifiers_groups: []
+    modifier_groups: []
   });
 
   const step = ref(1);
   const nextStep = ref(null);
 
   const { errors: productErrors, isValid: isProductValid } = useProductValidator(product);
-  const { isValid: areGroupsValid } = useGroupsValidator(computed(() => product.modifiers_groups));
+  const { isValid: areGroupsValid } = useGroupsValidator(computed(() => product.modifier_groups));
 
   const hasMadeStep1Decision = computed(() => nextStep.value !== null);
   const canProceedFromStep1 = computed(() => isProductValid.value && hasMadeStep1Decision.value);
   const isStep1Complete = computed(() => isProductValid.value);
 
-  const hasModifiers = computed(() => product.modifiers_groups.length > 0);
+  const hasModifiers = computed(() => product.modifier_groups.length > 0);
   const canProceedFromStep2 = computed(() => !hasModifiers.value || areGroupsValid.value);
 
   const isFormValid = computed(() => isProductValid.value && canProceedFromStep2.value);
@@ -61,17 +61,14 @@ export function useProductForm() {
 
 export function useProductTemplate(product, forceCategoryError) {
   function fillProduct(template) {
+    console.log(template)
+    product.ingredients.length = 0;
+
+    if (template.ingredients) {
+      product.ingredients.push(...template.ingredients);
+    }
+
     Object.assign(product, {
-      name: null,
-      category: null,
-      price: null,
-      duration: null,
-      description: null,
-      image_url: null,
-      isActive: true,
-      isFeatured: false,
-      ingredients: [],
-      modifiers_groups: [],
       ...template
     });
 

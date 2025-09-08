@@ -12,7 +12,7 @@
 
     <ul class="modifiers">
       <li
-        v-for="item in modifier_group.modifiers"
+        v-for="item in modifier_group.modifiers_attributes"
         :key="item.id"
         class="modifiers-options"
         :class="{
