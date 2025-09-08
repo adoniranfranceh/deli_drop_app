@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :modifier do
-    name { "MyString" }
+    name { "Suco de Maçã" }
     base_price { 1 }
-    image { "MyString" }
+    image { "http://modifier_image.png" }
     modifier_group { nil }
   end
 end
