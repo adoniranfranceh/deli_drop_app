@@ -10,7 +10,8 @@ class Api::V1::RestaurantsController < Api::V1::ApplicationController
   end
 
   def update
-    restaurant = current_restaurant_user.restaurant
+    restaurant = Restaurant.find(params[:id])
+    authorize restaurant
 
     if restaurant.update(restaurant_params)
       render json: { message: I18n.t("api.v1.restaurants.update.success"), restaurant: restaurant }, status: :ok
