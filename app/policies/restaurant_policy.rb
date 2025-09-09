@@ -6,4 +6,8 @@ class RestaurantPolicy < ApplicationPolicy
   def edit?
     user.present? && record.restaurant_user_id == user.id
   end
+
+  def update?
+    user.present? && record.restaurant_user_id == user.id
+  end
 end
