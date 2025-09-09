@@ -5,11 +5,19 @@ import Dashboard from './components/dashboard/Dashboard.vue'
 import Menu from './components/menu/MenuCenter.vue'
 import ProductForm from './components/products/ProductForm.vue'
 import RestaurantForm from "./components/restaurant/RestaurantForm.vue";
+import FlashMessage from './components/ui/FlashMessage.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const appEl = document.getElementById('app-vue')
   if (appEl) {
     createApp(App).mount(appEl)
+  }
+
+  const flashEl = document.getElementById('flash-messages')
+  if (flashEl) {
+    const type = flashEl.dataset.type
+    const message = flashEl.dataset.message
+    createApp(FlashMessage, { type, message }).mount(flashEl)
   }
 
   const dashboardEl = document.getElementById('dashboard-widget')
