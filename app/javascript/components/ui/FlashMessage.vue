@@ -14,7 +14,7 @@ defineProps({
         <Icon v-if="type === 'success'" icon="fa6-solid:check" />
         <Icon v-else icon="lucide:triangle-alert" />
       </span>
-      <span class="app-flash__text">Login efetuado com sucesso!</span>
+      <span class="app-flash__text">{{ message }}</span>
     </div>
   </div>
 </template>
