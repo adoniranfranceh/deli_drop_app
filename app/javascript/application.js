@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const menuEl = document.getElementById('menu-widget')
   if (menuEl) {
-    createApp(Menu).mount(menuEl)
+    const categoriesData = JSON.parse(menuEl.dataset.categories);
+
+    createApp(Menu, { categories: categoriesData }).mount(menuEl)
   }
 
   const newPro = document.getElementById('new-product')
