@@ -1,7 +1,7 @@
 <template>
   <div class="empty-box">
     <Icon icon="tabler:package" class="empty-icon" />
-    <p class="empty-text">Nenhum {{ product ? 'produtos' : 'categorias' }} encontrado</p>
+    <p class="empty-text">{{ product ? 'Nenhum produto encontrado' : 'Nenhuma categoria encontrada' }} </p>
     <p class="empty-subtext">Comece adicionando {{ product ? 'seu primeiro produto' : 'sua primeira categoria' }}</p>
     <AppButton
       iconLeft="tabler:plus"
