@@ -99,7 +99,7 @@ function handleTabChange(view) {
 @media (min-width: 758px) {
   .products-container,
   .categories-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
