@@ -17,4 +17,20 @@ RSpec.describe Category, type: :model do
       expect(category.errors.full_messages).not_to include("Descrição não pode ficar em branco")
     end
   end
+
+  context '.with_products_stats' do
+    let(:category) { create(:category, restaurant:) }
+    let(:active_product) { create(:product, category:, status: :active, base_price: 100, restaurant:) }
+    let(:inactive_product) { create(:product, category:, status: :inactive, base_price: 200, restaurant:) }
+
+    it 'returns the category with correct count and average' do
+      active_product
+      inactive_product
+      result = Category.with_products_stats.find(category.id)
+
+      expect(result.products_count).to eq 2
+      expect(result.actived_products_count).to eq 1
+      expect(result.average_price.to_f).to eq 150
+    end
+  end
 end
