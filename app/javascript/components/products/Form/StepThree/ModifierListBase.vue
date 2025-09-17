@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { FloatToMoney } from '../../../utils/modey'
+import { FloatToMoney } from '../../../../utils/modey'
 import ModifierHeader from './ModifierHeader.vue'
 
 defineProps({

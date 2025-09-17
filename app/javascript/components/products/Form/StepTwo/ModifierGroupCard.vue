@@ -92,13 +92,13 @@
 
 <script setup>
 import { computed, watch } from 'vue'
-import AppButton from '../../ui/AppButton.vue'
-import InputDropdown from '../../ui/InputDropdown.vue'
-import InputGroup from '../../ui/InputGroup.vue'
-import InputNumber from '../../ui/InputNumber.vue'
-import ItemChip from '../../ui/ItemChip.vue'
+import AppButton from '../../../ui/AppButton.vue'
+import InputDropdown from '../../../ui/InputDropdown.vue'
+import InputGroup from '../../../ui/InputGroup.vue'
+import InputNumber from '../../../ui/InputNumber.vue'
+import ItemChip from '../../../ui/ItemChip.vue'
 import ModifierList from './ModifierList.vue'
-import { useGroupValidator } from '../../../composables/useGroupValidator'
+import { useGroupValidator } from '../../../../composables/useGroupValidator'
 
 const props = defineProps({
   group: Object,

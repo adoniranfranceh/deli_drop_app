@@ -10,9 +10,9 @@
 </template>
 
 <script setup>
-import AppButton from '../../ui/AppButton.vue';
-import MenuHeader from '../../ui/MenuHeader.vue';
-import { navigateTo } from '../../../utils/navigation';
+import AppButton from '../../../ui/AppButton.vue';
+import MenuHeader from '../../../ui/MenuHeader.vue';
+import { navigateTo } from '../../../../utils/navigation';
 </script>
 
 <style scoped>

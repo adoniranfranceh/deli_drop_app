@@ -45,10 +45,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { FloatToMoney } from '../../../utils/modey'
-import DeliveryDuration from '../../ui/DeliveryDuration.vue'
+import { FloatToMoney } from '../../../../utils/modey'
+import DeliveryDuration from '../../../ui/DeliveryDuration.vue'
 import ModifierGroup from './ModifierGroup.vue'
-import ProductIngredients from '../../ui/ProductIngredients.vue'
+import ProductIngredients from '../../../ui/ProductIngredients.vue'
 
 const props = defineProps({
   product: {
