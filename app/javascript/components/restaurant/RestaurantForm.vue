@@ -35,7 +35,7 @@ import RestaurantBasicInputs from './RestaurantBasicInputs.vue';
 import AppButton from '../ui/AppButton.vue';
 import { useRestaurantValidator } from '../../composables/useRestaurantValidator';
 import { navigateTo } from '../../utils/navigation';
-import { apiPost, apiPut } from '../../utils/apiHelper'
+import { apiPost, apiPut } from '../../utils/apiHelper';
 
 const props = defineProps ({
   initialData: Object,

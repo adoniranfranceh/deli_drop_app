@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue'
 import AppButton from '../ui/AppButton.vue'
 import SearchInput from '../ui/SearchInput.vue'
 

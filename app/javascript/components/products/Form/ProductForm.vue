@@ -63,16 +63,16 @@ import { ref, watch, onMounted, onUnmounted } from 'vue';
 import {
   useProductForm,
   useProductTemplate
-} from '../../composables/useProductForm';
+} from '../../../composables/useProductForm';
 import ProductFormOverview from './Shared/ProductFormOverview.vue';
 import StepIndicator from './Shared/StepIndicator.vue';
 import QuickTemplate from './StepOne/QuickTemplate.vue';
 import ModifierGroup from './StepTwo/ModifierGroup.vue';
 import ModifierOptionsPrompt from './StepOne/ModifierOptionsPrompt.vue';
 import ProductBasicInputs from './StepOne/ProductBasicInputs.vue';
-import AppButton from '../ui/AppButton.vue';
+import AppButton from '../../ui/AppButton.vue';
 import ProductViewer from './StepThree/ProductViewer.vue';
-import { apiPost } from '../../utils/apiHelper';
+import { apiPost } from '../../../utils/apiHelper';
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice;

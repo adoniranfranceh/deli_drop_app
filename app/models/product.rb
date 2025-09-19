@@ -9,4 +9,8 @@ class Product < ApplicationRecord
   validates :featured, inclusion: { in: [ true, false ] }
 
   enum :status, { active: 5, inactive: 10 }
+
+   scope :with_category_name, -> {
+    joins(:category).select("products.*, categories.name AS category_name")
+  }
 end

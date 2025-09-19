@@ -30,7 +30,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 import { Icon } from '@iconify/vue';
 import AppButton from '../ui/AppButton.vue';
 import ItemChip from '../ui/ItemChip.vue'

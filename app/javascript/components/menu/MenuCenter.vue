@@ -7,7 +7,13 @@
 
       <div v-show="tab === 'products'" class="products-tab">
         <ProductsMenuFilters @changeView="handleViewChange" />
-        <MenuEmptyState :product="true" @openProductForm="navigateTo('/products/new')"/>
+        <div v-if="products.length > 0" class="products-container">
+          <CardProducts
+            v-for="product in products"
+            :product="product"
+          />
+        </div>
+        <MenuEmptyState v-else :product="true" @openProductForm="navigateTo('/products/new')"/>
       </div>
 
       <div v-show="tab === 'categories'">
@@ -37,9 +43,11 @@ import CategoriesFilter from './CategoriesFilter.vue'
 import CategoryFormModal from '../category/CategoryFormModal.vue'
 import { navigateTo } from '../../utils/navigation'
 import CategoriesCard from '../category/CategoriesCard.vue'
+import CardProducts from '../products/CardProducts.vue'
 
 defineProps({
-  categories: Object
+  categories: Object,
+  products: Object,
 })
 
 const tab = ref('products')
@@ -79,6 +87,7 @@ function handleTabChange(view) {
   width: 1820px;
 }
 
+.products-container,
 .categories-container {
   display: grid;
   gap: 2rem;
@@ -87,15 +96,24 @@ function handleTabChange(view) {
   grid-template-columns: repeat(1, 1fr);
 }
 
- @media (min-width: 758px) {
+@media (min-width: 758px) {
+  .products-container,
   .categories-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1250px) {
+@media (min-width: 958px) {
+  .products-container,
   .categories-container {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1250px) {
+  .products-container,
+  .categories-container {
+    grid-template-columns: repeat(4, 1fr);
     margin: 3rem auto;
   }
 }

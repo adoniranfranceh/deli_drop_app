@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import WrapperQuantity from '../../ui/WrapperQuantity.vue'
+import WrapperQuantity from '../../../ui/WrapperQuantity.vue'
 import ModifierHeader from './ModifierHeader.vue'
-import { FloatToMoney } from '../../../utils/modey'
+import { FloatToMoney } from '../../../../utils/modey'
 
 const props = defineProps({
   modifier_group: { type: Object, required: true }

@@ -69,10 +69,10 @@
 </template>
 
 <script setup>
-import AppButton from '../../ui/AppButton.vue'
-import CurrencyInput from '../../ui/CurrencyInput.vue'
-import InputGroup from '../../ui/InputGroup.vue'
-import { useModifierValidator } from '../../../composables/useModifierValidator'
+import AppButton from '../../../ui/AppButton.vue'
+import CurrencyInput from '../../../ui/CurrencyInput.vue'
+import InputGroup from '../../../ui/InputGroup.vue'
+import { useModifierValidator } from '../../../../composables/useModifierValidator'
 
 const props = defineProps({
   modifiers: Array,

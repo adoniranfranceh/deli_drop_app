@@ -55,7 +55,7 @@
 <script setup>
 import { toRef, watch} from 'vue'
 import { Icon } from '@iconify/vue'
-import AppButton from '../../ui/AppButton.vue'
+import AppButton from '../../../ui/AppButton.vue'
 import ModifierGroupCard from './ModifierGroupCard.vue'
 
 const props = defineProps({

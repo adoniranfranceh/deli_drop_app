@@ -23,7 +23,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import ItemChip from '../../ui/ItemChip.vue' 
+import ItemChip from '../../../ui/ItemChip.vue' 
 
 const props = defineProps({
   name: String,

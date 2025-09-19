@@ -69,4 +69,15 @@ RSpec.describe Product, type: :model do
       expect(product).to be_valid
     end
   end
+
+  context '.with_category_name' do
+    let(:category) { create(:category, restaurant:, name: 'Pizza') }
+    let(:product) { create(:product, category:, status: :active, base_price: 100, restaurant:) }
+
+    it 'returns the product with category_name' do
+      result = Product.with_category_name.find(product.id)
+
+      expect(result.category_name).to eq 'Pizza'
+    end
+  end
 end

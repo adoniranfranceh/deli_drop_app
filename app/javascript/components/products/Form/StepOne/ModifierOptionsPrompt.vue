@@ -37,7 +37,7 @@
 
 <script setup>
 import { Icon } from '@iconify/vue'
-import AppButton from '../../ui/AppButton.vue'
+import AppButton from '../../../ui/AppButton.vue'
 
 const emit = defineEmits(['modifiers-decision'])
 
