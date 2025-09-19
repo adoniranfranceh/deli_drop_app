@@ -42,7 +42,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 import AppButton from '../ui/AppButton.vue';
 import ToggleSwitch from '../ui/ToggleSwitch.vue';
 import { FloatToMoney } from '../../utils/modey';
