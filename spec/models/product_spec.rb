@@ -74,7 +74,7 @@ RSpec.describe Product, type: :model do
     let(:category) { create(:category, restaurant:, name: 'Pizza') }
     let(:product) { create(:product, category:, status: :active, base_price: 100, restaurant:) }
 
-    it 'returns the category with correct count and average' do
+    it 'returns the product with category_name' do
       result = Product.with_category_name.find(product.id)
 
       expect(result.category_name).to eq 'Pizza'

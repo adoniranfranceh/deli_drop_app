@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User views category list', type: :system do
+describe 'User views product list', type: :system do
   let(:user) { create(:restaurant_user) }
   let(:restaurant) { create(:restaurant, restaurant_user: user) }
 
@@ -34,7 +34,7 @@ describe 'User views category list', type: :system do
     end
   end
 
-  it 'but no categories' do
+  it 'but no products' do
     restaurant
     login_as user
     visit root_path
