@@ -13,7 +13,6 @@
           <h3>{{ product.name }}</h3>
           <div class="toggle-container">
             <ToggleSwitch
-              :id="`toggle-${product.id}`"
               v-model:is-active="product.active"
               @update:is-active="$emit('toggle-product', product.id, product.active)"
             />
