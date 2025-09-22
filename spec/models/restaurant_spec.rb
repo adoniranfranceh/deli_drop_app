@@ -42,4 +42,13 @@ RSpec.describe Restaurant, type: :model do
       expect(duplicate.errors.full_messages).to include("Usuário Restaurante já está em uso")
     end
   end
+
+  context '.create' do
+    it 'create product with default categories' do
+      restaurant = create(:restaurant, restaurant_user: user)
+
+      expect(restaurant.categories.count).to eq(3)
+      expect(restaurant.categories.pluck(:name)).to eq([ "Bebidas", "Combos", "Pratos Principais", "Sobremesas" ])
+    end
+  end
 end
