@@ -25,13 +25,18 @@ export async function apiPost({
   }
 }
 
-export async function apiPut(endpoint, payload, successMessage = 'Operação realizada com sucesso!') {
+export async function apiPut({
+  endpoint,
+  payload,
+  successMessage = 'Operação realizada com sucesso!',
+  redirectPath = '/'
+}) {
   try {
     const { data } = await axios.put(endpoint, payload, {
       headers: { 'Content-Type': 'application/json' }
     })
     const msg = data?.message || successMessage
-    navigateTo(`/flash?path=${encodeURIComponent('/')}&notice=${encodeURIComponent(msg)}`)
+    navigateTo(`/flash?path=${encodeURIComponent(redirectPath)}&notice=${encodeURIComponent(msg)}`)
     return data
   } catch (error) {
     const msg = error.response?.data?.errors || 'Erro desconhecido'
