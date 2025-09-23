@@ -14,6 +14,17 @@ class Api::V1::CategoriesController < Api::V1::ApplicationController
     end
   end
 
+  def update
+    category = Category.find(params[:id])
+    authorize category
+
+    if category.update(category_params)
+      render json: { message: I18n.t("api.v1.categories.update.success"), category: }, status: :ok
+    else
+      render json: { status: :unprocessable_entity, errors: category.errors.full_messages.join(", ") }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def category_params
