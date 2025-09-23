@@ -84,6 +84,7 @@ describe "PATCH /api/v1/restaurants/:id" do
     it "returns unauthorized" do
       owner = create(:restaurant_user)
       other_user = create(:restaurant_user, email: 'other@email.com')
+      create(:restaurant, restaurant_user: other_user)
       restaurant = create(:restaurant, restaurant_user: owner)
 
       login_as other_user
