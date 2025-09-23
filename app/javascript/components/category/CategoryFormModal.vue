@@ -57,12 +57,23 @@ import BaseModal from '../ui/BaseModal.vue';
 import InputGroup from '../ui/InputGroup.vue';
 import { useCategoryValidator } from '../../composables/useCategoryValidator';
 import AppButton from '../ui/AppButton.vue';
-import { apiPost } from '../../utils/apiHelper';
+import { apiPost, apiPut } from '../../utils/apiHelper';
+
+const props = defineProps({
+  categoryData: {
+    type: Object,
+    default: null,
+  },
+});
+
+const categoryData = props.categoryData;
 
 const category = reactive({
-  name: null,
-  description: null
+  name: categoryData?.name || null,
+  description: categoryData?.description || null
 });
+
+const categoryExists = categoryData !== '' && categoryData !== null && categoryData !== undefined
 
 const { errors: categoryErrors, isValid: isValidCategory } = useCategoryValidator(category);
 
@@ -72,14 +83,21 @@ function submit() {
     description: category.description,
   };
 
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
-
-  apiPost({
-    endpoint: '/api/v1/categories',
-    payload,
-    successMessage: 'Categoria criada com sucesso!',
-    redirectPath: '/menu'
-  });
+  if (categoryExists) {
+    return apiPut({
+      endpoint: `/api/v1/categories/${categoryData.id}`,
+      payload,
+      successMessage: 'Categoria atualizada com sucesso!',
+      redirectPath: '/menu'
+    });
+  } else {
+    return apiPost({
+      endpoint: '/api/v1/categories',
+      payload,
+      successMessage: 'Categoria criada com sucesso!',
+      redirectPath: '/menu'
+    });
+  }
 }
 </script>
 

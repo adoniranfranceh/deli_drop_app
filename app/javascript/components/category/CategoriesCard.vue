@@ -23,18 +23,30 @@
       </div>
     </div>
     <div class="category-actions">
-      <AppButton class="edit-btn" text="Editar" iconLeft="lucide-pen-line" />
+      <AppButton class="edit-btn" text="Editar" iconLeft="lucide-pen-line" @click="openCategoryForm" />
       <AppButton class="delete-btn" iconLeft="lucide:trash-2" />
     </div>
   </div>
+  <CategoryFormModal v-if="openModal" @close="closeModal" :categoryData="category" />
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import AppButton from '../ui/AppButton.vue';
 import ItemChip from '../ui/ItemChip.vue'
 import { FloatToMoney } from '../../utils/modey';
+import CategoryFormModal from './CategoryFormModal.vue';
 
+const openModal = ref(false)
+
+function openCategoryForm() {
+  openModal.value = true
+}
+
+function closeModal() {
+  openModal.value = false
+}
 
 defineProps({
   category: {
