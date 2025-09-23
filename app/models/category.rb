@@ -2,6 +2,9 @@ class Category < ApplicationRecord
   belongs_to :restaurant
   has_many :products
 
+  validates :name, presence: true
+  validates :name, uniqueness: { scope: :restaurant_id, case_sensitive: false }
+
   scope :with_products_stats, -> {
     active_status = Product.statuses[:active]
 
@@ -17,5 +20,4 @@ class Category < ApplicationRecord
     left_joins(:products).select(select_clause).group("categories.id")
   }
 
-  validates :name, presence: true
 end

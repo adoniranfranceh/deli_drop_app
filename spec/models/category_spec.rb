@@ -6,15 +6,22 @@ RSpec.describe Category, type: :model do
 
   context '.valid' do
     it 'is invalid without a name' do
-      category = Category.new(name: nil, restaurant: restaurant, description: "Bebidas diversas")
+      category = Category.new(name: nil, restaurant: restaurant, description: "Pizzas diversas")
       expect(category).not_to be_valid
       expect(category.errors.full_messages).to include("Nome não pode ficar em branco")
     end
 
     it 'is valid without a description' do
-      category = Category.new(description: nil, restaurant: restaurant, name: "Bebidas")
+      category = Category.new(description: nil, restaurant: restaurant, name: "Pizzas")
       expect(category).to be_valid
       expect(category.errors.full_messages).not_to include("Descrição não pode ficar em branco")
+    end
+
+    it 'enforces uniqueness of name' do
+      create(:category, name: "Pizzas", restaurant: restaurant)
+      category = Category.new(description: nil, restaurant: restaurant, name: "pizzas")
+      expect(category).not_to be_valid
+      expect(category.errors.full_messages).to include("Nome já está em uso")
     end
   end
 
