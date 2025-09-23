@@ -5,6 +5,8 @@ class Category < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: { scope: :restaurant_id, case_sensitive: false }
 
+  validate :restaurant_category_limit
+
   scope :with_products_stats, -> {
     active_status = Product.statuses[:active]
 
@@ -19,4 +21,18 @@ class Category < ApplicationRecord
 
     left_joins(:products).select(select_clause).group("categories.id")
   }
+
+  MAX_CATEGORIES_PER_RESTAURANT = 10
+
+  private
+
+  def restaurant_category_limit
+    return if restaurant.nil?
+    return if restaurant.categories.count < MAX_CATEGORIES_PER_RESTAURANT
+    errors.add(
+      :base,
+      I18n.t("activerecord.errors.models.category.attributes.base.max_categories",
+             count: MAX_CATEGORIES_PER_RESTAURANT)
+    )
+  end
 end

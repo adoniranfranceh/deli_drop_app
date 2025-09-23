@@ -23,6 +23,18 @@ RSpec.describe Category, type: :model do
       expect(category).not_to be_valid
       expect(category.errors.full_messages).to include("Nome já está em uso")
     end
+
+    it 'is invalid if the restaurant already has the maximum allowed categories' do
+      restaurant.categories.destroy_all
+      max_categories = 10
+      max_categories.times do |i|
+        create(:category, name: "Category #{i}", restaurant:)
+      end
+
+      category = Category.new(name: "Excesso", restaurant:)
+      expect(category).not_to be_valid
+      expect(category.errors.full_messages).to include("Você atingiu o limite de 10 categorias. Edite ou exclua categorias existentes para adicionar novas.")
+    end
   end
 
   context '.with_products_stats' do
