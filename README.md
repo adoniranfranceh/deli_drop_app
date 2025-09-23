@@ -8,7 +8,7 @@ Aqui os restaurantes podem **cadastrar produtos, categorias e gerenciar pedidos*
 ## 🚀 Tecnologias
 
 - **Backend:** Ruby on Rails 8, PostgreSQL, Puma  
-- **Frontend:** Vue 3, Turbo, Stimulus, Importmap, ESBuild  
+- **Frontend:** Vue 3, ESBuild  
 - **Autenticação:** Devise  
 - **Autorização:** Pundit  
 - **Testes:** RSpec, FactoryBot, Capybara, SimpleCov  
