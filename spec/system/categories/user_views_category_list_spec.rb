@@ -6,7 +6,6 @@ describe 'User views category list', type: :system do
 
   it 'successfully' do
     category = create(:category, restaurant:, name: 'Pizzas')
-    create(:category, restaurant:, name: 'Combos')
     create(:product, category:, status: :active, base_price: 1000, restaurant:)
     create(:product, category:, status: :inactive, base_price: 2000, restaurant:)
     login_as user
@@ -26,7 +25,28 @@ describe 'User views category list', type: :system do
       expect(page).to have_css('.edit-btn', text: 'Editar')
       expect(page).to have_css('.delete-btn')
 
+      expect(page).to have_content('Bebidas')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
       expect(page).to have_content('Combos')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Pratos Principais')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Sobremesas')
       expect(page).to have_content("Produtos\n0")
       expect(page).to have_content("Ativos\n0")
       expect(page).to have_content("Preço Médio\nR$ 0,00")
@@ -37,6 +57,7 @@ describe 'User views category list', type: :system do
 
   it 'but no categories' do
     restaurant
+    restaurant.categories.destroy_all
     login_as user
     visit root_path
     find('span', text: 'Gerenciar Menu').click
