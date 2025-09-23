@@ -47,7 +47,7 @@ RSpec.describe Restaurant, type: :model do
     it 'create product with default categories' do
       restaurant = create(:restaurant, restaurant_user: user)
 
-      expect(restaurant.categories.count).to eq(3)
+      expect(restaurant.categories.count).to eq(4)
       expect(restaurant.categories.pluck(:name)).to eq([ "Bebidas", "Combos", "Pratos Principais", "Sobremesas" ])
     end
   end
