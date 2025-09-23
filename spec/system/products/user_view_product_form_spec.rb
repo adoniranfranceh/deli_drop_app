@@ -3,11 +3,9 @@ require 'rails_helper'
 describe 'User view product form', type: :system do
   let(:user) { create(:restaurant_user) }
   let(:restaurant) { create(:restaurant, restaurant_user: user) }
-  let(:category) { create(:category, name: 'Combos', restaurant: restaurant) }
 
   before do
     restaurant
-    category
     login_as user
     visit root_path
     find('span', text: 'Gerenciar Menu').click

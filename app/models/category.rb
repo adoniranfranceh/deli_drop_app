@@ -19,5 +19,4 @@ class Category < ApplicationRecord
 
     left_joins(:products).select(select_clause).group("categories.id")
   }
-
 end
