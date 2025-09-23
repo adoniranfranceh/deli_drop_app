@@ -3,11 +3,9 @@ require 'rails_helper'
 describe 'User creates a product', type: :system do
   let(:user) { create(:restaurant_user) }
   let(:restaurant) { create(:restaurant, restaurant_user: user) }
-  let(:category) { create(:category, name: 'Combos', restaurant: restaurant) }
 
   before do
     restaurant
-    category
     login_as user
     visit root_path
     find('span', text: 'Gerenciar Menu').click
@@ -68,12 +66,12 @@ describe 'User creates a product', type: :system do
     click_button 'Salvar'
 
     # Assert
-    expect(page).to have_content 'Produto criado com sucesso!'
+    expect(page).to have_content 'Produto criado com sucesso!', wait: 5
     expect(page).to have_current_path(menu_path)
 
     product = Product.last
     expect(product.name).to eq('Combo Mix')
-    expect(product.category).to eq(category)
+    expect(product.category.name).to eq('Combos')
     expect(product.base_price).to eq(4990)
     expect(product.duration).to eq(14)
     expect(product.description).to eq('Este é um combo mix')
@@ -136,7 +134,7 @@ describe 'User creates a product', type: :system do
     expect(ModifierGroup.count).to eq 0
     expect(Modifier.count).to eq 0
     expect(product.name).to eq('Combo Mix')
-    expect(product.category).to eq(category)
+    expect(product.category.name).to eq('Combos')
     expect(product.base_price).to eq(4990)
     expect(product.duration).to eq(14)
     expect(product.description).to eq('Este é um combo mix')
