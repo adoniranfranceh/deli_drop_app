@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { navigateTo } from './navigation'
+import { updateFlash } from './flashHelper'
 
 export async function apiPost({
   endpoint,
@@ -42,5 +43,23 @@ export async function apiPut({
     const msg = error.response?.data?.errors || 'Erro desconhecido'
     navigateTo(`/flash?path=${encodeURIComponent(window.location.pathname)}&alert=${encodeURIComponent(msg)}`)
     throw error
+  }
+}
+
+export function apiPostLocal({ endpoint, payload }) {
+  return apiRequestLocal('post', endpoint, payload)
+}
+
+export function apiPutLocal({ endpoint, payload }) {
+  return apiRequestLocal('put', endpoint, payload)
+}
+
+async function apiRequestLocal(method, endpoint, payload) {
+  try {
+    const { data } = await axios({ method, url: endpoint, data: payload })
+    await updateFlash({ notice: data?.message })
+    return data
+  } catch (error) {
+    await updateFlash({ alert: error.response?.data?.errors })
   }
 }
