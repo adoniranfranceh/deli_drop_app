@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { navigateTo } from './navigation'
-import { updateFlash } from './flashHelper'
+import { showFlash } from './flashHelper'
 
 export async function apiPost({
   endpoint,
@@ -57,9 +57,10 @@ export function apiPutLocal({ endpoint, payload }) {
 async function apiRequestLocal(method, endpoint, payload) {
   try {
     const { data } = await axios({ method, url: endpoint, data: payload })
-    await updateFlash({ notice: data?.message })
+    showFlash({ type: 'success', message: data?.message })
     return data
   } catch (error) {
-    await updateFlash({ alert: error.response?.data?.errors })
+    const errorMsg = error.response?.data?.errors
+    showFlash({ type: 'error', message: errorMsg })
   }
 }
