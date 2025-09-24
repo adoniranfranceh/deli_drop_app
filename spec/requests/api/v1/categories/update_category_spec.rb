@@ -24,6 +24,10 @@ describe "PATCH /api/v1/categories/:id" do
 
       expect(category_response["name"]).to eq("Updated Name")
       expect(category_response["description"]).to eq("Updated description")
+      expect(category_response["products_count"]).to eq(0)
+      expect(category_response["actived_products_count"]).to eq(0)
+      expect(category_response["average_price"].to_f).to eq(0.0)
+      expect(category_response["restaurant_id"]).to eq(restaurant.id)
     end
 
     it "returns error if required fields are blank" do
@@ -58,7 +62,6 @@ describe "PATCH /api/v1/categories/:id" do
       update_params = {
         category: { name: "Hack Attempt" }
       }
-
 
       patch api_v1_category_path(category), params: update_params
 
