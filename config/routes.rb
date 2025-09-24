@@ -17,5 +17,4 @@ Rails.application.routes.draw do
   end
 
   get "/flash", to: "flash#redirect"
-  get "flash/show",     to: "flash#show"
 end
