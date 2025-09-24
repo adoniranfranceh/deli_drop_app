@@ -18,11 +18,9 @@
   </head>
 
   <body>
-    <% if notice.present? %>
-      <div id="flash-messages" data-type="success" data-message="<%= notice %>"></div>
-    <% elsif alert.present? %>
-      <div id="flash-messages" data-type="error" data-message="<%= alert %>"></div>
-    <% end %>
+    <div id="flash">
+      <%= render "shared/flash" %>
+    </div>
 
     <div id="app-vue"></div>
     <%= yield %>
