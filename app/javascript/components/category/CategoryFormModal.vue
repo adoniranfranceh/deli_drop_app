@@ -57,7 +57,7 @@ import BaseModal from '../ui/BaseModal.vue';
 import InputGroup from '../ui/InputGroup.vue';
 import { useCategoryValidator } from '../../composables/useCategoryValidator';
 import AppButton from '../ui/AppButton.vue';
-import { apiPost, apiPut } from '../../utils/apiHelper';
+import { apiPostLocal, apiPutLocal } from '../../utils/apiHelper';
 
 const props = defineProps({
   categoryData: {
@@ -77,26 +77,23 @@ const categoryExists = categoryData !== '' && categoryData !== null && categoryD
 
 const { errors: categoryErrors, isValid: isValidCategory } = useCategoryValidator(category);
 
-function submit() {
-  const payload = {
-    name: category.name,
-    description: category.description,
-  };
+const emit = defineEmits(['close', 'saved']);
 
-  if (categoryExists) {
-    return apiPut({
-      endpoint: `/api/v1/categories/${categoryData.id}`,
-      payload,
-      successMessage: 'Categoria atualizada com sucesso!',
-      redirectPath: '/menu'
-    });
-  } else {
-    return apiPost({
-      endpoint: '/api/v1/categories',
-      payload,
-      successMessage: 'Categoria criada com sucesso!',
-      redirectPath: '/menu'
-    });
+async function submit() {
+  const payload = { id: categoryData?.id, name: category.name, description: category.description }
+
+  try {
+    let response
+    if (categoryExists) {
+      response = await apiPutLocal({ endpoint: `/api/v1/categories/${categoryData.id}`, payload })
+    } else {
+      response = await apiPostLocal({ endpoint: '/api/v1/categories', payload })
+    }
+
+    emit('close')
+    emit('saved', response.category)
+  } catch (error) {
+    console.error(error)
   }
 }
 </script>
