@@ -13,6 +13,8 @@ class Category < ApplicationRecord
     select_clause = sanitize_sql_array([
       "categories.id,
        categories.name,
+       categories.description,
+       categories.restaurant_id,
        COUNT(products.id) AS products_count,
        SUM(CASE WHEN products.status = ? THEN 1 ELSE 0 END) AS actived_products_count,
        COALESCE(AVG(products.base_price), 0) AS average_price",
@@ -21,6 +23,10 @@ class Category < ApplicationRecord
 
     left_joins(:products).select(select_clause).group("categories.id")
   }
+
+  def with_products_stats
+    self.class.with_products_stats.find(id)
+  end
 
   MAX_CATEGORIES_PER_RESTAURANT = 10
 
