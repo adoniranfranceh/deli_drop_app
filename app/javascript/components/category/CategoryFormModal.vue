@@ -80,15 +80,19 @@ const { errors: categoryErrors, isValid: isValidCategory } = useCategoryValidato
 const emit = defineEmits(['close', 'saved']);
 
 async function submit() {
-  const payload = { id: categoryData?.id, name: category.name, description: category.description }
+  const payload = { name: category.name, description: category.description }
+
+   if (categoryExists &&
+      category.name === categoryData.name &&
+      category.description === categoryData.description) {
+    emit('close')
+    return
+  }
 
   try {
-    let response
-    if (categoryExists) {
-      response = await apiPutLocal({ endpoint: `/api/v1/categories/${categoryData.id}`, payload })
-    } else {
-      response = await apiPostLocal({ endpoint: '/api/v1/categories', payload })
-    }
+    let response = categoryExists ?
+      await apiPutLocal({ endpoint: `/api/v1/categories/${categoryData.id}`, payload })
+      : await apiPostLocal({ endpoint: '/api/v1/categories', payload })
 
     emit('close')
     emit('saved', response.category)
