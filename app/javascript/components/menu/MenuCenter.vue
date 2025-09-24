@@ -7,9 +7,9 @@
 
       <div v-show="tab === 'products'" class="products-tab">
         <ProductsMenuFilters @changeView="handleViewChange" />
-        <div v-if="products.length > 0" class="products-container">
+        <div v-if="productsList.length > 0" class="products-container">
           <CardProducts
-            v-for="product in products"
+            v-for="product in productsList"
             :product="product"
           />
         </div>
@@ -60,6 +60,7 @@ const props = defineProps({
 const openModal = ref(false)
 const selectedCategory = ref(null)
 const categoriesList = reactive([...props.categories])
+const productsList = reactive([...props.products])
 
 function openCategoryForm(category = null) {
   selectedCategory.value = category
@@ -78,11 +79,17 @@ function handleCategorySaved(savedCategory) {
 
   const index = categoriesList.findIndex(c => c.id === savedCategory.id)
 
-  if (index !== -1) {
-    categoriesList.splice(index, 1, savedCategory)
+  if (index >= 0) {
+    categoriesList[index] = savedCategory;
   } else {
     categoriesList.push(savedCategory)
   }
+
+  productsList.forEach(product => {
+    if (product.category_id === savedCategory.id) {
+      product.category_name = savedCategory.name;
+    }
+  });
 }
 
 function handleViewChange(view) {
