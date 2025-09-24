@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :restaurants, only: %i[create update]
-      resources :categories, only: %i[index create]
+      resources :categories, only: %i[index create update]
       resources :products, only: %i[create]
     end
   end

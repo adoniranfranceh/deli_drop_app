@@ -25,6 +25,9 @@ describe "POST /api/v1/categories" do
       category_response = json_response["category"]
       expect(category_response["name"]).to eq("Pizzas")
       expect(category_response["description"]).to eq("A test category")
+      expect(category_response["products_count"]).to eq(0)
+      expect(category_response["actived_products_count"]).to eq(0)
+      expect(category_response["average_price"].to_f).to eq(0.0)
       expect(category_response["restaurant_id"]).to eq(restaurant.id)
     end
 
@@ -45,7 +48,7 @@ describe "POST /api/v1/categories" do
       expect(json_response["errors"]).not_to include("Descrição não pode ficar em branco")
     end
 
-    it "to another restaurant" do
+    it "cannot create a category for another restaurant" do
       another_user = create(:restaurant_user, email: 'another@email.com')
       another_restaurant = create(:restaurant, restaurant_user: another_user)
       category_params = {
@@ -64,7 +67,7 @@ describe "POST /api/v1/categories" do
       category_response = json_response["category"]
       expect(category_response["name"]).to eq("Pizzas")
       expect(category_response["description"]).to eq("A test category")
-      expect(category_response["restaurant_id"]).to eq(restaurant.id)
+      expect(category_response["restaurant_id"]).to eq(user.restaurant.id)
     end
   end
 

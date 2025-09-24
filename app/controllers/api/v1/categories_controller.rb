@@ -8,7 +8,24 @@ class Api::V1::CategoriesController < Api::V1::ApplicationController
     category = Category.new(category_params)
 
     if category.save
-      render json: { message: I18n.t("api.v1.categories.create.success"), category: category }, status: :created
+      render json: {
+        message: I18n.t("api.v1.categories.create.success"),
+        category: category.with_products_stats
+      }, status: :created
+    else
+      render json: { status: :unprocessable_entity, errors: category.errors.full_messages.join(", ") }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    category = Category.find(params[:id])
+    authorize category
+
+    if category.update(category_params)
+      render json: {
+        message: I18n.t("api.v1.categories.update.success"),
+        category: category.with_products_stats
+      }, status: :ok
     else
       render json: { status: :unprocessable_entity, errors: category.errors.full_messages.join(", ") }, status: :unprocessable_entity
     end

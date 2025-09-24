@@ -51,5 +51,15 @@ RSpec.describe Category, type: :model do
       expect(result.actived_products_count).to eq 1
       expect(result.average_price.to_f).to eq 150
     end
+
+    it 'returns the category with correct count and average until direct' do
+      active_product
+      inactive_product
+      result = category.with_products_stats
+
+      expect(result.products_count).to eq 2
+      expect(result.actived_products_count).to eq 1
+      expect(result.average_price.to_f).to eq 150
+    end
   end
 end
