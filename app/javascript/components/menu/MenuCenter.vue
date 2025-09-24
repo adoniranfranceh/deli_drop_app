@@ -18,10 +18,12 @@
 
       <div v-show="tab === 'categories'">
         <CategoriesFilter @openCategoryModal="openCategoryForm"/>
-        <div v-if="categories.length > 0" class="categories-container">
+        <div v-if="categoriesList.length > 0" class="categories-container">
           <CategoriesCard
-            v-for="category in categories"
+            v-for="category in categoriesList"
+            :key="category.id"
             :category="category"
+            @openCategoryForm="openCategoryForm(category)"
           />
         </div>
         <MenuEmptyState v-else @openCategoryModal="openCategoryForm"  />
@@ -29,11 +31,16 @@
     </div>
   </div>
 
-  <CategoryFormModal v-if="openModal" @close="closeModal"/>
+  <CategoryFormModal
+    v-if="openModal"
+    @close="closeModal"
+    :categoryData="selectedCategory"
+    @saved="handleCategorySaved"
+  />
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import MenuOverview from './MenuOverview.vue'
 import MenuCards from './MenuCards.vue'
 import ProductsMenuFilters from './ProductsMenuFilters.vue'
@@ -45,21 +52,37 @@ import { navigateTo } from '../../utils/navigation'
 import CategoriesCard from '../category/CategoriesCard.vue'
 import CardProducts from '../products/CardProducts.vue'
 
-defineProps({
+const props = defineProps({
   categories: Object,
   products: Object,
 })
 
-const tab = ref('products')
-
 const openModal = ref(false)
+const selectedCategory = ref(null)
+const categoriesList = reactive([...props.categories])
 
-function openCategoryForm() {
+function openCategoryForm(category = null) {
+  selectedCategory.value = category
   openModal.value = true
 }
 
 function closeModal() {
   openModal.value = false
+  selectedCategory.value = null
+}
+
+const tab = ref('products')
+
+function handleCategorySaved(savedCategory) {
+  if (!savedCategory.id) return;
+
+  const index = categoriesList.findIndex(c => c.id === savedCategory.id)
+
+  if (index !== -1) {
+    categoriesList.splice(index, 1, savedCategory)
+  } else {
+    categoriesList.push(savedCategory)
+  }
 }
 
 function handleViewChange(view) {
