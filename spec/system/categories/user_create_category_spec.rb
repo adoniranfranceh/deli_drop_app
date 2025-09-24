@@ -9,7 +9,10 @@ describe 'User creates a category', type: :system do
     login_as user
     visit root_path
     find('span', text: 'Gerenciar Menu').click
-    click_button 'Nova Categoria'
+    find('span', text: 'Categorias').click
+    within('.menu-center') do
+      click_button 'Nova Categoria'
+    end
   end
 
   it 'successfully' do
@@ -23,6 +26,43 @@ describe 'User creates a category', type: :system do
     expect(Category.last.name).to eq('Pizzas')
     expect(Category.last.description).to eq('Categorias de pizzas diversas')
     expect(Category.last.restaurant).to eq(user.restaurant)
+
+    within '.categories-container' do
+      expect(page).to have_content('Pizzas')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Bebidas')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Combos')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Pratos Principais')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Sobremesas')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+    end
   end
 
   it 'and see errors in all required fields after touched' do
@@ -50,5 +90,36 @@ describe 'User creates a category', type: :system do
     expect(page).to have_content('Erro interno no servidor')
     expect(page).not_to have_css('.modal-content', visible: true)
     expect(page).to have_current_path(menu_path)
+    within '.categories-container' do
+      expect(page).not_to have_content('Pizzas')
+
+      expect(page).to have_content('Bebidas')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Combos')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Pratos Principais')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+
+      expect(page).to have_content('Sobremesas')
+      expect(page).to have_content("Produtos\n0")
+      expect(page).to have_content("Ativos\n0")
+      expect(page).to have_content("Preço Médio\nR$ 0,00")
+      expect(page).to have_css('.edit-btn', text: 'Editar')
+      expect(page).to have_css('.delete-btn')
+    end
   end
 end
