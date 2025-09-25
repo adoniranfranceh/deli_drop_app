@@ -178,7 +178,7 @@ function buildModifier(modifier) {
     name: modifier.name,
     base_price: Number(modifier.base_price),
     image: modifier.image,
-    _destroy: modifier._destroy,
+    _destroy: modifier._destroy || false,
   }
 }
 
@@ -190,7 +190,7 @@ function buildModifierGroup(group) {
     min: group.min,
     max: group.max,
     free_limit: group.free_limit,
-    _destroy: group._destroy,
+    _destroy: group._destroy || false,
     modifiers_attributes: group.modifiers.map(buildModifier)
   }
 }
