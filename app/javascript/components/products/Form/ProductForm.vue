@@ -13,23 +13,23 @@
 
   <div class="product-form">
     <div class="form-container">
-      <QuickTemplate @update:product="fillProduct" v-if="step === 1 && !isEdition"/>
+      <QuickTemplate v-if="stepVisibility.quickTemplate" @update:product="fillProduct"/>
       <ProductBasicInputs
-        v-if="step === 1"
+        v-if="stepVisibility.stepOne"
         :product="product"
         :errors="productErrors"
         :showCategoryError="forceCategoryError"
         :isActive="isActive"
       />
       <ModifierOptionsPrompt
-        v-if="isProductValid && step === 1 && !isEdition"
+        v-if="stepVisibility.modifierPrompt"
         @modifiers-decision="handleStepChange"
       />
       <ModifierGroup
-        v-if="step === 2"
+        v-if="stepVisibility.stepTwo"
         v-model="product.modifier_groups"
       />
-      <ProductViewer v-if="step === 3" :product="product" />
+      <ProductViewer v-if="stepVisibility.stepThree" :product="product" />
       <div class="form-actions">
         <AppButton
           class="cancel"
@@ -75,7 +75,6 @@ import AppButton from '../../ui/AppButton.vue';
 import ProductViewer from './StepThree/ProductViewer.vue';
 import { apiPost, apiPut } from '../../../utils/apiHelper';
 import { isEqual } from 'lodash';
-import cloneDeep from 'lodash/cloneDeep';
 import { navigateTo } from '../../../utils/navigation';
 
 const handleStepChange = (stepChoice) => {
@@ -91,15 +90,16 @@ const {
   step,
   nextStep,
   productErrors,
-  isProductValid,
+  stepVisibility,
   isNextDisabled,
   canClickSteps,
   isEdition,
+  getPayload,
+  getNormalizedInitial
 } = useProductForm(props.initialData);
 
 const isActive = ref(product.status == 'active')
 
-Object.assign(product, cloneDeep(props.initialData || product));
 
 function handleContinue() {
   console.log({ isEdition: isEdition.value, nextStep: nextStep.value, step: step.value })
@@ -112,7 +112,6 @@ function handleContinue() {
 
 const forceCategoryError = ref(false);
 const { fillProduct } = useProductTemplate(product, forceCategoryError);
-console.log(product)
 
 const hasUnsavedChanges = ref(false);
 
@@ -121,10 +120,7 @@ watch(product, () => {
 }, { deep: true });
 
 onMounted(() => {
-  if (isEdition.value) {
-    return
-  }
-  window.addEventListener('beforeunload', handleBeforeUnload);
+  if (!isEdition.value) window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
 onUnmounted(() => {
@@ -139,8 +135,8 @@ const handleBeforeUnload = (event) => {
 };
 
 function submit() {
-  const payload = buildPayload(product)
-  const initialPayload = normalizeProduct(props.initialData)
+  const payload = getPayload();
+  const initialPayload = getNormalizedInitial();
 
   if (isEqual(payload, initialPayload) && isEdition.value) {
     navigateTo('/menu')
@@ -166,50 +162,6 @@ function submit() {
   hasUnsavedChanges.value = false
 }
 
-function normalizeProduct(product) {
-  return buildPayload({
-    ...product,
-    modifier_groups: product?.modifier_groups || product?.modifier_groups_attributes || []
-  })
-}
-
-function buildModifier(modifier) {
-  return {
-    id: modifier.id,
-    name: modifier.name,
-    base_price: Number(modifier.base_price),
-    image: modifier.image,
-    _destroy: modifier._destroy || false,
-  }
-}
-
-function buildModifierGroup(group) {
-  return {
-    id: group.id,
-    name: group.name,
-    input_type: group.input_type,
-    min: group.min,
-    max: group.max,
-    free_limit: group.free_limit,
-    _destroy: group._destroy || false,
-    modifiers_attributes: group.modifiers.map(buildModifier)
-  }
-}
-
-function buildPayload(product) {
-  return {
-    name: product.name,
-    category_id: product.category_id,
-    base_price: Number(product.base_price),
-    duration: Number(product.duration),
-    description: product.description,
-    ingredients: product.ingredients,
-    image: product.image,
-    featured: product.featured,
-    status: product.status ? 'active' : 'inactive',
-    modifier_groups_attributes: product.modifier_groups.map(buildModifierGroup)
-  }
-}
 </script>
 
 <style scoped>
