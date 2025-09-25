@@ -1,7 +1,7 @@
 <template>
   <div class="product-viewer">
     <div class="image-wrapper">
-      <img :src="product.image_url" :alt="product.name" class="product-image" />
+      <img :src="product.image" :alt="product.name" class="product-image" />
     </div>
 
     <div class="product-details">
@@ -72,7 +72,7 @@ const additionalTotal = computed(() => {
 });
 
 const finalPrice = computed(() => {
-  return (props.product.price || 0) + additionalTotal.value
+  return (props.product.base_price || 0) + additionalTotal.value
 });
 </script>
 
