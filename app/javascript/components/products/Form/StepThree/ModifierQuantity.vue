@@ -105,7 +105,7 @@ const headerProps = computed(() => ({
   
   <ul class="modifiers">
     <li
-    v-for="item in modifier_group.modifiers_attributes"
+    v-for="item in modifier_group.modifiers"
     :key="item.id"
     class="modifiers-options"
     >
