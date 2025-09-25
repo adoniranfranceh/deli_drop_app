@@ -3,8 +3,8 @@ import { reactive, watchEffect, computed } from 'vue'
 export function useProductValidator(product) {
   const errors = reactive({
     name: null,
-    category: null,
-    price: null,
+    category_id: null,
+    base_price: null,
     duration: null,
     description: null,
   })
@@ -14,11 +14,11 @@ export function useProductValidator(product) {
   }
 
   function validateCategory() {
-    return !product.category ? 'Categoria é obrigatória' : null
+    return !product.category_id ? 'Categoria é obrigatória' : null
   }
 
   function validatePrice() {
-    return Number(product.price) <= 0.00 ? 'Preço é obrigatório' : null
+    return Number(product.base_price) <= 0.00 ? 'Preço é obrigatório' : null
   }
 
   function validateDuration() {
@@ -35,8 +35,8 @@ export function useProductValidator(product) {
 
   watchEffect(() => {
     errors.name = validateName()
-    errors.category = validateCategory()
-    errors.price = validatePrice()
+    errors.category_id = validateCategory()
+    errors.base_price = validatePrice()
     errors.duration = validateDuration()
     errors.description = validateDescription()
   })

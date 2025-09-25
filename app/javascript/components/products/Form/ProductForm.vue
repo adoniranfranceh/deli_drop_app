@@ -13,7 +13,7 @@
 
   <div class="product-form">
     <div class="form-container">
-      <QuickTemplate @update:product="fillProduct" v-if="step === 1"/>
+      <QuickTemplate @update:product="fillProduct" v-if="step === 1 && !isEdition"/>
       <ProductBasicInputs
         v-if="step === 1"
         :product="product"
@@ -21,7 +21,7 @@
         :showCategoryError="forceCategoryError"
       />
       <ModifierOptionsPrompt
-        v-if="isProductValid && step === 1"
+        v-if="isProductValid && step === 1 && !isEdition"
         @modifiers-decision="handleStepChange"
       />
       <ModifierGroup
@@ -41,7 +41,7 @@
           class="save"
           text="Continuar"
           icon="lucide-arrow-right"
-          @click="step = (step === 1 ? nextStep : 3)"
+          @click="handleContinue"
           :disabled="isNextDisabled"
           v-if="step < 3"
         />
@@ -72,11 +72,15 @@ import ModifierOptionsPrompt from './StepOne/ModifierOptionsPrompt.vue';
 import ProductBasicInputs from './StepOne/ProductBasicInputs.vue';
 import AppButton from '../../ui/AppButton.vue';
 import ProductViewer from './StepThree/ProductViewer.vue';
-import { apiPost } from '../../../utils/apiHelper';
+import { apiPost, apiPut } from '../../../utils/apiHelper';
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice;
 };
+
+const props = defineProps({
+  initialData: Object
+});
 
 const {
   product,
@@ -85,8 +89,22 @@ const {
   productErrors,
   isProductValid,
   isNextDisabled,
-  canClickSteps
-} = useProductForm();
+  canClickSteps,
+  isEdition,
+} = useProductForm(props.initialData);
+
+if (props.initialData) {
+  Object.assign(product, props.initialData);
+}
+
+function handleContinue() {
+  console.log({ isEdition: isEdition.value, nextStep: nextStep.value, step: step.value })
+  if (isEdition.value) {
+    step.value = step.value + 1;
+  } else {
+    step.value = (step.value === 1 ? nextStep.value : 3)
+  }
+}
 
 const forceCategoryError = ref(false);
 const { fillProduct } = useProductTemplate(product, forceCategoryError);
@@ -114,30 +132,66 @@ const handleBeforeUnload = (event) => {
 };
 
 function submit() {
-  const payload = {
+  const payload = buildPayload(product)
+
+  if (isEdition.value && props.initialData.id) {
+    payload._method = 'put'
+    apiPut({
+      endpoint: `/api/v1/products/${props.initialData.id}`,
+      payload,
+      successMessage: 'Produto atualizado com sucesso!',
+      redirectPath: '/menu'
+    })
+  } else {
+    apiPost({
+      endpoint: '/api/v1/products',
+      payload,
+      successMessage: 'Produto criado com sucesso!',
+      redirectPath: '/menu'
+    })
+  }
+
+  hasUnsavedChanges.value = false
+}
+
+function buildModifier(modifier) {
+  return {
+    id: modifier.id,
+    name: modifier.name,
+    base_price: Number(modifier.base_price),
+    image: modifier.image,
+    _destroy: modifier._destroy,
+  }
+}
+
+function buildModifierGroup(group) {
+  return {
+    id: group.id,
+    name: group.name,
+    input_type: group.input_type,
+    min: group.min,
+    max: group.max,
+    free_limit: group.free_limit,
+    _destroy: group._destroy,
+    modifiers_attributes: group.modifiers.map(buildModifier)
+  }
+}
+
+function buildPayload(product) {
+  return {
     name: product.name,
-    category_id: product.category,
-    base_price: Number(product.price),
+    category_id: product.category_id,
+    base_price: Number(product.base_price),
     duration: Number(product.duration),
     description: product.description,
     ingredients: product.ingredients,
-    image: product.image_url,
+    image: product.image,
     featured: product.isFeatured,
     status: product.isActive ? 'active' : 'inactive',
-    modifier_groups_attributes: product.modifier_groups
-  };
-
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
-
-  apiPost({
-    endpoint: '/api/v1/products',
-    payload,
-    successMessage: 'Produto criado com sucesso!',
-    redirectPath: '/menu'
-  });
-
-  hasUnsavedChanges.value = false;
+    modifier_groups_attributes: product.modifier_groups.map(buildModifierGroup)
+  }
 }
+
 </script>
 
 <style scoped>

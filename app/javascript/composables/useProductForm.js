@@ -2,14 +2,14 @@ import { ref, computed, reactive } from 'vue'
 import { useProductValidator } from './useProductValidator'
 import { useGroupsValidator } from './useGroupsValidator'
 
-export function useProductForm() {
+export function useProductForm(initialData = null) {
   const product = reactive({
     name: null,
     category: null,
-    price: null,
+    base_price: null,
     duration: null,
     description: null,
-    image_url: null,
+    image: null,
     isActive: true,
     isFeatured: false,
     ingredients: [],
@@ -21,8 +21,9 @@ export function useProductForm() {
 
   const { errors: productErrors, isValid: isProductValid } = useProductValidator(product);
   const { isValid: areGroupsValid } = useGroupsValidator(computed(() => product.modifier_groups));
+  const isEdition = ref(!!initialData);
 
-  const hasMadeStep1Decision = computed(() => nextStep.value !== null);
+  const hasMadeStep1Decision = computed(() => nextStep.value !== null || isEdition.value);
   const canProceedFromStep1 = computed(() => isProductValid.value && hasMadeStep1Decision.value);
   const isStep1Complete = computed(() => isProductValid.value);
 
@@ -33,7 +34,7 @@ export function useProductForm() {
 
   const isNextButtonDisabled = computed(() => {
     if (step.value === 1) {
-      return !canProceedFromStep1.value;
+      return !canProceedFromStep1.value
     }
     if (step.value === 2) {
       return !canProceedFromStep2.value;
@@ -56,12 +57,12 @@ export function useProductForm() {
     isNextDisabled: isNextButtonDisabled,
     canClickSteps,
     isFormValid,
+    isEdition
   };
 }
 
 export function useProductTemplate(product, forceCategoryError) {
   function fillProduct(template) {
-    console.log(template)
     product.ingredients.length = 0;
 
     if (template.ingredients) {
