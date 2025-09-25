@@ -19,6 +19,7 @@
         :product="product"
         :errors="productErrors"
         :showCategoryError="forceCategoryError"
+        :isActive="isActive"
       />
       <ModifierOptionsPrompt
         v-if="isProductValid && step === 1 && !isEdition"
