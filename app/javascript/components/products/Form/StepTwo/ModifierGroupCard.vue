@@ -79,10 +79,10 @@
       </div>
     </div>
 
-    <ItemChip :item="`${group.modifiers_attributes.length} ${group.modifiers_attributes.length != 1 ? 'opções' : 'opção' }`" class="options-chip" />
+    <ItemChip :item="`${group.modifiers.length} ${group.modifiers.length != 1 ? 'opções' : 'opção' }`" class="options-chip" />
 
     <ModifierList
-      :modifiers="group.modifiers_attributes"
+      :modifiers="group.modifiers"
       :index="index"
       @add-modifier="$emit('add-modifier', index)"
       @remove-modifier="$emit('remove-modifier', index, $event)"
