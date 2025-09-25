@@ -54,7 +54,7 @@ describe 'User creates a product', type: :system do
       fill_in 'Preço', with: '200'
       find('[placeholder="URL da Imagem"]').set('http://image.com/pudim')
 
-      # first modifier
+      # second modifier
       click_button 'Adicionar Opção'
       all('[placeholder="Nome da Opção"]').last.set('Bolo')
       all('[id="product-price"]').last.set('300')
@@ -170,7 +170,7 @@ describe 'User creates a product', type: :system do
 
     # Assert
     expect(page).to have_content 'Erro interno no servidor'
-    expect(page).to have_current_path(products_new_path)
+    expect(page).to have_current_path(new_product_path)
 
     expect(Product.count).to eq 0
     expect(ModifierGroup.count).to eq 0

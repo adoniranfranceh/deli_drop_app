@@ -1,7 +1,7 @@
 <template>
   <div class="product-viewer">
     <div class="image-wrapper">
-      <img :src="product.image_url" :alt="product.name" class="product-image" />
+      <img :src="product.image" :alt="product.name" class="product-image" />
     </div>
 
     <div class="product-details">
@@ -18,8 +18,8 @@
       <hr />
 
       <ModifierGroup
-        v-if="product.modifier_groups?.length > 0"
-        v-for="group in product.modifier_groups"
+        v-if="modifier_groups?.length > 0"
+        v-for="group in modifier_groups"
         :key="group.id"
         :modifier_group="group"
         @update:selected="handleUpdateSelected"
@@ -57,6 +57,8 @@ const props = defineProps({
   }
 })
 
+const modifier_groups = computed(() => (props.product.modifier_groups || []).filter(m => !m._destroy))
+
 const comment = ref('')
 const selectedByGroup = ref({}); 
 
@@ -72,7 +74,7 @@ const additionalTotal = computed(() => {
 });
 
 const finalPrice = computed(() => {
-  return (props.product.price || 0) + additionalTotal.value
+  return (props.product.base_price || 0) + additionalTotal.value
 });
 </script>
 

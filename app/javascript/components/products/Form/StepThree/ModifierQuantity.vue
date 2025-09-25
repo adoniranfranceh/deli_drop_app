@@ -13,6 +13,8 @@ const emit = defineEmits(['update:selected'])
 const quantities = ref({})
 const extraPrice = ref(0)
 
+const modifiers = computed(() => (props.modifier_group.modifiers || []).filter(m => !m._destroy))
+
 const totalSelected = computed(() =>
   Object.values(quantities.value).reduce((sum, entry) => sum + (entry?.quantity || 0), 0)
 )
@@ -105,7 +107,7 @@ const headerProps = computed(() => ({
   
   <ul class="modifiers">
     <li
-    v-for="item in modifier_group.modifiers_attributes"
+    v-for="item in modifiers"
     :key="item.id"
     class="modifiers-options"
     >

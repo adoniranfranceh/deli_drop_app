@@ -1,5 +1,5 @@
 <template>
-  <ProductFormOverview />
+  <ProductFormOverview :title="isEdition ? 'Editar Produto' : 'Novo Produto'" />
   <StepIndicator
     :steps="[
       { label: 'Informações Básicas', icon: 'lucide:package' },
@@ -13,22 +13,23 @@
 
   <div class="product-form">
     <div class="form-container">
-      <QuickTemplate @update:product="fillProduct" v-if="step === 1"/>
+      <QuickTemplate v-if="stepVisibility.quickTemplate" @update:product="fillProduct"/>
       <ProductBasicInputs
-        v-if="step === 1"
+        v-if="stepVisibility.stepOne"
         :product="product"
         :errors="productErrors"
         :showCategoryError="forceCategoryError"
+        :isActive="isActive"
       />
       <ModifierOptionsPrompt
-        v-if="isProductValid && step === 1"
+        v-if="stepVisibility.modifierPrompt"
         @modifiers-decision="handleStepChange"
       />
       <ModifierGroup
-        v-if="step === 2"
+        v-if="stepVisibility.stepTwo"
         v-model="product.modifier_groups"
       />
-      <ProductViewer v-if="step === 3" :product="product" />
+      <ProductViewer v-if="stepVisibility.stepThree" :product="product" />
       <div class="form-actions">
         <AppButton
           class="cancel"
@@ -41,7 +42,7 @@
           class="save"
           text="Continuar"
           icon="lucide-arrow-right"
-          @click="step = (step === 1 ? nextStep : 3)"
+          @click="handleContinue"
           :disabled="isNextDisabled"
           v-if="step < 3"
         />
@@ -72,25 +73,44 @@ import ModifierOptionsPrompt from './StepOne/ModifierOptionsPrompt.vue';
 import ProductBasicInputs from './StepOne/ProductBasicInputs.vue';
 import AppButton from '../../ui/AppButton.vue';
 import ProductViewer from './StepThree/ProductViewer.vue';
-import { apiPost } from '../../../utils/apiHelper';
+import { apiPost, apiPut } from '../../../utils/apiHelper';
+import { isEqual } from 'lodash';
+import { navigateTo } from '../../../utils/navigation';
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice;
 };
+
+const props = defineProps({
+  initialData: Object
+});
 
 const {
   product,
   step,
   nextStep,
   productErrors,
-  isProductValid,
+  stepVisibility,
   isNextDisabled,
-  canClickSteps
-} = useProductForm();
+  canClickSteps,
+  isEdition,
+  getPayload,
+  getNormalizedInitial
+} = useProductForm(props.initialData);
+
+const isActive = ref(product.status == 'active')
+
+function handleContinue() {
+  console.log({ isEdition: isEdition.value, nextStep: nextStep.value, step: step.value })
+  if (isEdition.value) {
+    step.value = step.value + 1;
+  } else {
+    step.value = (step.value === 1 ? nextStep.value : 3)
+  }
+}
 
 const forceCategoryError = ref(false);
 const { fillProduct } = useProductTemplate(product, forceCategoryError);
-console.log(product)
 
 const hasUnsavedChanges = ref(false);
 
@@ -99,7 +119,7 @@ watch(product, () => {
 }, { deep: true });
 
 onMounted(() => {
-  window.addEventListener('beforeunload', handleBeforeUnload);
+  if (!isEdition.value) window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
 onUnmounted(() => {
@@ -114,29 +134,31 @@ const handleBeforeUnload = (event) => {
 };
 
 function submit() {
-  const payload = {
-    name: product.name,
-    category_id: product.category,
-    base_price: Number(product.price),
-    duration: Number(product.duration),
-    description: product.description,
-    ingredients: product.ingredients,
-    image: product.image_url,
-    featured: product.isFeatured,
-    status: product.isActive ? 'active' : 'inactive',
-    modifier_groups_attributes: product.modifier_groups
-  };
+  const payload = getPayload();
+  const initialPayload = getNormalizedInitial();
 
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
+  if (isEqual(payload, initialPayload) && isEdition.value) {
+    navigateTo('/menu')
+    return
+  }
 
-  apiPost({
-    endpoint: '/api/v1/products',
-    payload,
-    successMessage: 'Produto criado com sucesso!',
-    redirectPath: '/menu'
-  });
+  if (isEdition.value && props.initialData.id) {
+    apiPut({
+      endpoint: `/api/v1/products/${props.initialData.id}`,
+      payload,
+      successMessage: 'Produto atualizado com sucesso!',
+      redirectPath: '/menu'
+    })
+  } else {
+    apiPost({
+      endpoint: '/api/v1/products',
+      payload,
+      successMessage: 'Produto criado com sucesso!',
+      redirectPath: '/menu'
+    })
+  }
 
-  hasUnsavedChanges.value = false;
+  hasUnsavedChanges.value = false
 }
 </script>
 

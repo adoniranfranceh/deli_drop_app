@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User creates a category', type: :system do
+describe 'User edits a category', type: :system do
   let(:user) { create(:restaurant_user) }
   let(:restaurant) { create(:restaurant, restaurant_user: user) }
   let(:category) { create(:category, restaurant:, name: 'Pizza', description: 'Categorias de pizzas diversas') }

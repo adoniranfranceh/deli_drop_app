@@ -31,6 +31,7 @@
         class="action-btn edit-btn"
         text="Editar"
         iconLeft="lucide:pen-line"
+        @click="navigateTo(`/products/${product.id}/edit`)"
       />
       <AppButton
         class="action-btn delete-btn"
@@ -45,6 +46,7 @@ import AppButton from '../ui/AppButton.vue';
 import ToggleSwitch from '../ui/ToggleSwitch.vue';
 import { FloatToMoney } from '../../utils/modey';
 import DeliveryDuration from '../ui/DeliveryDuration.vue';
+import { navigateTo } from '../../utils/navigation';
 
 defineProps({
   product: {

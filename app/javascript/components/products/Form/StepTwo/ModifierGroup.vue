@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div v-if="groups.length === 0" class="empty-groups">
+    <div v-if="groups.length === 0 || groups.every(g => g._destroy)" class="empty-groups">
       <Icon icon="lucide:settings" class="settings-icon" />
       <h3 class="first-title">Crie seu primeiro grupo</h3>
       <p class="empty-text">
@@ -34,7 +34,7 @@
 
     <div v-else>
       <ModifierGroupCard
-        v-for="(group, index) in groups"
+        v-for="(group, index) in groups.filter(g => !g._destroy)"
         :key="group.id"
         :group="group"
         :index="index"
@@ -87,16 +87,16 @@ function addGroup(type = '') {
     min: null,
     max: max,
     free_limit: free_limit,
-    modifiers_attributes: []
+    modifiers: []
   })
 }
 
 function removeGroup(index) {
-  groups.value.splice(index, 1)
+  groups.value[index]._destroy = true
 }
 
 function addModifier(index) {
-  groups.value[index].modifiers_attributes.push({
+  groups.value[index].modifiers.push({
     name: null,
     base_price: null,
     image: null,
@@ -104,7 +104,7 @@ function addModifier(index) {
 }
 
 function removeModifier(groupIndex, modifierIndex) {
-  groups.value[groupIndex].modifiers_attributes.splice(modifierIndex, 1)
+  groups.value[groupIndex].modifiers[modifierIndex]._destroy = true
 }
 </script>
 

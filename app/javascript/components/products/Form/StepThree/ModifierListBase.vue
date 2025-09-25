@@ -12,7 +12,7 @@
 
     <ul class="modifiers">
       <li
-        v-for="item in modifier_group.modifiers_attributes"
+        v-for="item in modifiers"
         :key="item.id"
         class="modifiers-options"
         :class="{
@@ -63,10 +63,11 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { FloatToMoney } from '../../../../utils/modey'
 import ModifierHeader from './ModifierHeader.vue'
 
-defineProps({
+const props = defineProps({
   modifier_group: Object,
   totalSelected: Number,
   isSelected: Function,
@@ -80,6 +81,8 @@ defineProps({
   isCheckbox: Boolean,
   isRadio: Boolean
 })
+
+const modifiers = computed(() => (props.modifier_group.modifiers || []).filter(m => !m._destroy))
 </script>
 
 <style scoped>

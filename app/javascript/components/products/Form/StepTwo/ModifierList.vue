@@ -11,7 +11,7 @@
 
     <div
       v-else
-      v-for="(modifier, idx) in modifiers"
+      v-for="(modifier, idx) in modifiers.filter(m => !m._destroy)"
       :key="modifier.id"
       class="modifier-row"
     >
