@@ -18,8 +18,8 @@
       <hr />
 
       <ModifierGroup
-        v-if="product.modifier_groups?.length > 0"
-        v-for="group in product.modifier_groups"
+        v-if="modifier_groups?.length > 0"
+        v-for="group in modifier_groups"
         :key="group.id"
         :modifier_group="group"
         @update:selected="handleUpdateSelected"
@@ -56,6 +56,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const modifier_groups = computed(() => (props.product.modifier_groups || []).filter(m => !m._destroy))
 
 const comment = ref('')
 const selectedByGroup = ref({}); 
