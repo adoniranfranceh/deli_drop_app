@@ -1,6 +1,6 @@
 <template>
   <MenuHeader
-    title="Novo Produto"
+    :title="title"
     subtitle="Preencha as informações do produto"
     >
     <template #actions>
@@ -13,6 +13,13 @@
 import AppButton from '../../../ui/AppButton.vue';
 import MenuHeader from '../../../ui/MenuHeader.vue';
 import { navigateTo } from '../../../../utils/navigation';
+
+defineProps({
+  title: {
+    type: String,
+    required: true
+  }
+})
 </script>
 
 <style scoped>

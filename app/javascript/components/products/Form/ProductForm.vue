@@ -1,5 +1,5 @@
 <template>
-  <ProductFormOverview />
+  <ProductFormOverview :title="isEdition ? 'Editar Produto' : 'Novo Produto'" />
   <StepIndicator
     :steps="[
       { label: 'Informações Básicas', icon: 'lucide:package' },
