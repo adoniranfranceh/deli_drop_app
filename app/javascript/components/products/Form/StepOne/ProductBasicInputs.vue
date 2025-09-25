@@ -69,8 +69,8 @@
     <IngredientsInput v-model="localProduct.ingredients" />
 
     <div class="switch-wrapper">
-      <ToggleSwitch v-model="product.isActive" label="Produto ativo" />
-      <ToggleSwitch v-model="product.isFeatured" label="Produto em destaque" />
+      <ToggleSwitch v-model="product.status" label="Produto ativo" />
+      <ToggleSwitch v-model="product.featured" label="Produto em destaque" />
     </div>
   </form>
 </template>
@@ -90,7 +90,10 @@ const props = defineProps({
   product: Object,
   errors: Object,
   showCategoryError: Boolean,
+  isActive: Boolean
 })
+
+props.product.status = props.isActive
 
 const emit = defineEmits(['update:product'])
 

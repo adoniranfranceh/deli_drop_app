@@ -10,8 +10,8 @@ export function useProductForm(initialData = null) {
     duration: null,
     description: null,
     image: null,
-    isActive: true,
-    isFeatured: false,
+    status: 'active',
+    featured: false,
     ingredients: [],
     modifier_groups: []
   });
