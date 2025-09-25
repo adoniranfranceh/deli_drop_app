@@ -73,6 +73,9 @@ import ProductBasicInputs from './StepOne/ProductBasicInputs.vue';
 import AppButton from '../../ui/AppButton.vue';
 import ProductViewer from './StepThree/ProductViewer.vue';
 import { apiPost, apiPut } from '../../../utils/apiHelper';
+import { isEqual } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import { navigateTo } from '../../../utils/navigation';
 
 const handleStepChange = (stepChoice) => {
   nextStep.value = stepChoice;
@@ -93,9 +96,9 @@ const {
   isEdition,
 } = useProductForm(props.initialData);
 
-if (props.initialData) {
-  Object.assign(product, props.initialData);
-}
+const isActive = ref(product.status == 'active')
+
+Object.assign(product, cloneDeep(props.initialData || product));
 
 function handleContinue() {
   console.log({ isEdition: isEdition.value, nextStep: nextStep.value, step: step.value })
