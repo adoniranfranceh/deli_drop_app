@@ -120,6 +120,9 @@ watch(product, () => {
 }, { deep: true });
 
 onMounted(() => {
+  if (isEdition.value) {
+    return
+  }
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
@@ -136,9 +139,14 @@ const handleBeforeUnload = (event) => {
 
 function submit() {
   const payload = buildPayload(product)
+  const initialPayload = normalizeProduct(props.initialData)
+
+  if (isEqual(payload, initialPayload) && isEdition.value) {
+    navigateTo('/menu')
+    return
+  }
 
   if (isEdition.value && props.initialData.id) {
-    payload._method = 'put'
     apiPut({
       endpoint: `/api/v1/products/${props.initialData.id}`,
       payload,
@@ -155,6 +163,13 @@ function submit() {
   }
 
   hasUnsavedChanges.value = false
+}
+
+function normalizeProduct(product) {
+  return buildPayload({
+    ...product,
+    modifier_groups: product?.modifier_groups || product?.modifier_groups_attributes || []
+  })
 }
 
 function buildModifier(modifier) {
@@ -189,12 +204,11 @@ function buildPayload(product) {
     description: product.description,
     ingredients: product.ingredients,
     image: product.image,
-    featured: product.isFeatured,
-    status: product.isActive ? 'active' : 'inactive',
+    featured: product.featured,
+    status: product.status ? 'active' : 'inactive',
     modifier_groups_attributes: product.modifier_groups.map(buildModifierGroup)
   }
 }
-
 </script>
 
 <style scoped>
