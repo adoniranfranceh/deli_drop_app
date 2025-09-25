@@ -24,118 +24,159 @@ describe 'User edits a product', type: :system do
     end
   end
 
-  it 'successfully with multiple groups and modifiers' do
-    fill_in 'Preço', with: '4090', fill_options: { clear: :backspace }
-    fill_in 'Tempo de preparo', with: '10'
-    find('label', text: 'Produto em destaque').click
+  context 'successfully' do
+    it 'with multiple groups and modifiers' do
+      fill_in 'Preço', with: '4090', fill_options: { clear: :backspace }
+      fill_in 'Tempo de preparo', with: '10'
+      find('label', text: 'Produto em destaque').click
 
-    click_button 'Continuar'
+      click_button 'Continuar'
 
-    within '.modifier-group-card' do
-      find('[placeholder="Nome do Grupo"]').set('Escolha 2 bebida')
-      fill_in 'Tipo de Escolha', with: 'Múltipla Escolha'
-      within '.dropdown-menu' do
-        find('.dropdown-item', text: 'Múltipla Escolha').click
+      within '.modifier-group-card' do
+        find('[placeholder="Nome do Grupo"]').set('Escolha 2 bebida')
+        fill_in 'Tipo de Escolha', with: 'Múltipla Escolha'
+        within '.dropdown-menu' do
+          find('.dropdown-item', text: 'Múltipla Escolha').click
+        end
+        fill_in 'Min de Opções', with: '2'
+        fill_in 'Max de Opções', with: '2'
+
+        all('[placeholder="Nome da Opção"]').first.set('Água')
+        all('[id="product-price"]').first.set('5,00')
+        all('[placeholder="URL da Imagem"]').first.set('http://image.com')
+
+        all('[placeholder="Nome da Opção"]').last.set('Suco')
+        all('[id="product-price"]').last.set('8,00')
+        all('[placeholder="URL da Imagem"]').last.set('http://image.com/suco')
+
+        click_button 'Adicionar Opção'
+        all('[placeholder="Nome da Opção"]').last.set('Coca-Cola')
+        all('[id="product-price"]').last.set('12,00')
+        all('[placeholder="URL da Imagem"]').last.set('http://image.com/cocacola')
       end
-      fill_in 'Min de Opções', with: '2'
-      fill_in 'Max de Opções', with: '2'
 
-      all('[placeholder="Nome da Opção"]').first.set('Água')
-      all('[id="product-price"]').first.set('5,00')
-      all('[placeholder="URL da Imagem"]').first.set('http://image.com')
+      click_button 'Continuar'
+      click_button 'Salvar'
 
-      all('[placeholder="Nome da Opção"]').last.set('Suco')
-      all('[id="product-price"]').last.set('8,00')
-      all('[placeholder="URL da Imagem"]').last.set('http://image.com/suco')
+      expect(page).to have_content 'Produto atualizado com sucesso!', wait: 5
+      expect(page).to have_current_path(menu_path)
 
-      click_button 'Adicionar Opção'
-      all('[placeholder="Nome da Opção"]').last.set('Coca-Cola')
-      all('[id="product-price"]').last.set('12,00')
-      all('[placeholder="URL da Imagem"]').last.set('http://image.com/cocacola')
+      product = Product.last
+      expect(product.name).to eq('Combo Mix')
+      expect(product.category.name).to eq('Combos')
+      expect(product.base_price).to eq(4090)
+      expect(product.duration).to eq(10)
+      expect(product.status).to eq('active')
+      expect(product.featured).to eq(true)
+
+      group = product.modifier_groups.find_by(name: 'Escolha 2 bebida')
+      expect(group.input_type).to eq('multiple_choice')
+      expect(group.min).to eq(2)
+      expect(group.max).to eq(2)
+      expect(group.free_limit).to eq(2)
+
+      modifiers = group.modifiers
+      expect(modifiers.map(&:name)).to eq([ 'Água', 'Suco', 'Coca-Cola' ])
+      expect(modifiers.map(&:base_price)).to eq([ 500, 800, 1200 ])
+      expect(modifiers.map(&:image)).to eq([ 'http://image.com', 'http://image.com/suco', 'http://image.com/cocacola' ])
     end
 
-    click_button 'Continuar'
-    click_button 'Salvar'
+    it 'removing multiple groups and modifiers' do
+      fill_in 'Preço', with: '4090', fill_options: { clear: :backspace }
+      fill_in 'Tempo de preparo', with: '10'
+      find('label', text: 'Produto em destaque').click
 
-    expect(page).to have_content 'Produto atualizado com sucesso!', wait: 5
-    expect(page).to have_current_path(menu_path)
+      click_button 'Continuar'
 
-    product = Product.last
-    expect(product.name).to eq('Combo Mix')
-    expect(product.category.name).to eq('Combos')
-    expect(product.base_price).to eq(4090)
-    expect(product.duration).to eq(10)
-    expect(product.status).to eq('active')
-    expect(product.featured).to eq(true)
+      within '.modifier-group-card' do
+        find('.bin-btn').click
+      end
 
-    group = product.modifier_groups.find_by(name: 'Escolha 2 bebida')
-    expect(group.input_type).to eq('multiple_choice')
-    expect(group.min).to eq(2)
-    expect(group.max).to eq(2)
-    expect(group.free_limit).to eq(2)
+      click_button 'Continuar'
+      click_button 'Salvar'
 
-    modifiers = group.modifiers
-    expect(modifiers.map(&:name)).to eq([ 'Água', 'Suco', 'Coca-Cola' ])
-    expect(modifiers.map(&:base_price)).to eq([ 500, 800, 1200 ])
-    expect(modifiers.map(&:image)).to eq([ 'http://image.com', 'http://image.com/suco', 'http://image.com/cocacola' ])
-  end
+      expect(page).to have_content 'Produto atualizado com sucesso!', wait: 5
+      expect(page).to have_current_path(menu_path)
 
-  it 'successfully removing multiple groups and modifiers' do
-    fill_in 'Preço', with: '4090', fill_options: { clear: :backspace }
-    fill_in 'Tempo de preparo', with: '10'
-    find('label', text: 'Produto em destaque').click
-
-    click_button 'Continuar'
-
-    within '.modifier-group-card' do
-      find('.bin-btn').click
+      product = Product.last
+      expect(product.name).to eq('Combo Mix')
+      expect(product.category.name).to eq('Combos')
+      expect(product.base_price).to eq(4090)
+      expect(product.duration).to eq(10)
+      expect(product.status).to eq('active')
+      expect(product.featured).to eq(true)
+      expect(product.modifier_groups.count).to eq(0)
+      expect(ModifierGroup.count).to eq(0)
+      expect(Modifier.count).to eq(0)
     end
 
-    click_button 'Continuar'
-    click_button 'Salvar'
+    it 'removing modifier' do
+      fill_in 'Preço', with: '4090', fill_options: { clear: :backspace }
+      fill_in 'Tempo de preparo', with: '10'
+      find('label', text: 'Produto em destaque').click
 
-    expect(page).to have_content 'Produto atualizado com sucesso!', wait: 5
-    expect(page).to have_current_path(menu_path)
+      click_button 'Continuar'
 
-    product = Product.last
-    expect(product.name).to eq('Combo Mix')
-    expect(product.category.name).to eq('Combos')
-    expect(product.base_price).to eq(4090)
-    expect(product.duration).to eq(10)
-    expect(product.status).to eq('active')
-    expect(product.featured).to eq(true)
-    expect(product.modifier_groups.count).to eq(0)
-    expect(ModifierGroup.count).to eq(0)
-    expect(Modifier.count).to eq(0)
+      all('.close-btn').last.click
+
+      click_button 'Continuar'
+      click_button 'Salvar'
+
+      expect(page).to have_content 'Produto atualizado com sucesso!', wait: 5
+      expect(page).to have_current_path(menu_path)
+
+      product = Product.last
+      expect(product.name).to eq('Combo Mix')
+      expect(product.category.name).to eq('Combos')
+      expect(product.base_price).to eq(4090)
+      expect(product.duration).to eq(10)
+      expect(product.status).to eq('active')
+      expect(product.featured).to eq(true)
+      expect(product.modifier_groups.count).to eq(1)
+      expect(product.modifier_groups.first.modifiers.count).to eq(1)
+      expect(product.modifier_groups.first.modifiers.first.name).to eq('Coca-Cola')
+      expect(ModifierGroup.count).to eq(1)
+      expect(Modifier.count).to eq(1)
+    end
+
+    it 'just a modifier group' do
+      click_button 'Continuar'
+
+      within '.modifier-group-card' do
+        find('[placeholder="Nome do Grupo"]').set('Escolha 2 bebida')
+      end
+
+      click_button 'Continuar'
+      click_button 'Salvar'
+
+      expect(page).to have_content 'Produto atualizado com sucesso!'
+      expect(page).to have_current_path(menu_path)
+
+      group = product.modifier_groups.find_by(name: 'Escolha 2 bebida')
+    end
+
+    it 'just a modifier' do
+      click_button 'Continuar'
+
+      all('[placeholder="Nome da Opção"]').last.set('Água com gás')
+
+      click_button 'Continuar'
+      click_button 'Salvar'
+
+      expect(page).to have_content 'Produto atualizado com sucesso!'
+      expect(page).to have_current_path(menu_path)
+      modifiers = product.modifier_groups.first.modifiers
+      expect(modifiers.last.name).to eq('Água com gás')
+    end
   end
 
-  it 'successfully removing modifier' do
-    fill_in 'Preço', with: '4090', fill_options: { clear: :backspace }
-    fill_in 'Tempo de preparo', with: '10'
-    find('label', text: 'Produto em destaque').click
-
+  it 'no request if nothing new' do
     click_button 'Continuar'
-
-    all('.close-btn').last.click
-
     click_button 'Continuar'
     click_button 'Salvar'
 
-    expect(page).to have_content 'Produto atualizado com sucesso!', wait: 5
+    expect(page).not_to have_content 'Produto atualizado com sucesso!'
     expect(page).to have_current_path(menu_path)
-
-    product = Product.last
-    expect(product.name).to eq('Combo Mix')
-    expect(product.category.name).to eq('Combos')
-    expect(product.base_price).to eq(4090)
-    expect(product.duration).to eq(10)
-    expect(product.status).to eq('active')
-    expect(product.featured).to eq(true)
-    expect(product.modifier_groups.count).to eq(1)
-    expect(product.modifier_groups.first.modifiers.count).to eq(1)
-    expect(product.modifier_groups.first.modifiers.first.name).to eq('Coca-Cola')
-    expect(ModifierGroup.count).to eq(1)
-    expect(Modifier.count).to eq(1)
   end
 
   it 'and sees an error message if something goes wrong on the server' do
