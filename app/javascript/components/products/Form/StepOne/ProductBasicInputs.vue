@@ -18,10 +18,10 @@
       />
 
       <InputDropdown
-        v-model="product.category"
+        v-model="product.category_id"
         :options="categoryOptions"
         placeholder="Todas as categorias"
-        :externalError="errors?.category"
+        :externalError="errors?.category_id"
         label="Categoria"
         :forceShowError="showCategoryError"
         required
@@ -32,8 +32,8 @@
       <CurrencyInput
         id="product-price"
         label="Preço"
-        v-model="product.price"
-        :externalError="errors?.price"
+        v-model="product.base_price"
+        :externalError="errors?.base_price"
         required
       />
 
@@ -63,7 +63,7 @@
       id="product-image"
       label="Imagem"
       placeholder="Imagem"
-      v-model="product.image_url"
+      v-model="product.image"
     />
 
     <IngredientsInput v-model="localProduct.ingredients" />
