@@ -5,7 +5,7 @@ describe 'User views product form product edit', type: :system do
   let(:restaurant) { create(:restaurant, restaurant_user: user) }
   let(:product) { create(:product, restaurant:, category: Category.find_by(name: 'Combos'),
                                    name: 'Combo Mix', base_price: 4990, duration: 10,
-                                   ingredients: ['bebidas'] ) }
+                                   ingredients: [ 'bebidas' ]) }
   let(:modifier_group) { create(:modifier_group, product:, name: 'Escolha uma bebida',
                                                  input_type: 'single_choice', min: 1, max: 1, free_limit: 1) }
   let(:modifier) { create(:modifier, modifier_group:, name: 'Coca-Cola', base_price: 500, image: 'http://image.com') }
