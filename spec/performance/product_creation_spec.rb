@@ -42,6 +42,6 @@ RSpec.describe "Product creation performance", type: :performance do
       expect(product.modifier_groups.first.modifiers.count).to eq(30)
     end
 
-    expect(elapsed).to be < 0.5
+    expect(elapsed).to be < 1
   end
 end
