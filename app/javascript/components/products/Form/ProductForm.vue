@@ -100,7 +100,6 @@ const {
 
 const isActive = ref(product.status == 'active')
 
-
 function handleContinue() {
   console.log({ isEdition: isEdition.value, nextStep: nextStep.value, step: step.value })
   if (isEdition.value) {
@@ -161,7 +160,6 @@ function submit() {
 
   hasUnsavedChanges.value = false
 }
-
 </script>
 
 <style scoped>
