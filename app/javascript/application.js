@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (newPro) {
     createApp(ProductForm).mount(newPro)
   }
+  const editPro = document.getElementById('edit-product')
+  if (editPro) {
+    const productData = JSON.parse(editPro.dataset.product);
+    createApp(ProductForm, { initialData: productData }).mount(editPro)
+  }
 
   const editRestaurant = document.getElementById('edit-restaurant')
   if (editRestaurant) {
