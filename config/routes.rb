@@ -4,15 +4,16 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   get "/menu", to: "menus#show"
-  get "/products/new", to: "products#new"
+  # get "/products/new", to: "products#new"
 
   resources :restaurants, only: %i[new edit]
+  resources :products, only: %i[new edit]
 
   namespace :api do
     namespace :v1 do
       resources :restaurants, only: %i[create update]
       resources :categories, only: %i[index create update]
-      resources :products, only: %i[create]
+      resources :products, only: %i[create update]
     end
   end
 
