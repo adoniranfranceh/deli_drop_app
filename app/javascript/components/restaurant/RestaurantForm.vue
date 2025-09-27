@@ -68,8 +68,6 @@ function submit() {
     address: restaurant.address,
   };
 
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
-
   if (restaurantExists) {
     return apiPut({
       endpoint: `/api/v1/restaurants/${initialData.id}`,
