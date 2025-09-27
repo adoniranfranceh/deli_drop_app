@@ -43,7 +43,7 @@ import { computed, useAttrs } from 'vue';
 
 defineProps({
   item: {
-    type: String,
+    type: [String, Number],
     required: true
   }
 })
