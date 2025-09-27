@@ -1,4 +1,7 @@
 class Api::V1::RestaurantsController < Api::V1::ApplicationController
+  before_action :set_restaurant, only: %i[update show]
+  include RestaurantJson
+
   def create
     restaurant = Restaurant.new(restaurant_params)
 
@@ -10,17 +13,24 @@ class Api::V1::RestaurantsController < Api::V1::ApplicationController
   end
 
   def update
-    restaurant = Restaurant.find(params[:id])
-    authorize restaurant
+    authorize @restaurant
 
-    if restaurant.update(restaurant_params)
-      render json: { message: I18n.t("api.v1.restaurants.update.success"), restaurant: restaurant }, status: :ok
+    if @restaurant.update(restaurant_params)
+      render json: { message: I18n.t("api.v1.restaurants.update.success"), restaurant: @restaurant }, status: :ok
     else
-      render json: { status: :unprocessable_entity, errors: restaurant.errors.full_messages.join(", ") }, status: :unprocessable_entity
+      render json: { status: :unprocessable_entity, errors: @restaurant.errors.full_messages.join(", ") }, status: :unprocessable_entity
     end
   end
 
+  def show
+    render json: restaurant_json(@restaurant)
+  end
+
   private
+
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  end
 
   def restaurant_params
     params.require(:restaurant).permit(
