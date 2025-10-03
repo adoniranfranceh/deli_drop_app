@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Restaurants API", type: :request do
-  describe "GET /restaurants/:id" do
+  describe "GET api/v1/restaurants/:id" do
     let(:user) { create(:restaurant_user) }
     let(:restaurant) { create(:restaurant, restaurant_user: user) }
     let(:product) { create(:product, category: restaurant.categories.first, restaurant:) }
