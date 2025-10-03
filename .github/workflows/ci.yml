@@ -98,6 +98,7 @@ jobs:
         run: bin/rails assets:precompile
         env:
           RAILS_ENV: test
+          FRONTEND_HOST: http://localhost:3000
 
       - name: Prepare database
         env:
