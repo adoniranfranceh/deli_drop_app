@@ -1,6 +1,7 @@
 class Api::V1::RestaurantsController < Api::V1::ApplicationController
   before_action :set_restaurant, only: %i[update show]
   include RestaurantJson
+  include RestaurantsJson
 
   def create
     restaurant = Restaurant.new(restaurant_params)
@@ -24,6 +25,11 @@ class Api::V1::RestaurantsController < Api::V1::ApplicationController
 
   def show
     render json: restaurant_json(@restaurant)
+  end
+
+  def index
+    @restaurants = restaurants_json(full: params[:full] == "true")
+    render json: @restaurants
   end
 
   private
