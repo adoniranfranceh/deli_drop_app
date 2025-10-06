@@ -38,6 +38,7 @@ module RestaurantJson
       description: product.description,
       image: product.image,
       category: product.category.name,
+      featured: product.featured,
       modifier_groups: product.modifier_groups.map { |group| modifier_group_json(group) }
     }
   end
