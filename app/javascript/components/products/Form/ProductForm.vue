@@ -101,7 +101,6 @@ const {
 const isActive = ref(product.status == 'active')
 
 function handleContinue() {
-  console.log({ isEdition: isEdition.value, nextStep: nextStep.value, step: step.value })
   if (isEdition.value) {
     step.value = step.value + 1;
   } else {

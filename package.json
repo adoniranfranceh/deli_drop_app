@@ -10,7 +10,6 @@
     "build:watch": "node esbuild.config.js --watch"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.2.6",
     "axios": "^1.11.0",
     "esbuild-plugin-vue3": "^0.4.2",
     "lodash": "^4.17.21",
