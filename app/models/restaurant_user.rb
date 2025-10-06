@@ -3,4 +3,6 @@ class RestaurantUser < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one :restaurant, dependent: :destroy
 end

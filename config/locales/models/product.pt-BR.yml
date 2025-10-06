@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    models:
+      product: "Produto"
+    attributes:
+      product:
+        name: "Nome"
+        category: "Categoria"
+        base_price: "Preço Base"
+        duration: "Tempo de Preparo"
+        description: "Descrição"
+        image: "Imagem"
+        status: "Status"
+        featured: "Produto em Destaque"
+        ingredients: Ingredientes
+        restaurant: "Restaurante"

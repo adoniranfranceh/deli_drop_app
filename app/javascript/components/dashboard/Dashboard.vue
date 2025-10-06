@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-header">
     <h1 class="title">Dashboard</h1>
-    <p class="welcome-msg">Bem-vindo de volta, Hamburgueria Top</p>
+    <p class="welcome-msg">Bem-vindo de volta, {{ restaurantData.name }}</p>
   </div>
   <div class="dashboard">
     <div class="dashboard-container">
@@ -12,7 +12,7 @@
           <RecentOrders />
         </div>
         <div class="dashboard-right">
-          <RestaurantInfo />
+          <RestaurantInfo :restaurantData="restaurantData" />
           <PerformanceChart
             :metrics="[
               { label: 'Visualizações', total: 1000, value: 234, suffix: '' },
@@ -31,6 +31,10 @@ import OverviewStats from './OverviewStats.vue';
 import RecentOrders from './RecentOrders.vue';
 import RestaurantInfo from './RestaurantInfo.vue';
 import PerformanceChart from './PerformanceChart.vue';
+
+defineProps({
+  restaurantData: Object
+})
 </script>
 
 <style scoped>

@@ -34,8 +34,8 @@
             { label: 'Lanches', value: 'snacks' },
             { label: 'Churrasco', value: 'barbecue' },
             { label: 'Frutos do Mar', value: 'seafood' },
-            { label: 'Cafeteria', value: 'coffee-shop' },
-            { label: 'Sorveteria', value: 'ice-cream' }
+            { label: 'Cafeteria', value: 'coffee_shop' },
+            { label: 'Sorveteria', value: 'ice_cream' }
           ]"
           placeholder="Tipo de Culinária"
           label="Tipo de Culinária"
@@ -58,16 +58,16 @@
         id="restaurant-image"
         label="Imagem"
         placeholder="Imagem"
-        v-model="restaurant.image_url"
+        v-model="restaurant.image"
         required
-        :externalError="restaurantErrors?.image_url"
+        :externalError="restaurantErrors?.image"
       />
 
       <div class="restaurant-image">
         <img
-          v-if="restaurant.image_url"
+          v-if="restaurant.image"
           alt="Restaurant"
-          :src="restaurant.image_url"
+          :src="restaurant.image"
         />
       </div>
     </div>

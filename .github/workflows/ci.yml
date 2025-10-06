@@ -66,16 +66,7 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: redis
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config google-chrome-stable
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -85,17 +76,38 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Run tests
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install JavaScript dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            build-essential git libpq-dev libyaml-dev pkg-config \
+            chromium chromium-driver fonts-liberation libnss3 \
+            libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 \
+            libxi6 libxtst6 xdg-utils
+
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+        env:
+          RAILS_ENV: test
+
+      - name: Prepare database
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+        run: |
+          bin/rails db:create db:schema:load
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+      - name: Run RSpec tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+        run: bundle exec rspec

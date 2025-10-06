@@ -45,7 +45,7 @@ export function useGroupValidator(group) {
 
   function validateModifiers() {
     const modifiers = group.modifiers
-    if (!modifiers || modifiers.length === 0) return 'Pelo menos um modificador é obrigatório'
+    if (!modifiers || modifiers.length === 0 || modifiers.every(m => m._destroy)) return 'Pelo menos um modificador é obrigatório'
     for (const mod of modifiers) {
       if (!mod.name?.trim()) {
         return 'Todos os modificadores devem ter nome e preço válidos'

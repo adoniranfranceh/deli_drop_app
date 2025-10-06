@@ -11,10 +11,13 @@ RSpec.describe "Authorization - Root", type: :request do
   context "when user is authenticated" do
     let(:user) { create(:restaurant_user) }
 
-    before { sign_in user }
+    before { login_as user, scope: :restaurant_user }
 
     it "allow access" do
+      user.create_restaurant
+
       get root_path
+
       expect(response).to have_http_status(:ok)
     end
   end

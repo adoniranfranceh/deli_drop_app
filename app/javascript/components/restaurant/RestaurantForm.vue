@@ -1,5 +1,5 @@
 <template>
-  <RestaurantFormOverview />
+  <RestaurantFormOverview :restaurantExists="restaurantExists" />
 
   <div class="restaurant-form">
     <div class="form-container">
@@ -10,6 +10,7 @@
 
       <div class="form-actions">
         <AppButton
+          v-if="initialData.length > 0"
           class="cancel"
           text="Cancelar"
           @click="navigateTo('/')"
@@ -34,15 +35,25 @@ import RestaurantBasicInputs from './RestaurantBasicInputs.vue';
 import AppButton from '../ui/AppButton.vue';
 import { useRestaurantValidator } from '../../composables/useRestaurantValidator';
 import { navigateTo } from '../../utils/navigation';
+import { apiPost, apiPut } from '../../utils/apiHelper';
+
+const props = defineProps ({
+  initialData: Object,
+  currentEmail: String
+})
+
+const initialData = props.initialData
+const currentEmail = props.currentEmail
+const restaurantExists = initialData !== '' && initialData !== null && initialData !== undefined
 
 const restaurant = reactive({
-  name: null,
-  culinary_style: null,
-  description: null,
-  image_url: null,
-  phone: null,
-  email: "email@email.com",
-  address: null,
+  name: initialData?.name || null,
+  culinary_style: initialData?.culinary_style || null,
+  description: initialData?.description || null,
+  image: initialData?.image || null,
+  phone: initialData?.phone || null,
+  email: currentEmail || null,
+  address: initialData?.address || null,
 });
 
 const { errors: restaurantErrors, isValid: isRestaurantValid } = useRestaurantValidator(restaurant);
@@ -51,14 +62,25 @@ function submit() {
   const payload = {
     name: restaurant.name,
     culinary_style: restaurant.culinary_style,
-    description: null,
-    image_url: null,
-    phone: null,
-    email: "email@email.com",
-    address: null,
+    description: restaurant.description,
+    image: restaurant.image,
+    phone: restaurant.phone,
+    address: restaurant.address,
   };
 
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
+  if (restaurantExists) {
+    return apiPut({
+      endpoint: `/api/v1/restaurants/${initialData.id}`,
+      payload,
+      successMessage: 'Restaurante atualizado com sucesso!'
+    });
+  } else {
+    return apiPost({
+      endpoint: '/api/v1/restaurants',
+      payload,
+      successMessage: 'Restaurante criado com sucesso!'
+    });
+  }
 }
 </script>
 

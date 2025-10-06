@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    models:
+      category: categoria
+    attributes:
+      category:
+        name: "Nome"
+        description: "Descrição"
+        restaurant: "Restaurante"
+        base:
+    errors:
+        models:
+          category:
+            attributes:
+              base:
+                max_categories: Você atingiu o limite de %{count} categorias. Edite ou exclua categorias existentes para adicionar novas.
