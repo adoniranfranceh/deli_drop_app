@@ -1,11 +1,13 @@
 <template>
   <label class="toggle-wrapper">
-    <input
-      type="checkbox"
-      :checked="checked"
-      @change="emit('update:modelValue', $event.target.checked)"
-    />
-    <span class="toggle-switch"></span>
+    <span class="switch-container">
+      <input
+        type="checkbox"
+        :checked="checked"
+        @change="emit('update:modelValue', $event.target.checked)"
+      />
+      <span class="toggle-switch"></span>
+    </span>
     <span class="label-text">{{ label }}</span>
   </label>
 </template>
@@ -33,6 +35,13 @@ const checked = computed({
   gap: 0.6em;
   cursor: pointer;
   font-size: 1rem;
+}
+
+.switch-container {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
 }
 
 .toggle-wrapper input[type="checkbox"] {
@@ -93,7 +102,7 @@ input[type="checkbox"]:checked + .toggle-switch::before {
   }
 
   input[type="checkbox"]:checked + .toggle-switch::before {
-    transform: translateX(18px);
+    transform: translateX(20px);
   }
 }
 </style>

@@ -1,0 +1,20 @@
+pt-BR:
+  activerecord:
+    models:
+      modifier_group: "Grupo de Modificador"
+    attributes:
+      modifier_group:
+        name: "Nome"
+        input_type: "Tipo de Escolha"
+        max: "Máximo"
+        min: "Mínimo"
+        free_limit: "Limite Grátis"
+
+  modifier_group:
+    single_choice:
+      min: "em Única Escolha deve ser sempre 1"
+      max: "em Única Escolha deve ser sempre 1"
+      free_limit: "deve ser igual ao valor de Máximo"
+    multiple_choice:
+      max: "deve ser no mínimo 2, em Múltipla Escolha"
+      free_limit: "deve ser igual ao valor de Máximo"

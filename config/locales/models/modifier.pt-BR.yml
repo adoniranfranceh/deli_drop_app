@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    models:
+      modifier: "Modificador"
+    attributes:
+      modifier:
+        name: "Nome"
+        base_price: "Preço Base"
+        image: "Imagem"

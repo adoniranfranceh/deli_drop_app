@@ -1,0 +1,7 @@
+pt-BR:
+  api:
+    v1:
+      restaurants:
+        update:
+          success: "Restaurante atualizado com sucesso!"
+          error: "Erro ao atualizar restaurante"

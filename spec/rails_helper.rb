@@ -22,6 +22,9 @@ Capybara.register_driver :selenium_chrome_headless do |app|
     opts.add_argument("--user-data-dir=/tmp/test-profile-#{SecureRandom.uuid}")
   end
 
+  chrome_path = '/usr/bin/chromium-browser'
+  chrome_options.binary = chrome_path if File.exist?(chrome_path)
+
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
@@ -40,6 +43,7 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :selenium_chrome_headless
+    Capybara.server = :puma, { Silent: true }
   end
 
   config.include Warden::Test::Helpers

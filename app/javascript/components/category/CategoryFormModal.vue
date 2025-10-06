@@ -16,6 +16,7 @@
 
       <form @submit.prevent class="form-grid">
         <InputGroup
+          id="name"
           label="Nome"
           placeholder="Nome da categoria"
           v-model="category.name"
@@ -24,6 +25,7 @@
         />
 
         <InputGroup
+          id="description"
           label="Descrição"
           placeholder="Descrição da categoria (opcional)"
           v-model="category.description"
@@ -55,21 +57,48 @@ import BaseModal from '../ui/BaseModal.vue';
 import InputGroup from '../ui/InputGroup.vue';
 import { useCategoryValidator } from '../../composables/useCategoryValidator';
 import AppButton from '../ui/AppButton.vue';
+import { apiPostLocal, apiPutLocal } from '../../utils/apiHelper';
+
+const props = defineProps({
+  categoryData: {
+    type: Object,
+    default: null,
+  },
+});
+
+const categoryData = props.categoryData;
 
 const category = reactive({
-  name: null,
-  description: null
+  name: categoryData?.name || null,
+  description: categoryData?.description || null
 });
+
+const categoryExists = categoryData !== '' && categoryData !== null && categoryData !== undefined
 
 const { errors: categoryErrors, isValid: isValidCategory } = useCategoryValidator(category);
 
-function submit() {
-  const payload = {
-    name: category.name,
-    description: category.description,
-  };
+const emit = defineEmits(['close', 'saved']);
 
-  console.log('JSON Final para envio:', JSON.stringify(payload, null, 2));
+async function submit() {
+  const payload = { name: category.name, description: category.description }
+
+   if (categoryExists &&
+      category.name === categoryData.name &&
+      category.description === categoryData.description) {
+    emit('close')
+    return
+  }
+
+  try {
+    let response = categoryExists ?
+      await apiPutLocal({ endpoint: `/api/v1/categories/${categoryData.id}`, payload })
+      : await apiPostLocal({ endpoint: '/api/v1/categories', payload })
+
+    emit('close')
+    emit('saved', response.category)
+  } catch (error) {
+    console.error(error)
+  }
 }
 </script>
 
