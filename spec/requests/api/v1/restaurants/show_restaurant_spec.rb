@@ -39,6 +39,7 @@ RSpec.describe "Restaurants API", type: :request do
       expect(json_product["description"]).to eq(product.description)
       expect(json_product["image"]).to eq(product.image)
       expect(json_product["category"]).to eq(category.name)
+      expect(json_product["featured"]).to eq(false)
       expect(json_product["modifier_groups"]).not_to be_empty
 
       json_modifier_group = json_product["modifier_groups"].first
@@ -61,15 +62,16 @@ RSpec.describe "Restaurants API", type: :request do
       expect(json_modifier).not_to have_key("product_id")
     end
 
-    it 'returns only categories that have a product' do
+    it 'returns only categories that have a active product(s)' do
       category_cool = restaurant.categories.first
       create(:product, category: restaurant.categories.second, restaurant:)
       create_list(:product, 3, category: category_cool, restaurant:)
+      create_list(:product, 2, category: category_cool, status: :inactive, restaurant:)
 
       get api_v1_restaurant_path(restaurant)
 
       expect(Category.count).to eq(4)
-      expect(Product.count).to eq(4)
+      expect(Product.count).to eq(6)
       json = JSON.parse(response.body)
       expect(json["categories"].size).to eq(2)
       expect(json["categories"].first["products"].size).to eq(3)
