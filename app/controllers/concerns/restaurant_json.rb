@@ -24,7 +24,7 @@ module RestaurantJson
     {
       id: category.id,
       name: category.name,
-      products: category.products.map { |product| product_json(product) }
+      products: category.products.active.map { |product| product_json(product) }
     }
   end
 
