@@ -14,3 +14,9 @@ pt-BR:
         featured: "Produto em Destaque"
         ingredients: Ingredientes
         restaurant: "Restaurante"
+    errors:
+      models:
+        product:
+          attributes:
+            category:
+              same_restaurant: deve pertencer ao mesmo restaurante que o produto
