@@ -6,12 +6,21 @@ RSpec.describe "Products API" do
       include ProductJson
        context "without params" do
         it "returns only id, restaurant_id, name, description, image and base_price" do
+          restaurant = create(:restaurant)
+          category1 = create(:category, name: 'Category 1', restaurant:)
           product1 = create(:product, name: 'Product 1', description: 'The product 1',
-                                      image: 'http://www.product1.com', base_price: 2000)
+                                      image: 'http://www.product1.com', base_price: 2000,
+                                      category: category1, restaurant:)
+
+          category2 = create(:category, name: 'Category 2', restaurant:)
           product2 = create(:product, name: 'Product 2', description: 'The product 2',
-                                      image: 'http://www.product2.com', base_price: 3000)
+                                      image: 'http://www.product2.com', base_price: 3000,
+                                      category: category2, restaurant:)
+
+          category3 = create(:category, name: 'Category 3', restaurant:)
           product3 = create(:product, name: 'Product 3', description: 'The product 3',
-                                      image: 'http://www.product3.com', base_price: 4000)
+                                      image: 'http://www.product3.com', base_price: 4000,
+                                      category: category3, restaurant:)
 
           get api_v1_products_path
 
@@ -31,6 +40,7 @@ RSpec.describe "Products API" do
           expect(json_product1["id"]).to eq(product1.id)
           expect(json_product1["restaurant_id"]).to eq(product1.restaurant_id)
           expect(json_product1["name"]).to eq('Product 1')
+          expect(json_product1["category"]).to eq('Category 1')
           expect(json_product1["description"]).to eq('The product 1')
           expect(json_product1["image"]).to eq('http://www.product1.com')
           expect(json_product1["base_price"]).to eq(2000)
@@ -38,6 +48,7 @@ RSpec.describe "Products API" do
           expect(json_product2["id"]).to eq(product2.id)
           expect(json_product2["restaurant_id"]).to eq(product2.restaurant_id)
           expect(json_product2["name"]).to eq('Product 2')
+          expect(json_product2["category"]).to eq('Category 2')
           expect(json_product2["description"]).to eq('The product 2')
           expect(json_product2["image"]).to eq('http://www.product2.com')
           expect(json_product2["base_price"]).to eq(3000)
@@ -45,6 +56,7 @@ RSpec.describe "Products API" do
           expect(json_product3["id"]).to eq(product3.id)
           expect(json_product3["restaurant_id"]).to eq(product3.restaurant_id)
           expect(json_product3["name"]).to eq('Product 3')
+          expect(json_product3["category"]).to eq('Category 3')
           expect(json_product3["description"]).to eq('The product 3')
           expect(json_product3["image"]).to eq('http://www.product3.com')
           expect(json_product3["base_price"]).to eq(4000)

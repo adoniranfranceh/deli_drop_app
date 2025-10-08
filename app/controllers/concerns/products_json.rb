@@ -13,6 +13,7 @@ module ProductsJson
           id: product.id,
           restaurant_id: product.restaurant_id,
           name: product.name,
+          category: product.category.name,
           description: product.description,
           image: product.image,
           base_price: product.base_price
