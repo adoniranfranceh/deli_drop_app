@@ -10,6 +10,6 @@ FactoryBot.define do
     image { "http://product_image.png" }
 
     association :restaurant, factory: :restaurant
-    category { association(:category, restaurant: restaurant) }
+    category { association(:category, restaurant:) }
   end
 end
