@@ -6,6 +6,6 @@ FactoryBot.define do
     image { "http://imagem.com" }
     phone { "89 99999-9999" }
     address { "Rua das Palmeiras, 400" }
-    restaurant_user { nil }
+    association :restaurant_user, factory: :restaurant_user
   end
 end

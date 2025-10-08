@@ -1,4 +1,6 @@
 class Api::V1::ProductsController < Api::V1::ApplicationController
+  include ProductsJson
+
   def create
     product = Product.new(product_params)
 
@@ -20,7 +22,26 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
     end
   end
 
+  def index
+    products = ProductQuery.new(params).call
+
+    render json: {
+      products: products_json(full: params[:full] == "true",
+        collection: products
+      ),
+      meta: pagination_meta(products)
+    }, status: :ok
+  end
+
   private
+
+  def pagination_meta(scope)
+    {
+      current_page: scope.current_page,
+      total_pages: scope.total_pages,
+      total_count: scope.total_count
+    }
+  end
 
   def product_params
     params.require(:product).permit(
