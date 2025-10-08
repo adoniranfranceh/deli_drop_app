@@ -116,8 +116,8 @@ RSpec.describe "Products API" do
         end
 
         it "returns products matching ingredients" do
-          product1 = create(:product, ingredients: ["Molho Italiano", "Calabresa"])
-          create(:product, ingredients: ["Cream Cheese", "Cebola"])
+          product1 = create(:product, ingredients: [ "Molho Italiano", "Calabresa" ])
+          create(:product, ingredients: [ "Cream Cheese", "Cebola" ])
 
           get api_v1_products_path, params: { query: "Calabresa" }
 
