@@ -28,11 +28,28 @@ class Api::V1::RestaurantsController < Api::V1::ApplicationController
   end
 
   def index
-    @restaurants = restaurants_json(full: params[:full] == "true")
-    render json: @restaurants
+    restaurants = RestaurantQuery.new(params).call
+
+    filtered = restaurants.joins(:products).distinct
+
+    render json: {
+      restaurants: restaurants_json(
+        full: params[:full] == "true",
+        collection: filtered
+      ),
+      meta: pagination_meta(filtered)
+    }
   end
 
   private
+
+  def pagination_meta(collection)
+    {
+      current_page: collection.current_page,
+      total_pages: collection.total_pages,
+      total_count: collection.total_count
+    }
+  end
 
   def set_restaurant
     @restaurant = Restaurant.find(params[:id])
