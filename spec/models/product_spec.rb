@@ -68,6 +68,16 @@ RSpec.describe Product, type: :model do
                             status: :active, featured: true)
       expect(product).to be_valid
     end
+
+    it "is invalid if product belongs to a different restaurant than its category" do
+      restaurant1 = create(:restaurant)
+      restaurant2 = create(:restaurant)
+      category = create(:category, restaurant: restaurant1)
+      product = Product.new(category: category, restaurant: restaurant2)
+
+      expect(product).not_to be_valid
+      expect(product.errors.full_messages).to include("Categoria deve pertencer ao mesmo restaurante que o produto")
+    end
   end
 
   context '.with_category_name' do

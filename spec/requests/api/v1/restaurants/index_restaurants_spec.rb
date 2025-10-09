@@ -13,11 +13,11 @@ RSpec.describe "Restaurants API", type: :request do
           restaurant2 = create(:restaurant, restaurant_user: create(:restaurant_user),
                               name: 'Restaurante 2', image: 'http://www.restaurant2.com',
                               description: 'The restaurant 2')
-          create(:product, restaurant: restaurant2, category: restaurant1.categories.first)
+          create(:product, restaurant: restaurant2, category: restaurant2.categories.first)
           restaurant3 = create(:restaurant, restaurant_user: create(:restaurant_user),
                               name: 'Restaurante 3', image: 'http://www.restaurant3.com',
                               description: 'The restaurant 3')
-          create(:product, restaurant: restaurant3, category: restaurant1.categories.first)
+          create(:product, restaurant: restaurant3, category: restaurant3.categories.first)
           restaurant4 = create(:restaurant, restaurant_user: create(:restaurant_user),
                               name: 'Restaurante 4', image: 'http://www.restaurant4.com',
                               description: 'The restaurant 4')

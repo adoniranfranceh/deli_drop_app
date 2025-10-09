@@ -81,9 +81,8 @@ RSpec.describe RestaurantQuery do
     it 'returns restaurants by product category' do
       restaurant1 = create(:restaurant, name: 'Pizzaria Dony')
       restaurant2 = create(:restaurant, name: 'Sushi Place')
-
-      category = create(:category, name: 'Japonesa', restaurant: restaurant1)
-      create(:product, restaurant: restaurant2, category: category)
+      category = create(:category, name: 'Japonesa', restaurant: restaurant2)
+      create(:product, restaurant: restaurant2, category:)
 
       response = described_class.new({ category: 'Japone' }).call
 
