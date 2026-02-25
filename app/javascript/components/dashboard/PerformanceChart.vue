@@ -1,19 +1,19 @@
 <template>
-  <div class="performance-chart">
-    <h2>Desempenho hoje</h2>
+  <div class="bg-white border border-border rounded-lg p-6 shadow-sm">
+    <h2 class="text-center my-4 text-xl font-bold">Desempenho hoje</h2>
 
     <div
       v-for="(metric, index) in processedMetrics"
       :key="index"
-      class="metric"
+      class="mb-5"
     >
-      <div class="metric-header">
+      <div class="flex justify-between mb-1 text-sm font-medium">
         <span>{{ metric.label }}</span>
-        <span class="value">{{ metric.displayValue }}</span>
+        <span class="font-bold">{{ metric.displayValue }}</span>
       </div>
-      <div class="progress-bar">
+      <div class="bg-[#f1f1f1] h-2 rounded-[10px] overflow-hidden">
         <div
-          class="progress-fill"
+          class="h-full bg-primary rounded-[10px] transition-all duration-300"
           :style="{ width: metric.percentage + '%' }"
         ></div>
       </div>
@@ -45,49 +45,3 @@ const processedMetrics = computed(() =>
   })
 )
 </script>
-
-<style scoped>
-.performance-chart {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  font-family: var(--font-family);
-}
-
-.performance-chart h2 {
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.metric {
-  margin-bottom: 1.2rem;
-}
-
-.metric-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.4rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.value {
-  font-weight: bold;
-}
-
-.progress-bar {
-  background-color: #f1f1f1;
-  height: 8px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: var(--color-primary);
-  border-radius: 10px;
-  transition: width 0.3s ease;
-}
-</style>

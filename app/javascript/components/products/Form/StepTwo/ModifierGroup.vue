@@ -1,33 +1,44 @@
 <template>
-  <div class="group-section">
-    <div class="group-header">
+  <div class="flex flex-col gap-5 w-4/5 p-8 bg-white border border-border rounded-lg max-[758px]:w-full max-[758px]:p-1.5 max-[758px]:m-0">
+    <div class="flex justify-between items-center gap-2 max-[758px]:flex-col">
       <div>
-        <h2 class="group-title"><Icon icon="lucide:settings"/> Grupos de Modificadores</h2>
-        <p class="group-subtitle">Configure opções de personalização para este produto</p>
+        <h2 class="flex items-center gap-2 font-bold m-0 text-xl max-[758px]:text-lg">
+          <Icon icon="lucide:settings" width="24" height="24" class="text-primary" /> Grupos de Modificadores
+        </h2>
+        <p class="text-sm text-muted m-0 max-[758px]:text-xs">Configure opções de personalização para este produto</p>
       </div>
     </div>
 
-    <div v-if="groups.length === 0 || groups.every(g => g._destroy)" class="empty-groups">
-      <Icon icon="lucide:settings" class="settings-icon" />
-      <h3 class="first-title">Crie seu primeiro grupo</h3>
-      <p class="empty-text">
+    <div v-if="groups.length === 0 || groups.every(g => g._destroy)" class="text-center border-2 border-dashed border-border p-6 rounded-lg mt-4">
+      <Icon icon="lucide:settings" width="56" height="56" class="w-full text-border" />
+      <h3 class="mt-4 text-muted font-medium">Crie seu primeiro grupo</h3>
+      <p class="mt-2 text-muted">
         Grupos organizam as opções. Por exemplo: "Tamanhos", "Adicionais", "Sabores"
       </p>
 
-      <div class="group-type-options">
-        <button class="group-type" @click="addGroup('single_choice')">
-          <strong>Escolha Única</strong>
-          <span>Cliente escolhe 1</span>
+      <div class="flex gap-4 justify-center flex-wrap mt-4">
+        <button
+          class="bg-white border border-border p-4 rounded-md w-[200px] text-center cursor-pointer flex flex-col gap-1 transition-all duration-200 hover:border-primary hover:bg-primary/10"
+          @click="addGroup('single_choice')"
+        >
+          <strong class="text-primary text-base">Escolha Única</strong>
+          <span class="text-sm text-muted">Cliente escolhe 1</span>
         </button>
 
-        <button class="group-type" @click="addGroup('multiple_choice')">
-          <strong>Múltipla Escolha</strong>
-          <span>Cliente escolhe vários</span>
+        <button
+          class="bg-white border border-border p-4 rounded-md w-[200px] text-center cursor-pointer flex flex-col gap-1 transition-all duration-200 hover:border-primary hover:bg-primary/10"
+          @click="addGroup('multiple_choice')"
+        >
+          <strong class="text-primary text-base">Múltipla Escolha</strong>
+          <span class="text-sm text-muted">Cliente escolhe vários</span>
         </button>
 
-        <button class="group-type" @click="addGroup('quantity')">
-          <strong>Quantidade</strong>
-          <span>Cliente define quantos</span>
+        <button
+          class="bg-white border border-border p-4 rounded-md w-[200px] text-center cursor-pointer flex flex-col gap-1 transition-all duration-200 hover:border-primary hover:bg-primary/10"
+          @click="addGroup('quantity')"
+        >
+          <strong class="text-primary text-base">Quantidade</strong>
+          <span class="text-sm text-muted">Cliente define quantos</span>
         </button>
       </div>
     </div>
@@ -45,8 +56,8 @@
       <AppButton
         text="Adicionar Grupo"
         iconLeft="ic:round-plus"
+        variant="secondary"
         @click="addGroup('')"
-        class="add-group-btn"
       />
     </div>
   </div>
@@ -107,135 +118,3 @@ function removeModifier(groupIndex, modifierIndex) {
   groups.value[groupIndex].modifiers[modifierIndex]._destroy = true
 }
 </script>
-
-<style scoped>
-.group-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  width: 80%;
-  padding: 2rem;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-}
-
-.group-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.group-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.group-subtitle {
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  margin: 0;
-}
-
-.add-group-btn {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-black);
-}
-
-.add-group-btn:hover {
-  background-color: var(--color-border);
-}
-
-.empty-groups {
-  text-align: center;
-  border: 2px dashed var(--color-border);
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-}
-
-.empty-groups :deep(.cta-button) {
-  background-color: var(--color-white);
-  color: var(--color-black);
-  border: 1px solid var(--color-border);
-}
-
-.settings-icon {
-  height: 3.5rem;
-  width: 3.5rem;
-  color: var(--color-border);
-}
-
-.first-title {
-  margin-top: 1rem;
-  color: var(--color-muted-blue);
-  font-weight: 500;
-}
-
-.empty-text {
-  margin-top: 0.5rem;
-  color: var(--color-muted);
-}
-
-.group-type-options {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-}
-
-.group-type {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  padding: 1rem;
-  border-radius: 6px;
-  width: 200px;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  transition: border 0.2s, background 0.2s;
-}
-
-.group-type:hover {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary-light);
-}
-
-.group-type strong {
-  color: var(--color-primary-hover);
-  font-size: 1rem;
-}
-
-.group-type span {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-}
-
-@media (max-width: 758px) {
-  .group-section {
-    width: 100%;
-    padding: 0.4rem;
-    margin: 0;
-  }
-
-  .group-header {
-    flex-direction: column;
-  }
-
-  .group-title {
-    font-size: 1.2rem;
-  }
-
-  .group-subtitle {
-    font-size: 0.8rem;
-  }
-}
-</style>

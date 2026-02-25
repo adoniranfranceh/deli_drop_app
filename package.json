@@ -3,11 +3,15 @@
   "private": true,
   "devDependencies": {
     "@iconify/vue": "^5.0.0",
-    "esbuild": "^0.25.6"
+    "@tailwindcss/postcss": "^4.1.18",
+    "autoprefixer": "^10.4.23",
+    "esbuild": "^0.25.6",
+    "tailwindcss": "^4.1.18"
   },
   "scripts": {
-    "build": "node esbuild.config.js",
-    "build:watch": "node esbuild.config.js --watch"
+    "build": "node esbuild.config.js && npm run build:css",
+    "build:watch": "node esbuild.config.js --watch",
+    "build:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/tailwind.css -o ./app/assets/builds/tailwind.css --minify"
   },
   "dependencies": {
     "axios": "^1.11.0",

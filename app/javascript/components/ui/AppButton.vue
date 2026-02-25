@@ -1,19 +1,19 @@
 <template>
   <button
-    class="cta-button"
     :style="customStyles"
-    :class="{ selected }"
+    :class="[buttonClasses, { selected }]"
     @click="handleClick"
   >
-    <span class="text-btn">
-      <Icon v-if="iconLeft" :icon="iconLeft" class="btn-icon" />
+    <span class="flex items-center justify-center text-lg max-[600px]:text-sm font-normal gap-2 group-hover:gap-4 transition-all duration-300 m-0">
+      <Icon v-if="iconLeft" :icon="iconLeft" class="transition-transform duration-300 group-hover:translate-x-1" />
       {{ text }}
-      <Icon v-if="icon" :icon="icon" class="btn-icon" />
+      <Icon v-if="icon" :icon="icon" class="transition-transform duration-300 group-hover:translate-x-1" />
     </span>
   </button>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps({
@@ -22,75 +22,31 @@ const props = defineProps({
   selected: Boolean,
   icon: String,
   iconLeft: String,
-  customStyles: Object
+  customStyles: Object,
+  variant: {
+    type: String,
+    default: 'primary'
+  }
 })
 
 const emit = defineEmits(['click'])
+
+const baseClasses = 'py-[0.7rem] px-6 max-[600px]:px-4 rounded-lg no-underline font-medium inline-block transition-all duration-300 overflow-hidden cursor-pointer hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed disabled:pointer-events-none group'
+
+const variantClasses = computed(() => {
+  const variants = {
+    primary: 'bg-primary text-white border-none hover:bg-primary-hover',
+    secondary: 'bg-white text-black border border-border hover:bg-border',
+    danger: 'bg-white text-primary border border-border hover:bg-border',
+    ghost: 'bg-transparent text-inherit border-none p-1 hover:scale-100 hover:opacity-70'
+  }
+  return variants[props.variant] || variants.primary
+})
+
+const buttonClasses = computed(() => `${baseClasses} ${variantClasses.value}`)
 
 function handleClick(event) {
   event.stopPropagation()
   emit('click', event)
 }
 </script>
-
-<style scoped>
-.cta-button {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
-  display: inline-block;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease;
-  overflow: hidden;
-  border: none;
-  cursor: pointer;
-}
-
-.cta-button:hover {
-  background-color: var(--color-primary-hover);
-  transform: scale(1.05);
-}
-
-.cta-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 400;
-  gap: 0.5rem;
-  transition: gap 0.3s ease;
-  margin: 0;
-}
-
-.cta-button:hover span {
-  gap: 1rem;
-}
-
-.btn-icon {
-  transition: transform 0.3s ease;
-}
-
-.cta-button:hover .btn-icon {
-  transform: translateX(4px);
-}
-
-@media (max-width: 600px) {
-  .cta-button {
-    padding: 0.7rem 1rem;
-  }
-
-  span {
-    font-size: 14px;
-  }
-}
-</style>

@@ -1,12 +1,14 @@
 <template>
-  <div class="input-group">
-    <label v-if="label" :for="id">
-      <span class="label-text">{{ label }}</span>
-      <span v-if="required" class="required-asterisk">*</span>
+  <div class="flex flex-col flex-1 min-w-0 gap-2">
+    <label v-if="label" :for="id" class="font-medium text-black flex justify-center gap-1">
+      <span class="flex-none">{{ label }}</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
-    <div class="currency-wrapper">
-      <span class="currency-icon"><Icon icon="lucide:dollar-sign" /></span>
+    <div class="relative flex items-center">
+      <span class="absolute left-3 pointer-events-none text-muted">
+        <Icon icon="lucide:dollar-sign" />
+      </span>
       <input
         :id="id"
         type="text"
@@ -14,10 +16,11 @@
         @keydown="onKeyDown"
         @input="onInput"
         @blur="onBlur"
+        class="py-3 pr-3 pl-8 border border-border rounded-md text-base w-full text-center focus:border-2 focus:border-primary focus:outline-none focus:shadow-sm"
       />
     </div>
 
-    <p class="error">
+    <p class="text-error text-sm min-h-5 m-0">
       <span v-if="touched && externalError">{{ externalError }}</span>
       <span v-else>&nbsp;</span>
     </p>
@@ -79,64 +82,3 @@ function onKeyDown(event) {
   }
 }
 </script>
-
-<style scoped>
-.input-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  gap: 0.5rem;
-}
-
-label {
-  font-weight: 500;
-  color: var(--color-black);
-  display: flex;
-  justify-content: center;
-  gap: 0.4rem;
-}
-
-.label-text {
-  flex: none;
-}
-
-.required-asterisk {
-  color: red;
-}
-
-.currency-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.currency-icon {
-  position: absolute;
-  left: 0.75rem;
-  pointer-events: none;
-  color: var(--color-muted);
-}
-
-input {
-  padding: 0.75rem 0.75rem 0.75rem 2rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  font-size: 1rem;
-  width: 100%;
-  text-align: center;
-}
-
-input:focus {
-  border: 2px solid var(--color-primary);
-  outline: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.error {
-  color: red;
-  font-size: 0.85rem;
-  min-height: 1.2rem;
-  margin: 0;
-}
-</style>

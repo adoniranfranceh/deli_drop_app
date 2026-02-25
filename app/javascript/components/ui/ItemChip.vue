@@ -1,42 +1,13 @@
 <template>
-  <span class="chip">
+  <span class="bg-[#f1f1f1] font-semibold text-text py-1.5 px-3 m-0 rounded-full text-sm transition-colors duration-200 shrink-0 hover:bg-border">
     {{ item }}
-    <button v-if="hasRemoveListener" class="remove-btn" @click="$emit('remove')">×</button>
+    <button
+      v-if="hasRemoveListener"
+      class="bg-transparent border-none text-muted text-base cursor-pointer p-0 ml-1 leading-none hover:text-primary"
+      @click="$emit('remove')"
+    >×</button>
   </span>
 </template>
-
-<style scoped>
-.chip {
-  background-color: #f1f1f1;
-  font-weight: 600;
-  color: var(--color-text);
-  padding: 0.4rem 0.75rem;
-  margin: 0;
-  border-radius: 9999px;
-  font-size: 0.9rem;
-  transition: background-color 0.2s;
-  flex-shrink: 0;
-}
-
-.chip:hover {
-  background-color: var(--color-border);
-}
-
-.remove-btn {
-  background: transparent;
-  border: none;
-  color: var(--color-muted);
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0;
-  margin-left: 0.3rem;
-  line-height: 1;
-}
-
-.remove-btn:hover {
-  color: var(--color-primary);
-}
-</style>
 
 <script setup>
 import { computed, useAttrs } from 'vue';

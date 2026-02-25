@@ -1,7 +1,7 @@
 <template>
-  <p class="ingredients-title">Ingredientes:</p>
+  <p class="flex font-semibold mb-3 text-black">Ingredientes:</p>
 
-  <div class="ingredients-chips">
+  <div class="flex flex-wrap gap-2 mt-2">
     <ItemChip
       v-for="ingredient in ingredients"
       :key="ingredient"
@@ -20,19 +20,3 @@ defineProps({
   }
 })
 </script>
-
-<style scoped>
-.ingredients-title {
-  display: flex;
-  font-weight: 600;
-  margin-bottom: 0.7rem;
-  color: var(--color-black);
-}
-
-.ingredients-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-</style>

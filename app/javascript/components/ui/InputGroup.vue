@@ -1,8 +1,8 @@
 <template>
-  <div class="input-group">
-    <label :for="id" v-if="label">
-      <span class="label-text">{{ label }}</span>
-      <span v-if="required" class="required-asterisk">*</span>
+  <div class="flex flex-col flex-1 min-w-0 gap-2 relative">
+    <label :for="id" v-if="label" class="font-medium text-black flex gap-1 justify-center relative">
+      <span class="flex-none">{{ label }}</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
     <component
@@ -15,9 +15,10 @@
       @blur="onBlur"
       :rows="isTextarea ? 4 : null"
       :disabled="disabled"
+      class="p-3 border border-border rounded-md text-base focus:border-2 focus:border-primary focus:outline-none focus:shadow-sm resize-none"
     />
 
-    <p class="error">
+    <p class="text-error text-sm min-h-5 m-0">
       <span v-if="touched && externalError">{{ externalError }}</span>
       <span v-else>&nbsp;</span>
     </p>
@@ -45,57 +46,3 @@ const emit = defineEmits(['update:modelValue'])
 const value = toRef(props, 'modelValue')
 const { touched, onBlur } = useField()
 </script>
-
-<style scoped>
-.input-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  gap: 0.5rem;
-  position: relative;
-}
-
-label {
-  font-weight: 500;
-  color: var(--color-black);
-  display: flex;
-  gap: 0.4rem;
-  justify-content: center;
-  position: relative;
-}
-
-.label-text {
-  flex: none;
-}
-
-.required-asterisk {
-  color: red;
-}
-
-input,
-textarea {
-  padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-input:focus,
-textarea:focus {
-  border: 2px solid var(--color-primary);
-  outline: none;
-  box-shadow: var(--shadow-sm);
-}
-
-textarea {
-  resize: none;
-}
-
-.error {
-  color: red;
-  font-size: 0.85rem;
-  min-height: 1.2rem;
-  margin: 0;
-}
-</style>

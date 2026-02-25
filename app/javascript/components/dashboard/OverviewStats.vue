@@ -1,30 +1,33 @@
 <template>
-  <div class="overview-header">
-    <h2>Visão geral</h2>
-    <div class="times">
+  <div class="flex items-baseline justify-between">
+    <h2 class="text-xl font-bold">Visão geral</h2>
+    <div class="flex gap-2">
       <AppButton
         v-for="time in times"
         :key="time"
         :text="time"
+        :variant="selectedTime === time ? 'primary' : 'ghost'"
         :selected="selectedTime === time"
+        class="!h-8 !px-4 !py-2 !rounded-md [&_span]:!text-base [&_span]:!font-normal"
+        :class="selectedTime !== time ? '!bg-background !text-black hover:!bg-border' : ''"
         @click="selectedTime = time"
       />
     </div>
   </div>
 
-  <div class="restaurant-info">
-    <div v-for="stat in stats" :key="stat.label" class="stat">
-      <div class="info-stat">
-        <p class="info-title">{{ stat.label }}</p>
-        <p class="info-value">{{ stat.value }}</p>
-        <span class="difference">
-          <Icon icon="stash:chart-trend-up" />
+  <div class="flex gap-10 max-[1270px]:grid max-[1270px]:grid-cols-2 max-[758px]:flex max-[758px]:flex-wrap">
+    <div v-for="stat in stats" :key="stat.label" class="flex justify-between w-[23%] bg-white border border-border shadow-sm rounded-md p-8 text-center max-[1270px]:w-[85%] max-[758px]:w-full">
+      <div class="flex flex-col items-baseline">
+        <p class="text-muted font-medium m-0">{{ stat.label }}</p>
+        <p class="text-black font-bold text-2xl m-0">{{ stat.value }}</p>
+        <span class="flex items-center mt-6 text-success [&_div]:text-muted [&_div]:ml-2">
+          <Icon icon="stash:chart-trend-up" width="24" height="24" />
           {{ stat.trend > 0 ? '+' : '' }}{{ stat.trend }}%
           <div>vs {{ selectedTime }}</div>
         </span>
       </div>
-      <div class="info-icon">
-        <Icon :icon="iconMap[extractBase(stat.label)]" />
+      <div class="bg-primary/10 text-primary w-11 h-11 flex items-center justify-center rounded-full">
+        <Icon :icon="iconMap[extractBase(stat.label)]" width="20" height="20" />
       </div>
     </div>
   </div>
@@ -76,143 +79,3 @@ const allStats = {
 
 const stats = computed(() => allStats[selectedTime.value]);
 </script>
-
-<style scoped>
-.overview-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.times {
-  display: flex;
-  width: 16rem;
-  justify-content: space-between;
-}
-
-:deep(.cta-button) {
-  height: 2rem;
-  width: 5rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-background);
-  color: var(--color-black);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-:deep(.cta-button:hover) {
-  padding: 1rem;
-  background-color: var(--color-border);
-}
-
-:deep(.cta-button.selected) {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-:deep(.text-btn) {
-  font-weight: 400;
-  font-size: 1rem;
-}
-
-.restaurant-info {
-  display: flex;
-  gap: 2.5rem;
-}
-
-.stat {
-  display: flex;
-  justify-content: space-between;
-  width: 23%;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
-  border-radius: 6px;
-  padding: 2rem;
-  text-align: center;
-}
-
-.info-title {
-  color: var(--color-muted);
-  font-weight: 500;
-  margin: 0;
-}
-
-.info-value {
-  color: var(--color-black);
-  font-weight: 700;
-  font-size: 24px;
-  margin: 0;
-}
-
-.difference {
-  display: flex;
-  align-items: center;
-
-  svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-}
-
-.restaurant-info span {
-  display: flex;
-  margin-top: 1.5rem;
-  color: rgb(22, 163, 74);
-
-  div {
-    color: var(--color-muted);
-    margin-left: 0.5rem;
-  }
-}
-
-.info-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-}
-
-.info-icon {
-  background-color: rgba(239, 68, 68, 0.125);
-  color: var(--color-primary);
-  width: 2.8rem;
-  height: 2.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50px;
-
-  svg {
-    width: 1.3rem;
-    height: 1.3rem;
-  }
-}
-
-@media (max-width: 1270px) {
-  .restaurant-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stat {
-    width: 85%;
-  }
-}
-
-@media (max-width: 758px) {
-  .restaurant-info {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .stat {
-    width: 100%;
-  }
-}
-
-
-</style>

@@ -1,27 +1,28 @@
 <template>
   <RestaurantFormOverview :restaurantExists="restaurantExists" />
 
-  <div class="restaurant-form">
-    <div class="form-container">
+  <div class="flex justify-center">
+    <div class="flex flex-col p-8 gap-8 bg-background mx-8 max-w-[1820px] w-full max-[758px]:w-full max-[758px]:m-0 max-[758px]:p-2">
       <RestaurantBasicInputs
         :restaurant="restaurant"
         :restaurantErrors="restaurantErrors"
       />
 
-      <div class="form-actions">
+      <div class="flex justify-end gap-4 m-0 w-[91%] px-4 max-[758px]:w-auto">
         <AppButton
           v-if="initialData.length > 0"
-          class="cancel"
           text="Cancelar"
+          variant="secondary"
           @click="navigateTo('/')"
+          class="min-w-[140px] flex items-center justify-center"
         />
 
         <AppButton
-          class="save"
           text="Salvar"
           icon="lucide-save"
           @click="submit"
           :disabled="!isRestaurantValid"
+          class="min-w-[140px] flex items-center justify-center [&_svg]:w-4 [&_svg]:h-4"
         />
       </div>
     </div>
@@ -84,65 +85,3 @@ function submit() {
 }
 </script>
 
-<style scoped>
-.restaurant-form {
-  display: flex;
-  justify-content: center;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 2rem;
-  background-color: var(--color-background);
-  margin: 0 2rem;
-  width: 1820px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin: 0;
-  width: 91%;
-  padding-inline: 1rem;
-}
-
-button.cancel {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-black);
-}
-
-button.cancel,
-button.save {
-  min-width: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-:deep(.cta-button) {
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-
-button.cancel:hover {
-  background-color: var(--color-border);
-}
-
-@media (max-width: 758px) {
-  .form-container {
-    width: 100%;
-    margin: 0;
-    padding: 0.5rem;
-  }
-
-  .form-actions {
-    width: auto;
-  }
-}
-</style>

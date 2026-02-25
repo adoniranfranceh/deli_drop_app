@@ -1,48 +1,52 @@
 <template>
-  <div class="modifiers-section">
-    <div class="modifiers-header">
-      <h3 class="modifiers-title">Opções disponíveis</h3>
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col items-center">
+      <h3 class="font-medium text-lg mb-2 text-muted">Opções disponíveis</h3>
     </div>
 
-    <div class="empty-modifier-text" v-if="modifiers.length === 0">
-      <h3>Nenhuma opção adicionada</h3>
-      <p>Toque em "Adicionar Opção" para começar</p>
+    <div
+      v-if="modifiers.length === 0"
+      class="flex flex-col items-center justify-center mb-2 text-muted border-2 border-dashed border-border p-9 rounded-md gap-2 h-24"
+    >
+      <h3 class="m-0 text-base text-muted font-medium max-[758px]:text-sm">Nenhuma opção adicionada</h3>
+      <p class="m-0 text-sm text-muted max-[758px]:text-center max-[758px]:text-xs">Toque em "Adicionar Opção" para começar</p>
     </div>
 
     <div
       v-else
       v-for="(modifier, idx) in modifiers.filter(m => !m._destroy)"
       :key="modifier.id"
-      class="modifier-row"
+      class="flex items-start gap-2 p-4 mb-2 bg-white border border-border rounded-md w-full box-border h-[174px]"
     >
-      <div class="form-row-modifier">
-        <div class="form-header">
+      <div class="flex flex-col flex-1 gap-2 min-w-0">
+        <div class="flex items-start justify-between gap-2 w-full">
           <InputGroup
             v-model="modifier.name"
             placeholder="Nome da Opção"
             :externalError="modifierErrors[idx]?.name"
-            class="group-name-input"
+            class="flex-1 min-w-[100px] [&_input]:p-2 [&_input]:rounded-[10px]"
             required
           />
-  
+
           <AppButton
             @click="$emit('remove-modifier', idx)"
-            class="close-btn"
+            variant="danger"
+            class="!p-2.5"
             icon="lucide-x"
           />
         </div>
 
-        <div class="row-options">
-          <div class="currency-input-wrapper">
+        <div class="flex flex-wrap gap-2 w-full box-border">
+          <div class="flex flex-1 min-w-0 gap-2">
             <label
               for="product-price"
-              class="input-label"
+              class="font-medium text-muted flex items-center gap-1.5 h-[43px] max-[758px]:hidden"
             >
               Preço:
             </label>
             <CurrencyInput
               id="product-price"
-              class="input-price"
+              class="[&_.input-group]:h-[43px] [&_.input-group]:w-[150px]"
               placeholder="Preço da Opção"
               :externalError="modifierErrors[idx]?.base_price"
               v-model="modifier.base_price"
@@ -61,8 +65,8 @@
       <AppButton
         text="Adicionar Opção"
         iconLeft="ic:round-plus"
+        variant="secondary"
         @click="$emit('add-modifier')"
-        class="add-option-btn"
       />
     </div>
   </div>
@@ -83,160 +87,3 @@ const emit = defineEmits(['add-modifier', 'remove-modifier'])
 
 const { errors: modifierErrors, validate } = useModifierValidator(props.modifiers)
 </script>
-
-<style scoped>
-.modifiers-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.modifiers-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.modifiers-title {
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: var(--color-muted);
-}
-
-.add-option-btn {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-black);
-}
-
-.add-option-btn:hover {
-  background-color: var(--color-border);
-}
-
-.empty-modifier-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 0.5rem 0;
-  color: var(--color-muted);
-  border: 2px dashed var(--color-border);
-  padding: 37px;
-  border-radius: 6px;
-  gap: 0.5rem;
-
-  height: 96px;
-
-  h3 {
-    margin: 0;
-    font-size: 1rem;
-    color: var(--color-muted);
-    font-weight: 500;
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-}
-
-.modifier-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  padding: 1rem;
-  margin-bottom: 0.5rem;
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-  height: 174px;
-}
-
-.form-row-modifier {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.form-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.row-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.currency-input-wrapper {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  gap: 0.5rem;
-}
-
-.group-name-input {
-  flex: 1;
-  min-width: 100px;
-}
-
-.group-name-input :deep(input) {
-  padding: 0.5rem;
-  border-radius: 10px;
-}
-
-.close-btn {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-primary);
-  padding: 0.6rem;
-}
-
-.close-btn:hover {
-  background-color: var(--color-border);
-}
-
-.input-label {
-  font-weight: 500;
-  color: var(--color-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  height: 43px;
-}
-
-.input-price :deep(.input-group) {
-  height: 43px;
-  width: 150px;
-}
-
-@media (max-width: 758px) {
-  .input-label {
-    display: none;
-  }
-
-  .empty-modifier-text {
-    h3 {
-      font-size: 0.9rem;
-    }
-
-    p {
-      text-align: center;
-      font-size: 0.8rem;
-    }
-  }
-}
-
-</style>

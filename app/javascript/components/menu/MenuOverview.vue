@@ -7,7 +7,7 @@
       <AppButton
         text="Nova Categoria"
         iconLeft="tabler:plus"
-        class="new-category"
+        variant="secondary"
         @click="emit('openCategoryModal')"
       />
       <AppButton
@@ -16,9 +16,9 @@
         @click="navigateTo('/products/new')"
       />
       <AppButton
-        class="new-category"
         text="Voltar a tela inicial"
         iconLeft="ri:arrow-left-line"
+        variant="secondary"
         @click="navigateTo('/')"
       />
     </template>
@@ -32,15 +32,3 @@ import { navigateTo } from '../../utils/navigation';
 
 const emit = defineEmits(['openCategoryModal'])
 </script>
-
-<style scoped>
-.new-category {
-  background-color: var(--color-white);
-  color: var(--color-black);
-  border: 1px solid var(--color-border);
-}
-
-.new-category:hover {
-  background-color: var(--color-border);
-}
-</style>

@@ -1,17 +1,17 @@
 <template>
-  <div class="dashboard-header">
-    <h1 class="title">Dashboard</h1>
-    <p class="welcome-msg">Bem-vindo de volta, {{ restaurantData.name }}</p>
+  <div class="flex flex-col justify-center items-center w-80 mt-12 ml-12 max-[758px]:mt-4 max-[758px]:ml-0 max-[758px]:w-full">
+    <h1 class="text-[30px] font-bold m-0">Dashboard</h1>
+    <p class="mt-2 font-normal text-muted">Bem-vindo de volta, {{ restaurantData?.name }}</p>
   </div>
-  <div class="dashboard">
-    <div class="dashboard-container">
+  <div class="flex justify-center">
+    <div class="flex flex-col p-8 gap-8 bg-background m-8 max-w-[1820px] w-full max-[758px]:p-4 max-[758px]:m-0">
       <QuickActions />
       <OverviewStats />
-      <div class="dashboard-main">
-        <div class="dashboard-left">
+      <div class="flex gap-8 max-[900px]:flex-col">
+        <div class="flex-[2] flex flex-col gap-8">
           <RecentOrders />
         </div>
-        <div class="dashboard-right">
+        <div class="flex-1 flex flex-col gap-8">
           <RestaurantInfo :restaurantData="restaurantData" />
           <PerformanceChart
             :metrics="[
@@ -36,79 +36,3 @@ defineProps({
   restaurantData: Object
 })
 </script>
-
-<style scoped>
-.dashboard-header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 20rem;
-  margin: 3rem 0 0 3rem;
-}
-
-.title{
-  font-size: 30px;
-  font-weight: 700;
-  margin: 0;
-}
-
-.welcome-msg {
-  margin-top: 0.5rem;
-  font-weight: 400;
-  color: var(--color-muted);
-}
-
-.dashboard {
-  display: flex;
-  justify-content: center;
-}
-
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 2rem;
-  background-color: var(--color-background);
-  margin: 2rem;
-  width: 1820px;
-}
-
-.dashboard-main {
-  display: flex;
-  gap: 2rem;
-}
-
-.dashboard-left {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.dashboard-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-@media (max-width: 900px) {
-  .dashboard-main{
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 758px) {
-  .dashboard-header {
-    margin: 1rem 0;
-    width: 100%;
-  }
-
-  .dashboard-container {
-    width: 100%;
-    padding: 1rem;
-    margin: 0;
-  }
-}
-</style>

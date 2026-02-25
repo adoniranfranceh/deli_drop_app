@@ -1,7 +1,7 @@
 <template>
-  <div class="ingredients-wrapper">
-    <label class="input-label" for="ingredients">Ingredientes</label>
-    <div class="form-line">
+  <div class="flex flex-col gap-4 p-2 bg-background rounded-lg min-h-32">
+    <label class="font-medium text-black flex gap-1.5 justify-center relative" for="ingredients">Ingredientes</label>
+    <div class="flex gap-2 items-end [&_p]:hidden">
       <InputGroup
         id="ingredients"
         v-model="ingredient"
@@ -14,7 +14,7 @@
         @click="addIngredient"
       />
     </div>
-    <div class="chips-container" v-if="ingredients.length">
+    <div class="flex flex-wrap gap-2 min-w-0 [&>span]:max-w-full [&>span]:break-words [&>span]:whitespace-normal [&>span]:shrink" v-if="ingredients.length">
       <ItemChip
         v-for="(item, index) in ingredients"
         :key="index"
@@ -59,48 +59,3 @@ function removeIngredient(index) {
   ingredients.value.splice(index, 1)
 }
 </script>
-
-<style scoped>
-.input-label {
-  font-weight: 500;
-  color: var(--color-black);
-  display: flex;
-  gap: 0.4rem;
-  justify-content: center;
-  position: relative;
-}
-
-.ingredients-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem;
-  background-color: var(--color-light-background);
-  border-radius: 8px;
-  min-height: 8rem;
-}
-
-.form-line {
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-start;
-}
-
-:deep(.input-group .error) {
-  display: none;
-}
-
-.chips-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.chips-container > span {
-  max-width: 100%;
-  word-break: break-word;
-  white-space: normal;
-  flex-shrink: 1;
-}
-</style>

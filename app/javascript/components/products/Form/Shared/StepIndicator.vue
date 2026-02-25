@@ -1,29 +1,26 @@
 <template>
-  <div ref="containerRef" class="step-indicator">
+  <div ref="containerRef" class="flex items-center justify-center mx-8 py-4 border-b border-border max-[758px]:block max-[758px]:overflow-x-auto max-[758px]:whitespace-nowrap max-[758px]:scroll-smooth max-[758px]:pb-4 max-[758px]:pl-4 max-[758px]:mx-0 max-[758px]:overflow-y-hidden max-[758px]:scrollbar-none max-[758px]:snap-x max-[758px]:snap-mandatory">
     <div
       v-for="(step, index) in steps"
       :key="index"
-      class="step-wrapper"
       :ref="el => { if (el) stepRefs[index] = el }"
-      :class="{ disabled: !canClickSteps[index] }"
+      class="flex items-center cursor-pointer max-[758px]:inline-flex max-[758px]:flex-none max-[758px]:min-w-[100vw] max-[758px]:justify-center max-[758px]:snap-center"
+      :class="{ 'pointer-events-none': !canClickSteps[index] }"
       @click="() => canClickSteps[index] && $emit('update:step', index + 1)"
     >
-      <div class="step">
+      <div class="flex items-center gap-4 min-w-16 max-[758px]:flex-col max-[758px]:gap-2">
         <div
-          class="step-icon"
-          :class="{
-            active: index + 1 === currentStep,
-            completed: index + 1 < currentStep
-          }"
+          class="rounded-full p-3 transition-all duration-300 flex items-center justify-center max-[758px]:p-4"
+          :class="stepIconClasses(index)"
         >
-          <Icon :icon="index + 1 < currentStep ? 'lucide:circle-check-big' : step.icon" />
+          <Icon
+            :icon="index + 1 < currentStep ? 'lucide:circle-check-big' : step.icon"
+            class="w-6 h-6 max-[758px]:w-8 max-[758px]:h-8"
+          />
         </div>
         <span
-          class="step-label"
-          :class="{
-            active: index + 1 === currentStep,
-            completed: index + 1 < currentStep
-          }"
+          class="text-base max-[758px]:text-xs max-[758px]:whitespace-nowrap max-[758px]:text-center"
+          :class="stepLabelClasses(index)"
         >
           {{ step.label }}
         </span>
@@ -31,11 +28,10 @@
 
       <div
         v-if="index < steps.length - 1"
-        class="step-line"
-        :class="{ completed: index + 1 < currentStep }"
+        class="h-0.5 w-20 mx-4 max-[758px]:hidden"
+        :class="index + 1 < currentStep ? 'bg-success' : 'bg-border'"
       ></div>
     </div>
-
   </div>
 </template>
 
@@ -46,7 +42,7 @@ import { ref, watch, nextTick } from 'vue'
 const props = defineProps({
   steps: { type: Array, required: true },
   currentStep: { type: Number, default: 0 },
-   canClickSteps: {
+  canClickSteps: {
     type: Array,
     default: () => [true, true, true]
   }
@@ -54,6 +50,24 @@ const props = defineProps({
 
 const containerRef = ref(null)
 const stepRefs = ref([])
+
+function stepIconClasses(index) {
+  if (index + 1 < props.currentStep) {
+    return 'bg-success text-white'
+  } else if (index + 1 === props.currentStep) {
+    return 'bg-primary text-white animate-breathe'
+  }
+  return 'bg-border text-muted'
+}
+
+function stepLabelClasses(index) {
+  if (index + 1 < props.currentStep) {
+    return 'text-success font-medium'
+  } else if (index + 1 === props.currentStep) {
+    return 'text-primary font-bold'
+  }
+  return 'text-muted'
+}
 
 watch(
   () => props.currentStep,
@@ -77,149 +91,3 @@ function scrollToCurrentStep() {
   }
 }
 </script>
-
-<style scoped>
-.step-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.step-wrapper {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.step-wrapper.disabled {
-  pointer-events: none;
-}
-
-.step {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  min-width: 4rem;
-}
-
-.step-icon {
-  background-color: var(--color-border);
-  border-radius: 50%;
-  padding: 0.7rem;
-  color: var(--color-muted);
-  transition: all 0.3s ease;
-  width: 1.5rem;
-  height: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.step-icon > svg {
-  width: 100%;
-  height: 100%;
-}
-
-.step-icon.completed {
-  background-color: var(--color-success);
-  color: var(--color-white);
-}
-
-@keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.step-icon.active {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  animation: breathe 2.5s ease-in-out infinite;
-}
-
-
-.step-label {
-  font-size: 1rem;
-  color: var(--color-muted);
-}
-
-.step-label.active {
-  font-weight: bold;
-  color: var(--color-primary);
-}
-
-.step-label.completed {
-  color: var(--color-success);
-  font-weight: 500;
-}
-
-.step-line {
-  height: 2px;
-  width: 5rem;
-  background-color: var(--color-border);
-  margin: 0 1rem;
-}
-
-.step-line.completed {
-  background-color: var(--color-success);
-}
-
-@media (max-width: 758px) {
-  .step-indicator {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    padding-bottom: 1rem;
-    padding-left: 1rem;
-    margin: 0;
-    overflow-y: hidden;
-    scrollbar-width: none;
-
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .step-indicator::-webkit-scrollbar {
-    display: none;
-  }
-
-  .step-wrapper {
-    display: inline-flex;
-    align-items: center;
-    flex: 0 0 auto;
-    min-width: 100vw;
-    justify-content: center;
-
-    scroll-snap-align: center;
-  }
-
-  .step {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .step-label {
-    font-size: 0.75rem;
-    white-space: nowrap;
-    text-align: center;
-  }
-
-  .step-icon {
-    height: 3rem;
-    width: 3rem;
-    padding: 0.5rem;
-  }
-
-  .step-icon > svg {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .step-line {
-    display: none;
-  }
-}
-</style>

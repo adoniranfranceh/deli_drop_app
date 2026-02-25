@@ -11,8 +11,8 @@
     @update:step="step = $event"
   />
 
-  <div class="product-form">
-    <div class="form-container">
+  <div class="flex justify-center">
+    <div class="flex flex-col items-center p-8 gap-8 bg-background mx-8 max-w-[1820px] w-full max-[758px]:w-full max-[758px]:mx-0 max-[758px]:p-2">
       <QuickTemplate v-if="stepVisibility.quickTemplate" @update:product="fillProduct"/>
       <ProductBasicInputs
         v-if="stepVisibility.stepOne"
@@ -30,16 +30,17 @@
         v-model="product.modifier_groups"
       />
       <ProductViewer v-if="stepVisibility.stepThree" :product="product" />
-      <div class="form-actions">
+      <div class="flex justify-end gap-4 mt-4 px-4">
         <AppButton
-          class="cancel"
+          variant="secondary"
+          class="min-w-[140px] flex items-center justify-center [&_svg]:w-4 [&_svg]:h-4"
           @click="step = step > 1 ? step - 1 : 1"
           text="Voltar"
           iconLeft="lucide-arrow-left"
           v-if="step > 1"
         />
         <AppButton
-          class="save"
+          class="min-w-[140px] flex items-center justify-center [&_svg]:w-4 [&_svg]:h-4"
           text="Continuar"
           icon="lucide-arrow-right"
           @click="handleContinue"
@@ -47,7 +48,7 @@
           v-if="step < 3"
         />
         <AppButton
-          class="save"
+          class="min-w-[140px] flex items-center justify-center [&_svg]:w-4 [&_svg]:h-4"
           text="Salvar"
           icon="lucide-save"
           v-if="step === 3"
@@ -160,62 +161,3 @@ function submit() {
   hasUnsavedChanges.value = false
 }
 </script>
-
-<style scoped>
-.product-form {
-  display: flex;
-  justify-content: center;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  gap: 2rem;
-  background-color: var(--color-background);
-  margin: 0 2rem;
-  width: 1820px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding-inline: 1rem;
-}
-
-button.cancel {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-black);
-}
-
-button.cancel,
-button.save {
-  min-width: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-:deep(.cta-button) {
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-
-button.cancel:hover {
-  background-color: var(--color-border);
-}
-
-@media (max-width: 758px) {
-  .form-container {
-    width: 100%;
-    margin: 0;
-    padding: 0.5rem;
-  }
-}
-</style>

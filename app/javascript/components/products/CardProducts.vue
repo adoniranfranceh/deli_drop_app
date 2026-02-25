@@ -1,41 +1,43 @@
 <template>
-  <div class="product-card">
-    <div class="card-header">
-      <div class="image-wrapper">
-        <img :src="product.image" :alt="product.name" class="product-image" />
-        <span class="product-stamp">
+  <div class="bg-white rounded-lg overflow-hidden transition-all duration-200 border border-border flex flex-col cursor-pointer hover:scale-[1.02] hover:shadow-md">
+    <div class="relative flex-1 flex flex-col">
+      <div class="relative">
+        <img :src="product.image" :alt="product.name" class="w-full h-[200px] object-cover rounded-t-lg" />
+        <span class="bg-primary absolute top-2.5 left-2.5 rounded-full text-xs font-semibold text-white py-1 px-5">
           {{ product.featured ?  'Destaque' : product?.category_name }}
         </span>
       </div>
-      <div class="product-details">
-      <div class="product-info">
-        <div class="product-headinfo">
-          <h3>{{ product.name }}</h3>
-          <div class="toggle-container">
-            <ToggleSwitch
-              v-model:is-active="product.active"
-              @update:is-active="$emit('toggle-product', product.id, product.active)"
-            />
+      <div class="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between">
+            <h3 class="text-2xl m-0 text-text overflow-hidden text-ellipsis whitespace-nowrap max-w-[220px]">{{ product.name }}</h3>
+            <div>
+              <ToggleSwitch
+                v-model:is-active="product.active"
+                @update:is-active="$emit('toggle-product', product.id, product.active)"
+              />
+            </div>
           </div>
+          <p class="text-base text-muted my-2 leading-relaxed overflow-hidden line-clamp-2">{{ product.description }}</p>
         </div>
-        </div>
-        <p class="description">{{ product.description }}</p>
-        <div class="info-row">
-          <strong class="price">{{ FloatToMoney(product.base_price) }}</strong>
+        <div class="flex justify-between items-center mt-4">
+          <strong class="text-3xl font-bold text-primary">{{ FloatToMoney(product.base_price) }}</strong>
           <DeliveryDuration :duration="product.duration" />
         </div>
       </div>
     </div>
-    <div class="actions-footer">
+    <div class="flex justify-between gap-4 p-4 border-t border-border">
       <AppButton
-        class="action-btn edit-btn"
+        class="w-full"
         text="Editar"
         iconLeft="lucide:pen-line"
+        variant="secondary"
         @click="navigateTo(`/products/${product.id}/edit`)"
       />
       <AppButton
-        class="action-btn delete-btn"
+        class="[&_svg]:w-6 [&_svg]:h-6"
         iconLeft="lucide:trash-2"
+        variant="danger"
       />
     </div>
   </div>
@@ -57,124 +59,3 @@ defineProps({
 
 defineEmits(['toggle-product', 'edit-product', 'view-product', 'delete-product']);
 </script>
-
-<style scoped>
-.product-card {
-  background: var(--color-white);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.3s;
-  border: 1px solid var(--color-border);
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.product-card:hover {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-md);
-}
-
-.card-header {
-  position: relative;
-}
-
-.product-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.product-stamp {
-  background: var(--color-primary);
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-white);
-  padding: 4px 20px;
-}
-
-.product-details {
-  padding: 1rem;
-}
-
-.product-info h3 {
-  font-size: 1.5rem;
-  margin: 0;
-  color: var(--color-text);
-}
-
-.product-headinfo {
-  display: flex;
-  justify-content: space-between;
-}
-
-.product-info .description {
-  font-size: 1rem;
-  color: var(--color-muted);
-  margin: 0.5rem 0;
-  line-height: 1.4;
-}
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.price {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--color-primary);
-}
-
-.actions-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.edit-btn {
-  width: 100%;
-  color: var(--color-black);
-  border: 1px solid var(--color-border);
-  background-color: var(--color-white);
-}
-
-.edit-btn:hover {
-  background-color: var(--color-border);
-}
-
-.delete-btn {
-  color: var(--color-primary);
-  border: 1px solid var(--color-border);
-  background-color: var(--color-white);
-}
-
-.delete-btn :deep(svg) {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.delete-btn:hover {
-  background-color: var(--color-border);
-}
-
-.icon-text {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .icon-text {
-    display: inline;
-  }
-}
-</style>

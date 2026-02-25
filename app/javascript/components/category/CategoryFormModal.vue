@@ -1,20 +1,20 @@
 <template>
   <BaseModal @close="$emit('close')">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h2>Nova Categoria</h2>
+    <div class="[&_label]:justify-start">
+      <div class="flex justify-between items-center">
+        <h2 class="font-bold text-[1.4rem] m-0 max-[768px]:text-[1.1rem]">Nova Categoria</h2>
         <button
-          class="close-btn"
+          class="text-2xl p-0 bg-transparent cursor-pointer text-black transition-colors duration-200"
           aria-label="Fechar modal"
           @click="$emit('close')"
         >×</button>
       </div>
 
-      <p class="subtitle">
+      <p class="my-2 mb-6 text-muted max-[768px]:text-center">
         Adicione uma nova categoria para organizar seus produtos
       </p>
 
-      <form @submit.prevent class="form-grid">
+      <form @submit.prevent class="flex flex-col gap-4">
         <InputGroup
           id="name"
           label="Nome"
@@ -32,14 +32,13 @@
           isTextarea
         />
 
-        <div class="actions">
+        <div class="flex justify-end gap-4">
           <AppButton
-            class="cancel"
+            variant="secondary"
             @click="$emit('close')"
             text="Cancelar"
           />
           <AppButton
-            class="save"
             text="Salvar"
             icon="lucide-save"
             @click="submit"
@@ -101,69 +100,3 @@ async function submit() {
   }
 }
 </script>
-
-<style scoped>
-.modal-container :deep(.input-group) {
-  label {
-    justify-content: flex-start;
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-header h2 {
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin: 0;
-}
-
-.close-btn {
-  font-size: 1.5rem;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  color: var(--color-black);
-  transition: color 0.2s;
-}
-
-.subtitle {
-  margin: 0.5rem 0 1.5rem 0;
-  color: var(--color-muted);
-}
-
-.form-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-button.cancel {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-black);
-}
-
-button.cancel:hover {
-  background-color: var(--color-border);
-}
-
-@media (max-width: 768px) {
-  .modal-header h2 {
-    font-size: 1.1rem;
-  }
-
-  .subtitle {
-    text-align: center;
-  }
-}
-</style>

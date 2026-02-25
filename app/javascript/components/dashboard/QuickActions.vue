@@ -1,14 +1,14 @@
 <template>
-  <h2 class="quick-title">Ações rápidas</h2>
-  <div class="quick-actions">
+  <h2 class="m-0 flex justify-center text-xl font-bold">Ações rápidas</h2>
+  <div class="flex gap-6 max-[758px]:flex-wrap">
     <div
       v-for="action in actions"
       :key="action.label"
-      class="quick-action-card"
+      class="w-[23%] bg-white border border-primary rounded-md py-6 px-4 text-center cursor-pointer transition-shadow duration-200 hover:bg-background max-[758px]:w-full"
       @click="navigateTo(action.path)"
     >
-      <div class="quick-action-icon"><Icon :icon="action.icon" /></div>
-      <span class="quick-action-label">{{ action.label }}</span>
+      <div class="flex justify-center mb-2"><Icon :icon="action.icon" width="26" height="26" /></div>
+      <span class="flex justify-center font-medium text-black">{{ action.label }}</span>
     </div>
   </div>
 </template>
@@ -24,54 +24,3 @@ const actions = [
   { label: 'Área de Entrega', icon: 'tdesign:location', path: '/delivery-area' }
 ]
 </script>
-
-<style scoped>
-.quick-title {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.quick-actions {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.quick-action-card {
-  width: 23%;
-  height: 54px;
-  background: var(--color-white);
-  border: 1px solid var(--color-primary);
-  border-radius: 6px;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease;
-}
-
-.quick-action-card:hover {
-  background-color: var(--color-background);
-}
-
-.quick-action-icon {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-}
-
-.quick-action-label {
-  display: flex;
-  justify-content: center;
-  font-weight: 500;
-  color: var(--color-black);
-}
-
-@media (max-width: 758px) {
-  .quick-actions {
-    flex-wrap: wrap;
-  }
-
-  .quick-action-card {
-    width: 100%;
-  }
-}
-</style>

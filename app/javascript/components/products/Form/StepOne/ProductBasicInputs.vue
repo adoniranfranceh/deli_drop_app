@@ -1,13 +1,13 @@
 <template>
-  <form @submit.prevent class="form-grid">
-    <h2 class="product-form-title">
-      <Icon icon="lucide:package" /> Informações Básicas
+  <form @submit.prevent class="flex flex-col gap-5 w-4/5 p-8 bg-white border border-border rounded-lg max-[758px]:w-full max-[758px]:p-1.5 max-[758px]:m-0">
+    <h2 class="flex gap-2 m-0 text-xl font-bold max-[758px]:justify-center">
+      <Icon icon="lucide:package" width="24" height="24" class="text-primary" /> Informações Básicas
     </h2>
-    <p class="product-form-subtitle">
+    <p class="flex justify-center text-muted m-0 max-[758px]:text-center">
       Preencha as informações básicas do seu produto
     </p>
 
-    <div class="form-row">
+    <div class="flex gap-6 flex-wrap max-[758px]:flex-col">
       <InputGroup
         id="product-name"
         label="Nome"
@@ -28,7 +28,7 @@
       />
     </div>
 
-    <div class="form-row">
+    <div class="flex gap-6 flex-wrap max-[758px]:flex-col">
       <CurrencyInput
         id="product-price"
         label="Preço"
@@ -68,7 +68,7 @@
 
     <IngredientsInput v-model="localProduct.ingredients" />
 
-    <div class="switch-wrapper">
+    <div class="flex gap-6 items-center max-[758px]:items-start max-[758px]:gap-4">
       <ToggleSwitch v-model="product.status" label="Produto ativo" />
       <ToggleSwitch v-model="product.featured" label="Produto em destaque" />
     </div>
@@ -113,66 +113,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style scoped>
-.form-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  width: 80%;
-  padding: 2rem;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-}
-
-.product-form-title {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0;
-}
-
-.product-form-subtitle {
-  display: flex;
-  justify-content: center;
-  color: var(--color-muted);
-  margin: 0;
-}
-
-.form-row {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.switch-wrapper {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-@media (max-width: 758px) {
-  .form-grid {
-    width: 100%;
-    padding: 0.4rem;
-    margin: 0;
-  }
-
-  .product-form-title {
-    justify-content: center
-  }
-
-  .product-form-subtitle {
-    text-align: center;
-  }
-
-  .switch-wrapper {
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .form-row {
-    flex-direction: column;
-  }
-}
-</style>

@@ -10,49 +10,50 @@
       :isRadio="isRadio"
     />
 
-    <ul class="modifiers">
+    <ul class="p-0 list-none">
       <li
         v-for="item in modifiers"
         :key="item.id"
-        class="modifiers-options"
+        class="border border-border rounded-lg p-4 mb-2 cursor-pointer transition-all duration-200 flex items-center justify-start"
         :class="{
-          selected: isSelected(item),
-          faded: faded(item),
+          'bg-primary/10 border-primary': isSelected(item),
+          'opacity-40 pointer-events-none': faded(item),
         }"
       >
-        <label class="content-option">
-          <div class="item-details">
+        <label class="flex items-center justify-between cursor-pointer w-full">
+          <div class="flex items-center h-[50px]">
             <input
               type="checkbox"
               :checked="isSelected(item)"
               @change="() => toggle(item)"
               :name="`modifier-${modifier_group.id}`"
+              class="absolute opacity-0 w-5 h-5 m-0 cursor-pointer peer"
             />
-            <span 
-              class="custom-checkbox"
-              :class="{ 'multiple-border-radius': multiple }"
+            <span
+              class="w-4 h-4 rounded-full border-2 border-border mr-4 shrink-0 relative transition-all duration-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:after:content-[''] peer-checked:after:absolute peer-checked:after:top-[1px] peer-checked:after:left-[5px] peer-checked:after:w-1 peer-checked:after:h-2 peer-checked:after:border-white peer-checked:after:border-r-2 peer-checked:after:border-b-2 peer-checked:after:rotate-45"
+              :class="{ 'rounded-[25%]': multiple }"
             ></span>
 
             <img
               :src="item.image"
               alt="Product"
-              class="item-image"
+              class="w-10 h-10 rounded mr-4 object-cover"
             />
 
-            <div class="item-name">
+            <div class="flex flex-col justify-center">
               <strong>{{ item.name }}</strong>
-              <span class="ingredients" v-if="Array.isArray(item.ingredients)">
+              <span class="text-sm text-muted max-[758px]:text-[11px]" v-if="Array.isArray(item.ingredients)">
                 {{ item.ingredients.join(', ') }}
               </span>
-              <span v-else>
+              <span class="text-sm text-muted max-[758px]:text-[11px]" v-else>
                 {{ item.ingredients || item.description }}
               </span>
             </div>
           </div>
 
-          <div class="item-info">
-            <div class="free-modifier">Incluso</div>
-            <div class="item-price" v-if="getBasePrice(item) > 0">
+          <div class="flex flex-col justify-center items-end">
+            <div class="text-success text-[0.85rem] font-semibold">Incluso</div>
+            <div class="font-normal text-[0.775rem] text-muted line-through" v-if="getBasePrice(item) > 0">
               {{ FloatToMoney(getBasePrice(item)) }}
             </div>
           </div>
@@ -85,133 +86,3 @@ const props = defineProps({
 const modifiers = computed(() => (props.modifier_group.modifiers || []).filter(m => !m._destroy))
 </script>
 
-<style scoped>
-.modifiers {
-  padding: 0;
-  list-style: none;
-}
-
-.modifiers-options {
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  opacity: 1;
-}
-
-.modifiers-options.selected {
-  background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-white));
-  border-color: var(--color-primary);
-}
-
-.modifiers-options.faded {
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.content-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  width: 100%;
-}
-
-.content-option input[type='checkbox'] {
-  position: absolute;
-  opacity: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin: 0;
-  cursor: pointer;
-}
-
-.item-details {
-  display: flex;
-  align-items: center;
-  height: 50px;
-}
-
-.custom-checkbox {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%; 
-  border: 2px solid var(--color-border);
-  margin-right: 1rem;
-  flex-shrink: 0;
-  position: relative;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.custom-checkbox.multiple-border-radius {
-  border-radius: 25%;
-}
-
-.content-option input[type='checkbox']:checked + .custom-checkbox {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.content-option input[type='checkbox']:checked + .custom-checkbox::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 6px;
-  width: 4px;
-  height: 8px;
-  border: solid var(--color-white);
-  border-width: 0 1.5px 1.5px 0;
-  transform: rotate(45deg);
-}
-
-.item-image {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.25rem;
-  margin-right: 1rem;
-  object-fit: cover;
-}
-
-.item-name{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-}
-
-.ingredients {
-  font-size: 0.875rem;
-  color: var(--color-muted);
-}
-
-.item-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end
-}
-
-.free-modifier {
-  color: var(--color-success);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.item-price {
-  font-weight: 400;
-  font-size: 0.775rem;
-  color: var(--color-muted);
-  text-decoration: line-through;
-}
-
-@media (max-width: 758px) {
-  .ingredients {
-    font-size: 11px;
-  }
-}
-</style>

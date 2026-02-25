@@ -104,23 +104,23 @@ const headerProps = computed(() => ({
 
 <template>
   <ModifierHeader v-bind="headerProps" />
-  
-  <ul class="modifiers">
+
+  <ul class="p-0 list-none">
     <li
-    v-for="item in modifiers"
-    :key="item.id"
-    class="modifiers-options"
+      v-for="item in modifiers"
+      :key="item.id"
+      class="grid border-b border-border pt-6 pr-4 pb-2 pl-2"
     >
-      <div class="content-option">
-        <div class="item-details">
-          <img :src="item.image" :alt="item.name" class="item-image" />
-          <div class="item-info">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center h-[50px]">
+          <img :src="item.image" :alt="item.name" class="w-10 h-10 rounded mr-4 object-cover" />
+          <div class="flex flex-col justify-around h-full">
             {{ item.name }}
-            <div class="free-modifier">{{ getPriceLabel(item) }}</div>
+            <div class="text-primary font-semibold">{{ getPriceLabel(item) }}</div>
           </div>
         </div>
 
-        <div class="quantity-controls">
+        <div class="flex items-center gap-2">
           <WrapperQuantity
             :modelValue="quantities[item.id]?.quantity ?? 0"
             @plus="() => increment(item)"
@@ -131,110 +131,9 @@ const headerProps = computed(() => ({
             :justPlus="getQty(item) <= 0"
           />
         </div>
-
       </div>
     </li>
   </ul>
 </template>
 
 
-<style scoped>
-.header-modifier {
-  background: var(--color-background);
-  padding: 1rem;
-}
-
-.modifier-chip {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-
-.header-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0;
-}
-
-.header-info {
-  display: flex;
-  font-size: 0.875rem;
-  color: var(--color-muted);
-  
-  p {
-    margin: 0;
-    margin-right: 0.2rem;
-  }
-}
-
-.modifier-free {
-  margin-top: 0.5rem;
-  color: var(--color-success);
-  font-weight: 600;
-}
-
-
-.modifiers {
-  padding: 0;
-}
-
-.modifiers-options {
-  display: grid;
-  border-bottom: 1px solid var(--color-border);
-  padding: 1.5rem 1rem 0.5rem 0.5rem;
-}
-
-.content-option {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.item-details {
-  display: flex;
-  align-items: center;
-  height: 50px;
-}
-
-.item-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100%;
-}
-
-.item-image {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.25rem;
-  margin-right: 1rem;
-  object-fit: cover;
-}
-
-.free-modifier {
-  color: var(--color-primary);
-}
-
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.quantity-controls button {
-  background-color: #eee;
-  border: none;
-  padding: 0.4rem 0.6rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.quantity-controls button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.chip-maxed {
-  background-color: var(--color-primary);
-}
-</style>
