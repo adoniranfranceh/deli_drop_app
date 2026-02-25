@@ -1,35 +1,39 @@
 <template>
-  <div class="recent-orders">
-    <div class="orders-header">
-      <h2>Pedidos recentes</h2>
+  <div class="bg-white border border-border shadow-sm rounded-md flex flex-col justify-center">
+    <div class="flex justify-between items-center m-8">
+      <h2 class="m-0 text-xl font-bold">Pedidos recentes</h2>
       <ItemChip item="4 ativos" />
     </div>
     <div v-for="order in orders" :key="order.id">
-      <div class="order">
-        <div class="order-header">
-          <span class="order-id">#{{ order.id }} - {{ order.name }}</span>
+      <div class="py-8 hover:bg-background">
+        <div class="flex justify-between items-center gap-4">
+          <span class="px-8 text-xl font-medium">#{{ order.id }} - {{ order.name }}</span>
           <ItemChip
             :item="order.status"
-            class="status-chip"
+            class="mx-8"
             :style="{
               background: statusBackground(order.status),
               color: statusColor(order.status)
             }"
           />
         </div>
-        <p class="order-items">{{ order.items }}</p>
-        <div class="footer-order">
-          <span class="order-total">R$ {{ order.total }}</span>
+        <p class="flex justify-center text-muted">{{ order.items }}</p>
+        <div class="flex justify-between">
+          <span class="px-8 text-xl font-medium">R$ {{ order.total }}</span>
           <div>
-            <span class="order-ago">{{ order.timeAgo }}</span>
+            <span class="px-8 text-muted">{{ order.timeAgo }}</span>
           </div>
         </div>
       </div>
 
       <hr>
     </div>
-    <div class="btn-orders">
-      <AppButton text="Ver todos os pedidos" />
+    <div class="flex justify-center p-4">
+      <AppButton
+        text="Ver todos os pedidos"
+        variant="secondary"
+        class="w-full !border-primary"
+      />
     </div>
   </div>
 </template>
@@ -67,100 +71,4 @@ const statusBackground = (status) => {
     default: return 'var(--color-muted)'
   }
 }
-
 </script>
-
-<style scoped>
-.recent-orders {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  h2 {
-    margin: 0;
-  }
-}
-
-:deep(.cta-button) {
-  display: flex;
-  justify-content: center;
-  background-color: var(--color-white);
-  color: var(--color-black);
-  border: 1px solid var(--color-primary);
-  width: 100%;
-}
-
-:deep(.cta-button:hover) {
-  background-color: var(--color-border);
-}
-
-.orders-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 2rem;
-}
-
-.order {
-  padding: 2rem 0;
-
-  p {
-    display: flex;
-    justify-content: center
-  }
-}
-
-.order-id,
-.order-total,
-.order-ago{
-  padding: 0 2rem;
-}
-
-.order-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.order:hover {
-  background-color: var(--color-background);
-}
-
-.order-id {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.status-chip {
-  margin: 0 2rem;
-}
-
-.order-items {
-  color: var(--color-muted);
-}
-
-.footer-order {
-  display: flex;
-  justify-content: space-between;
-}
-
-.order-total {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.order-ago {
-  color: var(--color-muted);
-}
-
-.btn-orders {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-}
-</style>

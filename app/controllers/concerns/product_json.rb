@@ -10,6 +10,7 @@ module ProductJson
       base_price: product.base_price,
       description: product.description,
       image: product.image,
+      ingredients: product.ingredients,
       category: product.category.name,
       featured: product.featured,
       modifier_groups: product.modifier_groups.map { |group| modifier_group_json(group) }

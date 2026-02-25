@@ -1,11 +1,11 @@
 <template>
-  <div class="input-group">
-    <label :for="id" v-if="label">
-      <span class="label-text">{{ label }}</span>
-      <span v-if="required" class="required-asterisk">*</span>
+  <div class="flex flex-col gap-2 relative flex-1 min-w-[85px]">
+    <label :for="id" v-if="label" class="font-medium text-black flex justify-center gap-1 relative">
+      <span class="flex-none max-[758px]:text-[0.7rem]">{{ label }}</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
-    <div class="number-wrapper">
+    <div class="relative flex items-center min-w-20 max-w-full">
       <input
         :id="id"
         type="number"
@@ -15,30 +15,30 @@
         inputmode="numeric"
         @input="onInput"
         @blur="onBlur"
-        class="number-input"
         :disabled="disabled"
+        class="number-input w-full min-w-4 py-3 pl-4 pr-9 border border-border rounded-md text-base text-center appearance-none box-border flex-1 disabled:opacity-50 disabled:cursor-not-allowed focus:border-2 focus:border-primary focus:outline-none focus:shadow-sm"
       />
-      <div class="controls">
+      <div class="absolute right-0.5 top-0.5 bottom-1 flex flex-col justify-between gap-0.5">
         <button
           type="button"
-          class="control-btn"
+          class="bg-transparent p-0 px-1 cursor-pointer leading-none flex items-center justify-center h-5 transition-opacity duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
           @click="increment"
           :disabled="modelValue >= max || disabled"
         >
-          <Icon icon="mdi:chevron-up" class="control-icon" />
+          <Icon icon="mdi:chevron-up" class="text-primary text-xl" />
         </button>
         <button
           type="button"
-          class="control-btn"
+          class="bg-transparent p-0 px-1 cursor-pointer leading-none flex items-center justify-center h-5 transition-opacity duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
           @click="decrement"
           :disabled="modelValue <= min || disabled"
         >
-          <Icon icon="mdi:chevron-down" class="control-icon" />
+          <Icon icon="mdi:chevron-down" class="text-primary text-xl" />
         </button>
       </div>
     </div>
 
-    <p class="error">
+    <p class="text-error text-sm min-h-8 m-0">
       <span v-if="touched && externalError" v-html="externalError"></span>
       <span v-else>&nbsp;</span>
     </p>
@@ -94,118 +94,4 @@ function onBlur(event) {
 
   emit('update:modelValue', val)
 }
-
 </script>
-
-<style scoped>
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  position: relative;
-  flex: 1;
-  min-width: 85px;
-}
-
-label {
-  font-weight: 500;
-  color: var(--color-black);
-  display: flex;
-  justify-content: center;
-  gap: 0.4rem;
-  position: relative;
-}
-
-.label-text {
-  flex: none;
-}
-
-.required-asterisk {
-  color: red;
-}
-
-.number-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-width: 5rem;
-  max-width: 100%;
-}
-
-.number-input {
-  width: 100%;
-  min-width: 1rem;
-  padding: 0.7rem 1rem;
-  padding-right: 2.25rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  font-size: 1rem;
-  text-align: center;
-  appearance: none;
-  box-sizing: border-box;
-  flex: 1 1 0;
-}
-
-.number-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.number-input:focus {
-  border: 2px solid var(--color-primary);
-  outline: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.number-input::-webkit-inner-spin-button,
-.number-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.controls {
-  position: absolute;
-  right: 0.1rem;
-  top: 0.1rem;
-  bottom: 0.4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0.2rem;
-}
-
-.control-btn {
-  background: transparent;
-  padding: 0 4px;
-  cursor: pointer;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.2rem;
-  transition: opacity 0.2s ease;
-}
-
-.control-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.control-icon {
-  color: var(--color-primary);
-  font-size: 1.25rem;
-}
-
-.error {
-  color: red;
-  font-size: 0.85rem;
-  min-height: 2rem;
-  margin: 0;
-}
-
-@media (max-width: 758px) {
-  .label-text {
-    font-size: 0.7rem;
-  }
-}
-</style>

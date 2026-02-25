@@ -1,21 +1,23 @@
 <template>
-  <div class="quantity-wrapper">
-    <span v-if="!noLabel" class="label-quantity">Quantidade:</span>
+  <div class="flex items-center justify-center gap-2 p-2 transition-all duration-200">
+    <span v-if="!noLabel" class="font-semibold text-lg max-[1000px]:hidden">Quantidade:</span>
     <button
-      class="btn"
+      class="w-9 h-9 border border-border bg-white rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 text-[0] disabled:opacity-50 disabled:cursor-not-allowed"
       @click.stop="decreaseQuantity"
       :disabled="modelValue <= min"
       v-if="!justPlus"
     >
-      <span><Icon icon="lucide:minus" class="icon" /></span>
+      <span><Icon icon="lucide:minus" class="w-5 h-5 text-black" /></span>
     </button>
-    <span class="value" v-if="!justPlus">{{ modelValue }}</span>
+    <span v-if="!justPlus" class="text-xl font-bold text-text mx-2.5">{{ modelValue }}</span>
     <button
-      :class="!justPlus ? 'btn' : 'btn-just-plus'"
+      :class="justPlus
+        ? 'w-9 h-9 bg-primary border border-border rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 text-[0] disabled:opacity-50 disabled:cursor-not-allowed'
+        : 'w-9 h-9 border border-border bg-white rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 text-[0] disabled:opacity-50 disabled:cursor-not-allowed'"
       @click.stop="increaseQuantity"
       :disabled="disablePlus"
     >
-      <span><Icon icon="lucide:plus" class="icon"/></span>
+      <span><Icon icon="lucide:plus" :class="justPlus ? 'w-5 h-5 text-white' : 'w-5 h-5 text-black'" /></span>
     </button>
   </div>
 </template>
@@ -45,82 +47,3 @@ const decreaseQuantity = () => {
   }
 }
 </script>
-
-<style scoped>
-.quantity-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.label-quantity {
-  font-weight: 600;
-  font-size: 1.125rem;
-}
-
-.btn {
-  width: 2.2rem;
-  height: 2.2rem;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0;
-
-  .icon {
-    width: 1.2rem;
-    height: 1.2rem;
-    color: var(--color-black);
-  }
-}
-
-.btn-just-plus {
-  background-color: var(--color-primary);
-  width: 2.2rem;
-  height: 2.2rem;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0;
-
-  .icon {
-    width: 1.2rem;
-    height: 1.2rem;
-    color: var(--color-white);
-  }
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-just-plus:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.value {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin: 0 10px;
-}
-
-@media (max-width: 1000px) {
-  .label-quantity {
-    display: none;
-  }
-}
-</style>

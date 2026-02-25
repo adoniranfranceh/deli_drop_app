@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-cards">
+  <div class="flex gap-8 mb-8 max-[1000px]:grid max-[1000px]:grid-cols-2 max-[758px]:flex max-[758px]:flex-col max-[758px]:gap-4">
     <CardInfo icon="tabler:package" label="Total de Produtos" value="0" color="orange" />
     <CardInfo icon="tabler:eye" label="Produtos Ativos" value="0" color="green" />
     <CardInfo icon="tabler:star" label="Em Destaque" value="0" color="yellow" />
@@ -9,29 +9,4 @@
 
 <script setup>
 import CardInfo from './CardInfo.vue';
-
 </script>
-
-<style scoped>
-.menu-cards {
-  display: flex;
-  gap: 2em;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 1000px) {
-  .menu-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2em;
-  }
-}
-
-@media (max-width: 758px) {
-  .menu-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-  }
-}
-</style>

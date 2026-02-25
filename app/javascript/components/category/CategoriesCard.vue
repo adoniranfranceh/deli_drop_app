@@ -1,35 +1,36 @@
 <template>
-  <div class="category-card">
-    <div class="category-info">
-      <div class="category-header">
-        <span class="category-title">{{ category.name }}</span>
-        <div class="box-icon">
-          <Icon icon="lucide:package" />
+  <div class="bg-white rounded-lg transition-all duration-200 border border-border flex flex-col justify-between cursor-pointer min-h-[300px] p-6 hover:shadow-md">
+    <div>
+      <div class="flex mb-4">
+        <span class="text-xl font-bold flex justify-center w-full">{{ category.name }}</span>
+        <div>
+          <Icon icon="lucide:package" class="w-10 h-10 text-text-light" />
         </div>
       </div>
-      <div class="category-stats">
-        <div class="stat-item">
-          <span class="stat-label">Produtos</span>
-          <ItemChip :item="category.products_count" class="stat-value" />
+      <div class="flex flex-col gap-2">
+        <div class="bg-background py-3 px-4 rounded flex justify-between">
+          <span class="text-base font-medium">Produtos</span>
+          <ItemChip :item="category.products_count" class="text-sm font-bold" />
         </div>
-        <div class="stat-item">
-          <span class="stat-label">Ativos</span>
-          <ItemChip :item="category.actived_products_count" class="stat-value active" />
+        <div class="bg-background py-3 px-4 rounded flex justify-between">
+          <span class="text-base font-medium">Ativos</span>
+          <ItemChip :item="category.actived_products_count" class="text-sm font-bold bg-success text-white" />
         </div>
-        <div class="stat-item">
-          <span class="stat-label">Preço Médio</span>
+        <div class="bg-background py-3 px-4 rounded flex justify-between">
+          <span class="text-base font-medium">Preço Médio</span>
           <span>{{ FloatToMoney(category.average_price) }}</span>
         </div>
       </div>
     </div>
-    <div class="category-actions">
+    <div class="flex gap-2">
       <AppButton
-        class="edit-btn"
         text="Editar"
         iconLeft="lucide-pen-line"
+        variant="secondary"
+        class="w-full !py-2 !text-sm"
         @click="$emit('openCategoryForm', category)"
       />
-      <AppButton class="delete-btn" iconLeft="lucide:trash-2" />
+      <AppButton iconLeft="lucide:trash-2" variant="danger" class="!py-2 !px-3 [&_svg]:w-5 [&_svg]:h-5" />
     </div>
   </div>
 </template>
@@ -52,101 +53,3 @@ defineProps({
   },
 });
 </script>
-
-<style scoped>
-.category-card {
-  background: var(--color-white);
-  border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.3s;
-  border: 1px solid var(--color-border);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  height: 300px;
-  padding: 1.5rem;
-}
-
-.category-card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.category-header {
-  display: flex;
-  margin-bottom: 1rem;
-}
-
-.category-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.box-icon svg {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--color-text-light);
-}
-
-.category-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.stat-item {
-  background: var(--color-background);
-  padding: 0.7rem 1rem;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.stat-label {
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.stat-value {
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-.stat-value.active {
-  background-color: var(--color-success);
-  color: var(--color-white);
-}
-
-.category-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.edit-btn {
-  border: 1px solid var(--color-border);
-  background: var(--color-white);
-  color: var(--color-black);
-  width: 100%;
-}
-
-.edit-btn:hover {
-  background-color: var(--color-border);
-}
-
-.delete-btn {
-  border: 1px solid var(--color-border);
-  background: var(--color-white);
-  color: var(--color-primary);
-}
-
-.delete-btn :deep(svg) {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.delete-btn:hover {
-  background: var(--color-border);
-}
-</style>

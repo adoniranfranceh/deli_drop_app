@@ -1,14 +1,15 @@
 <template>
-  <label class="toggle-wrapper">
-    <span class="switch-container">
+  <label class="inline-flex items-center gap-2.5 cursor-pointer text-base max-[600px]:text-[0.95rem] max-[600px]:gap-2">
+    <span class="relative inline-block w-[50px] h-7 max-[600px]:w-11 max-[600px]:h-6">
       <input
         type="checkbox"
         :checked="checked"
         @change="emit('update:modelValue', $event.target.checked)"
+        class="hidden peer"
       />
-      <span class="toggle-switch"></span>
+      <span class="w-[50px] h-7 bg-border rounded-full relative transition-colors duration-300 block peer-checked:bg-primary max-[600px]:w-11 max-[600px]:h-6 before:content-[''] before:absolute before:left-[3px] before:top-[3px] before:w-[22px] before:h-[22px] before:bg-white before:rounded-full before:transition-transform before:duration-300 before:shadow-sm peer-checked:before:translate-x-[22px] max-[600px]:before:w-5 max-[600px]:before:h-5 max-[600px]:before:top-0.5 max-[600px]:before:left-0.5 max-[600px]:peer-checked:before:translate-x-5"></span>
     </span>
-    <span class="label-text">{{ label }}</span>
+    <span class="font-medium">{{ label }}</span>
   </label>
 </template>
 
@@ -27,82 +28,3 @@ const checked = computed({
   set: value => emit('update:modelValue', value)
 })
 </script>
-
-<style scoped>
-.toggle-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6em;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.switch-container {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
-}
-
-.toggle-wrapper input[type="checkbox"] {
-  appearance: none;
-  display: none !important;
-}
-
-.toggle-switch {
-  width: 50px;
-  height: 28px;
-  background-color: var(--color-border);
-  border-radius: 999px;
-  position: relative;
-  transition: background-color 0.3s ease;
-}
-
-.toggle-switch::before {
-  content: '';
-  position: absolute;
-  left: 3px;
-  top: 3px;
-  width: 22px;
-  height: 22px;
-  background-color: var(--color-white);
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-  box-shadow: var(--shadow-sm);
-}
-
-input[type="checkbox"]:checked + .toggle-switch {
-  background-color: var(--color-primary);
-}
-
-input[type="checkbox"]:checked + .toggle-switch::before {
-  transform: translateX(22px);
-}
-
-.label-text {
-  font-weight: 500;
-}
-
-@media (max-width: 600px) {
-  .toggle-wrapper {
-    font-size: 0.95rem;
-    gap: 0.5em;
-  }
-
-  .toggle-switch {
-    width: 44px;
-    height: 24px;
-  }
-
-  .toggle-switch::before {
-    width: 20px;
-    height: 20px;
-    top: 2px;
-    left: 2px;
-  }
-
-  input[type="checkbox"]:checked + .toggle-switch::before {
-    transform: translateX(20px);
-  }
-}
-</style>

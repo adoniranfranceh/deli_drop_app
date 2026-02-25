@@ -1,19 +1,19 @@
 <template>
-  <div class="quick-container">
-    <h2 class="quick-title">
-      <Icon icon="lucide-zap" class="zap-icon" /> Ações rápidas
+  <div class="flex flex-col gap-5 w-4/5 p-8 bg-white border border-border rounded-lg max-[758px]:w-full max-[758px]:p-1.5 max-[758px]:m-0">
+    <h2 class="flex gap-2 m-0 text-xl font-bold max-[758px]:justify-center">
+      <Icon icon="lucide-zap" class="text-primary" width="24" height="24" /> Ações rápidas
     </h2>
-    <p class="quick-subtitle">Escolha um template para preencher automaticamente</p>
-    <div class="quick-actions">
+    <p class="flex justify-center text-muted m-0 max-[758px]:text-center">Escolha um template para preencher automaticamente</p>
+    <div class="flex gap-6 max-[758px]:gap-2">
       <div
         v-for="action in actions"
         :key="action.label"
-        class="quick-action-card"
+        class="w-[23%] rounded-md py-6 px-4 text-center cursor-pointer transition-all duration-200 hover:saturate-[2.9] max-[758px]:py-4 max-[758px]:px-2"
         @click="selectTemplate(action.label)"
         :style="{ background: action.background }"
       >
-        <div class="quick-action-icon"><Icon :icon="action.icon" /></div>
-        <span class="quick-action-label">{{ action.label }}</span>
+        <div class="flex justify-center mb-2 max-[758px]:m-0"><Icon :icon="action.icon" width="26" height="26" class="max-[758px]:!w-4 max-[758px]:!h-4" /></div>
+        <span class="font-semibold text-black max-[758px]:text-[0.5rem]">{{ action.label }}</span>
       </div>
     </div>
   </div>
@@ -82,99 +82,3 @@ function selectTemplate(label) {
   emit('update:product', selected)
 }
 </script>
-
-<style scoped>
-.quick-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  width: 80%;
-  padding: 2rem;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-}
-
-.quick-title {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0;
-}
-
-.zap-icon {
-  color: var(--color-primary);
-}
-
-.quick-subtitle {
-  display: flex;
-  justify-content: center;
-  color: var(--color-muted);
-  margin: 0;
-}
-
-.quick-actions {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.quick-action-card {
-  width: 23%;
-  height: 54px;
-  background: var(--color-white);
-  border-radius: 6px;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: filter 0.2s ease;
-}
-
-.quick-action-card:hover {
-  filter: saturate(2.9);
-}
-
-.quick-action-icon {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-}
-
-.quick-action-label {
-  font-weight: 600;
-  color: var(--color-black);
-  justify-content: center
-}
-
-@media (max-width: 758px) {
-  .quick-container {
-    width: 100%;
-    padding: 0.4rem;
-    margin: 0;
-  }
-
-  .quick-title {
-    justify-content: center
-  }
-
-  .quick-subtitle {
-    text-align: center;
-  }
-
-  .quick-actions {
-    gap: 0.5rem;
-  }
-
-  .quick-action-card {
-    padding: 1rem;
-    height: 37px;
-  }
-
-  .quick-action-icon {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  .quick-action-label {
-    color: var(--color-black);
-    font-size: 0.5rem;
-  }
-}
-</style>

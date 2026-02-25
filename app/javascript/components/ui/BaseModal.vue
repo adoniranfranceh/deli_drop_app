@@ -1,6 +1,6 @@
 <template>
-  <div class="modal-overlay" @click.self="$emit('close')">
-    <div class="modal-content">
+  <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-[1000]" @click.self="$emit('close')">
+    <div class="bg-white p-8 rounded-[10px] max-w-[800px] w-full h-auto overflow-y-auto max-[758px]:h-[70%]">
       <slot />
     </div>
   </div>
@@ -19,35 +19,3 @@ onUnmounted(() => {
   document.body.style.overflow = ''
 })
 </script>
-
-<style scoped>
-body {
-  overflow: hidden;
-}
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: var(--color-white);
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 800px;
-  width: 100%;
-  height: auto;
-  overflow-y: auto;
-}
-
-@media (max-width: 758px) {
-  .modal-content {
-    height: 70%;
-  }
-}
-</style>

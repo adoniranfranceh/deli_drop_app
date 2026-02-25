@@ -1,44 +1,43 @@
 <template>
-  <div class="select-group" ref="dropdownRef">
-    <label :for="id || 'product-select'" @click="toggleDropdown">
-      <span class="label-text">{{ label }}</span>
-
-      <span v-if="required" class="required-asterisk">*</span>
+  <div class="flex-1 flex flex-col gap-2 relative" ref="dropdownRef">
+    <label :for="id || 'product-select'" @click="toggleDropdown" class="flex justify-center gap-1 font-medium text-black">
+      <span class="flex-none">{{ label }}</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
-    <div class="dropdown-wrapper" @click="toggleDropdown">
-      <div class="dropdown-display" @click="toggleDropdown">
+    <div class="relative w-full text-base" @click="toggleDropdown">
+      <div class="pr-2 border border-border rounded-md bg-white flex justify-between items-center cursor-pointer hover:border-2 hover:border-primary hover:shadow-sm focus:border-2 focus:border-primary focus:shadow-sm">
         <input
           :id="id || 'product-select'"
           v-model="searchQuery"
           :placeholder="selectedPlaceholder"
-          class="dropdown-input"
-          :class="{ 'has-value': selected }"
+          class="w-full h-full border-none outline-none bg-transparent p-3 text-base text-black placeholder:text-muted"
+          :class="{ 'placeholder:text-black': selected }"
           @click.stop
           @focus="toggleDropdown()"
         />
-        <Icon icon="line-md:chevron-down" class="dropdown-icon" />
+        <Icon icon="line-md:chevron-down" class="text-muted mr-2" />
       </div>
 
-      <div v-if="isOpen" class="dropdown-menu">
+      <div v-if="isOpen" class="absolute top-[110%] left-0 right-0 bg-white border border-border rounded-md shadow-sm z-10 max-h-[200px] overflow-y-auto">
         <div
           v-for="option in filteredOptions"
           :key="option.value"
-          class="dropdown-item"
-          :class="{ selected: option.value === selected }"
+          class="py-2 px-3 cursor-pointer flex items-center"
+          :class="{ 'bg-[#f0f4ff]': option.value === selected }"
           @click.stop="selectOption(option.value)"
         >
           <Icon
             v-if="option.value === selected"
             icon="material-symbols:check-rounded"
-            class="check-icon"
+            class="h-5 w-5"
           />
-          <span>{{ option.label }}</span>
+          <span class="pl-1">{{ option.label }}</span>
         </div>
       </div>
     </div>
 
-    <p class="error">
+    <p class="text-error text-sm min-h-5 m-0">
       <span v-if="(touched || forceShowError) && externalError">{{ externalError }}</span>
       <span v-else>&nbsp;</span>
     </p>
@@ -129,116 +128,3 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 </script>
-
-<style scoped>
-.select-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  position: relative;
-}
-
-label {
-  display: flex;
-  justify-content: center;
-  gap: 0.4rem;
-  font-weight: 500;
-  color: var(--color-black);
-}
-
-.label-text {
-  flex: none;
-}
-
-.required-asterisk {
-  color: red;
-}
-
-.dropdown-wrapper {
-  position: relative;
-  width: 100%;
-  font-size: 1rem;
-}
-
-.dropdown-display {
-  padding-right: 0.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background-color: var(--color-white);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.dropdown-input {
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0.75rem;
-  font-size: 1rem;
-  color: var(--color-black);
-}
-
-.dropdown-input::placeholder {
-  color: var(--color-muted);
-}
-
-.dropdown-input.has-value::placeholder {
-  color: var(--color-black);
-}
-
-.dropdown-icon {
-  color: var(--color-muted);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  right: 0;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  box-shadow: var(--shadow-sm);
-  z-index: 10;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.dropdown-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.dropdown-item span {
-  padding-left: 0.25rem;
-}
-
-.dropdown-display:hover,
-.dropdown-display:focus {
-  border: 2px solid var(--color-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.dropdown-item.selected {
-  background-color: #f0f4ff;
-}
-
-.check-icon {
-  height: 1.2rem;
-  width: 1.2rem;
-}
-
-.error {
-  color: red;
-  font-size: 0.85rem;
-  min-height: 1.2rem;
-  margin: 0;
-}
-</style>

@@ -1,22 +1,24 @@
 <template>
-  <div class="tab-container">
-    <div class="tab">
+  <div class="w-full">
+    <div class="flex gap-4 pb-4">
       <span
-        :class="{ active: currentTab === 'products' }"
+        class="font-medium text-muted cursor-pointer transition-colors duration-200 ml-3"
+        :class="{ '!text-primary': currentTab === 'products' }"
         @click="selectTab('products')"
       >
         Produtos
       </span>
       <span
-        :class="{ active: currentTab === 'categories' }"
+        class="font-medium text-muted cursor-pointer transition-colors duration-200 ml-3"
+        :class="{ '!text-primary': currentTab === 'categories' }"
         @click="selectTab('categories')"
       >
         Categorias
       </span>
     </div>
-    <div class="underline-container">
+    <div class="relative h-0 -mt-0.5">
       <div
-        class="underline"
+        class="w-[90px] h-0.5 bg-primary transition-transform duration-300"
         :style="{ transform: currentTab === 'products' ? 'translateX(0%)' : 'translateX(113%)' }"
       ></div>
     </div>
@@ -36,40 +38,3 @@ function selectTab(tab) {
   emit('changeTab', tab)
 }
 </script>
-
-<style scoped>
-.tab-container {
-  width: 100%;
-}
-
-.tab {
-  display: flex;
-  gap: 1rem;
-  padding-bottom: 1rem;
-}
-
-.tab span {
-  font-weight: 500;
-  color: var(--color-muted);
-  cursor: pointer;
-  transition: color 0.2s;
-  margin-left: 0.7rem;
-}
-
-.tab span.active {
-  color: var(--color-primary);
-}
-
-.underline-container {
-  position: relative;
-  height: 0px;
-  margin-top: -2px;
-}
-
-.underline {
-  width: 90px;
-  height: 2px;
-  background-color: var(--color-primary);
-  transition: transform 0.3s;
-}
-</style>

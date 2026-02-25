@@ -1,21 +1,21 @@
 <template>
-  <div class="product-viewer">
-    <div class="image-wrapper">
-      <img :src="product.image" :alt="product.name" class="product-image" />
+  <div class="flex flex-col w-[800px] max-[758px]:w-full max-[758px]:h-full max-[758px]:rounded-none">
+    <div class="w-full h-[400px] overflow-hidden bg-background max-[758px]:h-[270px]">
+      <img :src="product.image" :alt="product.name" class="w-full h-full rounded-t-[10px] block object-cover" />
     </div>
 
-    <div class="product-details">
-      <div class="about-product">
-        <h2>{{ product.name }}</h2>
-        <div class="product-price">{{ FloatToMoney(finalPrice) }}</div>
+    <div class="p-6 bg-white rounded-b-[10px] shadow-sm max-[758px]:px-4 max-[758px]:py-8">
+      <div class="flex justify-between items-center max-[758px]:flex-col max-[758px]:items-start max-[758px]:gap-2">
+        <h2 class="text-primary text-2xl mb-0">{{ product.name }}</h2>
+        <div class="text-[1.6rem] font-bold text-black">{{ FloatToMoney(finalPrice) }}</div>
       </div>
 
-      <div class="info">
+      <div class="mt-4 text-[#555] leading-relaxed max-[758px]:text-center">
         <p>{{ product.description }}</p>
         <DeliveryDuration :duration="product.duration" />
       </div>
 
-      <hr />
+      <hr class="my-8 border-t border-border" />
 
       <ModifierGroup
         v-if="modifier_groups?.length > 0"
@@ -30,13 +30,14 @@
         :ingredients="product.ingredients"
       />
 
-      <div class="comment-content">
-        <label for="comment">Algum comentário?</label>
+      <div class="flex flex-col items-start my-8">
+        <label for="comment" class="font-bold">Algum comentário?</label>
         <textarea
           id="comment"
           rows="5"
           placeholder="Ex: sem cebola, sem maionese..."
           v-model="comment"
+          class="w-full border border-border rounded-lg mt-4 resize-none max-[758px]:w-[97%]"
         />
       </div>
     </div>
@@ -78,112 +79,3 @@ const finalPrice = computed(() => {
 });
 </script>
 
-<style scoped>
-.product-viewer {
-  display: flex;
-  flex-direction: column;
-  width: 800px;
-}
-
-.product-viewer h2 {
-  color: var(--color-primary);
-  font-size: 1.5rem;
-  margin-bottom: 0;
-}
-
-.image-wrapper {
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  background-color: var(--background-color);
-}
-
-.product-image {
-  width: 100%;
-  height: 100%;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  display: block;
-  object-fit: cover;
-}
-
-.product-details {
-  padding: 1.5rem;
-  background-color: var(--color-white);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: var(--shadow-sm);
-}
-
-.about-product {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.product-price {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--color-black);
-}
-
-.info {
-  margin-top: 1rem;
-  color: #555;
-  line-height: 1.5;
-}
-
-.comment-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 2rem 0;
-}
-
-.comment-content label {
-  font-weight: 700;
-}
-
-.comment-content textarea {
-  width: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-  resize: none;
-}
-
-hr {
-  margin: 2rem 0;
-  border-top: 1px solid var(--color-border);
-}
-
-@media (max-width: 758px) {
-  .product-viewer {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-
-  .product-details {
-    padding: 2rem 1rem;
-  }
-
-  .image-wrapper {
-    height: 270px;
-  }
-
-  .comment-content textarea {
-    width: 97%;
-  }
-
-  .about-product {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .info {
-    text-align: center;
-  }
-}
-</style>

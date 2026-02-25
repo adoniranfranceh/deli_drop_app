@@ -1,13 +1,13 @@
 <template>
   <MenuOverview @openCategoryModal="openCategoryForm"/>
-  <div class="menu">
-    <div class="menu-center">
+  <div class="flex justify-center">
+    <div class="flex flex-col p-8 gap-8 bg-background mx-8 max-w-[1820px] w-full max-[758px]:w-full max-[758px]:mx-0 max-[758px]:p-4">
       <MenuCards />
       <TabMenu @changeTab="handleTabChange" />
 
-      <div v-show="tab === 'products'" class="products-tab">
+      <div v-show="tab === 'products'">
         <ProductsMenuFilters @changeView="handleViewChange" />
-        <div v-if="productsList.length > 0" class="products-container">
+        <div v-if="productsList.length > 0" class="grid gap-8 my-8 px-4 grid-cols-1 min-[758px]:grid-cols-2 min-[958px]:grid-cols-3 min-[1250px]:grid-cols-4 min-[1250px]:my-12">
           <CardProducts
             v-for="product in productsList"
             :product="product"
@@ -18,7 +18,7 @@
 
       <div v-show="tab === 'categories'">
         <CategoriesFilter @openCategoryModal="openCategoryForm"/>
-        <div v-if="categoriesList.length > 0" class="categories-container">
+        <div v-if="categoriesList.length > 0" class="grid gap-8 my-8 px-4 grid-cols-1 min-[758px]:grid-cols-2 min-[958px]:grid-cols-3 min-[1250px]:grid-cols-4 min-[1250px]:my-12">
           <CategoriesCard
             v-for="category in categoriesList"
             :key="category.id"
@@ -100,64 +100,3 @@ function handleTabChange(view) {
   tab.value = view
 }
 </script>
-
-<style scoped>
-.menu {
-  display: flex;
-  justify-content: center;
-}
-
-.menu-center {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 2rem;
-  background-color: var(--color-background);
-  margin: 0 2rem;
-  width: 1820px;
-}
-
-.products-container,
-.categories-container {
-  display: grid;
-  gap: 2rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  grid-template-columns: repeat(1, 1fr);
-}
-
-@media (min-width: 758px) {
-  .products-container,
-  .categories-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 958px) {
-  .products-container,
-  .categories-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1250px) {
-  .products-container,
-  .categories-container {
-    grid-template-columns: repeat(4, 1fr);
-    margin: 3rem auto;
-  }
-}
-
-.tab {
-  display: flex;
-  gap: 1rem;
-}
-
-@media (max-width: 758px) {
-  .menu-center {
-    width: 100%;
-    margin: 0;
-    padding: 1rem;
-  }
-}
-</style>

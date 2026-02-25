@@ -5,10 +5,11 @@
     icon="lucide-store"
   >
     <template #actions>
-      <AppButton 
+      <AppButton
         v-if="restaurantExists"
         text="Voltar a tela inicial"
         iconLeft="ri:arrow-left-line"
+        variant="secondary"
         @click="navigateTo('/')"
       />
     </template>
@@ -24,15 +25,3 @@ defineProps({
   restaurantExists: Boolean
 });
 </script>
-
-<style scoped>
-:deep(.cta-button) {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  color: var(--color-black);
-}
-
-:deep(.cta-button:hover) {
-  background-color: var(--color-border);
-}
-</style>

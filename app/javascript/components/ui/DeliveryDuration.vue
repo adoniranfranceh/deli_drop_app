@@ -1,6 +1,6 @@
 <template>
-  <span v-if="duration">
-    <Icon icon="mdi-light:clock" style="width: 20px; height: 20px; margin: 5px;" />
+  <span v-if="duration" class="flex items-center">
+    <Icon icon="mdi-light:clock" class="w-5 h-5 m-1" />
     {{ duration }} min
   </span>
 </template>
@@ -15,10 +15,3 @@ defineProps({
   }
 })
 </script>
-
-<style setup>
-  span {
-    display: flex;
-    align-items: center;
-  }
-</style>
