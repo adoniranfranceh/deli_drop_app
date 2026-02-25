@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    models:
+      order_item: "Item do Pedido"
+    attributes:
+      order_item:
+        product_name: "Nome do Produto"
+        product_image: "Imagem do Produto"
+        unit_price: "Preço Unitário"
+        quantity: "Quantidade"
+        total_price: "Preço Total"
+        comment: "Observação"

@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    models:
+      order_status_log: "Log de Status"
+    attributes:
+      order_status_log:
+        from_status: "Status Origem"
+        to_status: "Status Destino"
+        changed_by: "Alterado Por"
+        note: "Observação"

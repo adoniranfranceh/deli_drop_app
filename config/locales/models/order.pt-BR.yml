@@ -1,0 +1,24 @@
+pt-BR:
+  activerecord:
+    models:
+      order: Pedido
+    attributes:
+      order:
+        code: "Código"
+        status: "Status"
+        delivery_address: "Endereço de Entrega"
+        delivery_complement: "Complemento"
+        delivery_neighborhood: "Bairro"
+        delivery_reference: "Referência"
+        subtotal: "Subtotal"
+        delivery_fee: "Taxa de Entrega"
+        discount: "Desconto"
+        total: "Total"
+        payment_method: "Forma de Pagamento"
+        change_for: "Troco Para"
+        payment_status: "Status do Pagamento"
+        customer_note: "Observação"
+        rejection_reason: "Motivo da Recusa"
+        cancellation_reason: "Motivo do Cancelamento"
+        estimated_delivery_time: "Tempo Estimado de Entrega"
+        expires_at: "Expira Em"

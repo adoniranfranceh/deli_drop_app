@@ -3,6 +3,7 @@ class Restaurant < ApplicationRecord
 
   has_many :categories
   has_many :products
+  has_many :orders
 
   validates :name, :culinary_style, :description, :image, :phone, presence: true
   validates :restaurant_user_id, uniqueness: true
@@ -23,6 +24,24 @@ class Restaurant < ApplicationRecord
   def add_default_categories
     DEFAULT_CATEGORIES.each do |name|
       categories.create!(name:)
+    end
+  end
+
+  # Days: 0=Sunday, 1=Monday, ..., 6=Saturday
+  def open_now?
+    return true if opening_time.nil? || closing_time.nil? || open_days.blank?
+
+    now = Time.current
+    return false unless open_days.include?(now.wday)
+
+    current_time = now.strftime("%H:%M")
+    open = opening_time.strftime("%H:%M")
+    close = closing_time.strftime("%H:%M")
+
+    if open <= close
+      current_time >= open && current_time < close
+    else
+      current_time >= open || current_time < close
     end
   end
 end

@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    models:
+      order_item_modifier: "Modificador do Item"
+    attributes:
+      order_item_modifier:
+        group_name: "Nome do Grupo"
+        modifier_name: "Nome do Modificador"
+        unit_price: "Preço Unitário"
+        quantity: "Quantidade"
