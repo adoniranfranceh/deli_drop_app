@@ -12,6 +12,23 @@ Rails.application.routes.draw do
       resources :restaurants, only: %i[create update show index]
       resources :categories, only: %i[index create update]
       resources :products, only: %i[create update index]
+
+      resources :orders, only: [:create], param: :code do
+        member do
+          get "/", action: :show
+          patch :cancel
+        end
+      end
+
+      namespace :restaurant do
+        resources :orders, only: %i[index show] do
+          member do
+            patch :accept
+            patch :reject
+            patch :status
+          end
+        end
+      end
     end
   end
 

@@ -1,0 +1,14 @@
+pt-BR:
+  api:
+    v1:
+      orders:
+        create:
+          success: "Pedido enviado com sucesso!"
+        cancel:
+          success: "Pedido cancelado com sucesso"
+        accept:
+          success: "Pedido aceito com sucesso"
+        reject:
+          success: "Pedido recusado"
+        status:
+          success: "Status do pedido atualizado"
