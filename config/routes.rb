@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :categories, only: %i[index create update]
       resources :products, only: %i[create update index]
 
-      resources :orders, only: [:create], param: :code do
+      resources :orders, only: [:index, :create], param: :code do
         member do
           get "/", action: :show
           patch :cancel

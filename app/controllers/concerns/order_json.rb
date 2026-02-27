@@ -47,6 +47,17 @@ module OrderJson
     }
   end
 
+  def order_history_json(order)
+    {
+      code: order.code,
+      status: order.status,
+      restaurant_name: order.restaurant.name,
+      total: order.total,
+      items_count: order.order_items.size,
+      created_at: order.created_at
+    }
+  end
+
   def order_tracking_json(order)
     {
       code: order.code,

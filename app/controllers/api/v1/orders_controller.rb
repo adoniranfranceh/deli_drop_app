@@ -1,6 +1,13 @@
 class Api::V1::OrdersController < ActionController::API
   include OrderJson
 
+  def index
+    customer = Customer.find_by(phone: params[:phone])
+    orders = customer ? customer.orders.includes(:restaurant, :order_items).order(created_at: :desc) : []
+
+    render json: { orders: orders.map { |order| order_history_json(order) } }, status: :ok
+  end
+
   def create
     restaurant = Restaurant.find_by(id: order_params[:restaurant_id])
     unless restaurant
