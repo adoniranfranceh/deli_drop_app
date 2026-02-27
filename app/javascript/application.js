@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/Dashboard.vue'
 import Menu from './components/menu/MenuCenter.vue'
 import ProductForm from './components/products/Form/ProductForm.vue'
 import RestaurantForm from "./components/restaurant/RestaurantForm.vue";
+import OrdersCenter from './components/orders/OrdersCenter.vue'
 import FlashMessage from './components/ui/FlashMessage.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,6 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const productsData = JSON.parse(menuEl.dataset.products);
 
     createApp(Menu, { categories: categoriesData, products: productsData }).mount(menuEl)
+  }
+
+  const ordersEl = document.getElementById('orders-widget')
+  if (ordersEl) {
+    createApp(OrdersCenter).mount(ordersEl)
   }
 
   const newPro = document.getElementById('new-product')
