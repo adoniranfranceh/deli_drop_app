@@ -1,6 +1,9 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
+import { createConsumer } from '@rails/actioncable'
 import { showFlash } from '../utils/flashHelper'
+
+const cable = createConsumer()
 
 export function useOrders() {
   const orders = ref([])
@@ -16,6 +19,7 @@ export function useOrders() {
   })
 
   let pollingTimer = null
+  let subscription = null
   let previousOrderIds = []
   let notificationSound = null
 
@@ -127,6 +131,38 @@ export function useOrders() {
     fetchOrders()
   }
 
+  function subscribe() {
+    unsubscribe()
+    initSound()
+
+    subscription = cable.subscriptions.create(
+      { channel: 'RestaurantOrdersChannel' },
+      {
+        connected() {
+          stopPolling()
+          fetchOrders()
+        },
+        disconnected() {
+          startPolling()
+        },
+        received(data) {
+          if (data.type === 'new_order') {
+            playNotificationSound()
+          }
+          fetchOrders()
+        }
+      }
+    )
+  }
+
+  function unsubscribe() {
+    if (subscription) {
+      subscription.unsubscribe()
+      subscription = null
+    }
+    stopPolling()
+  }
+
   function startPolling(intervalMs = 30000) {
     stopPolling()
     initSound()
@@ -141,8 +177,8 @@ export function useOrders() {
     }
   }
 
-  onMounted(() => startPolling())
-  onUnmounted(() => stopPolling())
+  onMounted(() => subscribe())
+  onUnmounted(() => unsubscribe())
 
   return {
     orders,

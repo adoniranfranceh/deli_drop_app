@@ -29,6 +29,9 @@ class Order < ApplicationRecord
 
   validate :restaurant_must_be_open, on: :create
 
+  after_create_commit :broadcast_new_order
+  after_update_commit :broadcast_order_update, if: :status_previously_changed?
+
   before_validation :generate_code, on: :create
   before_validation :set_expires_at, on: :create
 
@@ -105,6 +108,50 @@ class Order < ApplicationRecord
 
     attr = timestamp_map[new_status.to_s]
     send(:"#{attr}=", time) if attr
+  end
+
+  def broadcast_new_order
+    RestaurantOrdersChannel.broadcast_to(restaurant, {
+      type: "new_order",
+      order: restaurant_order_payload
+    })
+  end
+
+  def broadcast_order_update
+    OrderTrackingChannel.broadcast_to(self, {
+      code: code,
+      status: status,
+      estimated_delivery_time: estimated_delivery_time,
+      confirmed_at: confirmed_at,
+      preparing_at: preparing_at,
+      ready_at: ready_at,
+      out_for_delivery_at: out_for_delivery_at,
+      delivered_at: delivered_at,
+      cancelled_at: cancelled_at,
+      cancellation_reason: cancellation_reason,
+      rejection_reason: rejection_reason
+    })
+
+    RestaurantOrdersChannel.broadcast_to(restaurant, {
+      type: "order_updated",
+      order: restaurant_order_payload
+    })
+  end
+
+  def restaurant_order_payload
+    {
+      id: id,
+      code: code,
+      status: status,
+      customer_name: customer.name,
+      customer_phone: customer.phone,
+      total: total,
+      payment_method: payment_method,
+      items_count: order_items.size,
+      estimated_delivery_time: estimated_delivery_time,
+      expires_at: expires_at,
+      created_at: created_at
+    }
   end
 
   def restaurant_must_be_open

@@ -5,5 +5,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     headers: :any,
     methods: [ :get, :post, :patch, :options, :head ],
     credentials: true
+
+    resource "/cable",
+    headers: :any,
+    methods: [ :get, :post, :options ],
+    credentials: true
   end
 end
